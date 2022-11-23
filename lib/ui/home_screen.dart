@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:moneygram/ui/add_transaction_page.dart';
 import 'package:moneygram/ui/transaction_row_widget.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key, required this.title}) : super(key: key);
@@ -36,7 +38,7 @@ class _HomePageState extends State<HomePage> {
   Widget _listWidget() {
     return Expanded(
         child: ListView.builder(
-      itemCount: 10,
+      itemCount: 20,
       itemBuilder: (context, index) {
         return const TransactionRowWidget();
       },
@@ -44,15 +46,23 @@ class _HomePageState extends State<HomePage> {
   }
 
   FloatingActionButton _fab() {
-    return const FloatingActionButton(
-      onPressed: null,
-      tooltip: 'Increment',
+    return FloatingActionButton(
+      onPressed: _onFabClick,
+      tooltip: 'Add Transaction',
       backgroundColor: Colors.white,
-      child: Icon(
+      child: const Icon(
         Icons.add,
         size: 32,
         color: Colors.black,
       ),
+    );
+  }
+
+  void _onFabClick() {
+    showCupertinoModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => const AddTransactionPage(),
     );
   }
 }
