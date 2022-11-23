@@ -104,7 +104,11 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                 ),
                 Align(
                   alignment: Alignment.centerRight,
-                  child: Text('Cancel'),
+                  child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('Cancel')),
                 )
               ],
             ),
