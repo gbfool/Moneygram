@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:moneygram/models/category.dart';
+import 'package:moneygram/ui/category/category_screen.dart';
 import 'package:moneygram/utils/utils.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class ActionsWidget extends StatefulWidget {
   const ActionsWidget({Key? key}) : super(key: key);
@@ -30,9 +32,7 @@ class _ActionsWidgetState extends State<ActionsWidget> {
           ]),
           SizedBox(height: 6),
           Divider(height: 1, thickness: 0),
-          SizedBox(height: 12),
           _accountCategory(),
-          SizedBox(height: 12),
           Divider(height: 1, thickness: 0)
         ],
       ),
@@ -49,15 +49,15 @@ class _ActionsWidgetState extends State<ActionsWidget> {
 
   Widget _accountCategory() {
     return Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-      ..._emojiWidget(category: Category(emoji: "💳", text: "Credit Card")),
+      _emojiWidget(category: Category(emoji: "💳", text: "Credit Card")),
       SizedBox(width: 12),
       Icon(Icons.arrow_forward),
       SizedBox(width: 12),
-      ..._emojiWidget(category: Category(emoji: "🍿", text: "Entertainment")),
+      _emojiWidget(category: Category(emoji: "🍿", text: "Entertainment")),
     ]);
   }
 
-  List<Widget> _emojiWidget({required Category category}) {
+  Widget _emojiWidget({required Category category}) {
     List<Widget> widgets = [
       Text(category.emoji, style: GoogleFonts.notoEmoji(fontSize: 24)),
       SizedBox(width: 4),
@@ -70,6 +70,21 @@ class _ActionsWidgetState extends State<ActionsWidget> {
         ),
       )
     ];
-    return widgets;
+    return InkWell(
+        onTap: () {
+          _openCategoryPage(category);
+        },
+        child: Container(
+            padding: EdgeInsets.only(top: 12, bottom: 12),
+            child: Row(mainAxisSize: MainAxisSize.min, children: widgets)));
+  }
+
+  void _openCategoryPage(Category category) {
+    showBarModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.transparent,
+        builder: (context) => SingleChildScrollView(
+            controller: ModalScrollController.of(context),
+            child: CategoryScreen(categoryList: Utils.getExpensesCategory())));
   }
 }

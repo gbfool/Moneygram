@@ -15,6 +15,11 @@ class Utils {
     list.add(Category(emoji: "🍿", text: "Entertainment"));
     list.add(Category(emoji: "📚", text: "Books"));
     list.add(Category(emoji: "🤷", text: "Miscellenous"));
+    list.add(Category(emoji: "⚡", text: "Elecricity"));
+    list.add(Category(emoji: "🎁", text: "Gifts"));
+    list.add(Category(emoji: "🍿", text: "Entertainment"));
+    list.add(Category(emoji: "📚", text: "Books"));
+    list.add(Category(emoji: "🤷", text: "Miscellenous"));
     return list;
   }
 }
