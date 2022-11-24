@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:moneygram/models/category.dart';
+import 'package:moneygram/utils/utils.dart';
 
 class ActionsWidget extends StatefulWidget {
   const ActionsWidget({Key? key}) : super(key: key);
@@ -47,21 +49,27 @@ class _ActionsWidgetState extends State<ActionsWidget> {
 
   Widget _accountCategory() {
     return Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-      Text("💳", style: GoogleFonts.notoEmoji(fontSize: 24)),
-      SizedBox(width: 4),
-      Text(
-        "Credit Card",
-        style: TextStyle(fontSize: 16),
-      ),
+      ..._emojiWidget(category: Category(emoji: "💳", text: "Credit Card")),
       SizedBox(width: 12),
       Icon(Icons.arrow_forward),
       SizedBox(width: 12),
-      Text("🍿", style: GoogleFonts.notoEmoji(fontSize: 24)),
-      SizedBox(width: 4),
-      Text(
-        "Enterntainment",
-        style: TextStyle(fontSize: 16),
-      ),
+      ..._emojiWidget(category: Category(emoji: "🍿", text: "Entertainment")),
     ]);
+  }
+
+  List<Widget> _emojiWidget({required Category category}) {
+    List<Widget> widgets = [
+      Text(category.emoji, style: GoogleFonts.notoEmoji(fontSize: 24)),
+      SizedBox(width: 4),
+      Flexible(
+        child: Text(
+          category.text,
+          style: TextStyle(fontSize: 16),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      )
+    ];
+    return widgets;
   }
 }

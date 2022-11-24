@@ -1,7 +1,7 @@
 import 'package:moneygram/models/category.dart';
 
 class Utils {
-  static List<Category> _getExpensesCategory() {
+  static List<Category> getExpensesCategory() {
     List<Category> list = [];
     list.add(Category(emoji: "💧", text: "Water"));
     list.add(Category(emoji: "🥘", text: "Food"));
