@@ -20,14 +20,11 @@ class AddTransactionPage extends StatefulWidget {
 // }
 
 class _AddTransactionPageState extends State<AddTransactionPage> {
-  bool isValidForm = false;
-  late TextEditingController textEditingController;
   late List<List<dynamic>> keys;
   String amount = "";
 
   @override
   void initState() {
-    textEditingController = TextEditingController();
     keys = [
       ['1', '2', '3'],
       ['4', '5', '6'],
@@ -54,6 +51,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
             const SizedBox(height: 16),
             _amountWidget(),
             const Spacer(),
+            _renderActions(),
             ...renderKeyboard(),
           ],
         ),
@@ -112,33 +110,6 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
     );
   }
 
-  Widget _inputField() {
-    return IntrinsicWidth(
-      child: TextFormField(
-        style: TextStyle(
-            color: Colors.black, fontWeight: FontWeight.w600, fontSize: 32),
-        cursorColor: Colors.black,
-        enabled: false,
-        initialValue: amount,
-        controller: textEditingController,
-        keyboardType: TextInputType.numberWithOptions(decimal: true),
-        onChanged: (String value) {
-          setState(() {});
-        },
-        validator: (value) {
-          // ErrorModel? errorModel = validateField(value);
-          // logErrorEvent(errorModel);
-          // return validateField(value)?.errorMessage;
-        },
-        decoration: InputDecoration(
-          hintText: '0',
-          hintStyle: TextStyle(color: Colors.grey),
-          border: InputBorder.none,
-        ),
-      ),
-    );
-  }
-
   Widget renderAmount() {
     TextStyle style = const TextStyle(
         color: Colors.grey, fontWeight: FontWeight.w600, fontSize: 32);
@@ -170,6 +141,14 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
     });
   }
 
+  _renderActions() {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 12),
+      color: Colors.black.withOpacity(0.3),
+      child: Row(children: [Spacer(), Icon(Icons.send, size: 24)]),
+    );
+  }
+
   renderKeyboard() {
     return keys
         .map(
@@ -177,16 +156,19 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
             children: x.map(
               (y) {
                 return Expanded(
-                  child: KeyboardKey(
-                    label: y,
-                    value: y,
-                    onTap: (val) {
-                      if (val is Widget) {
-                        onBackspacePress();
-                      } else {
-                        onKeyTap(val);
-                      }
-                    },
+                  child: Container(
+                    color: Colors.white,
+                    child: KeyboardKey(
+                      label: y,
+                      value: y,
+                      onTap: (val) {
+                        if (val is Widget) {
+                          onBackspacePress();
+                        } else {
+                          onKeyTap(val);
+                        }
+                      },
+                    ),
                   ),
                 );
               },

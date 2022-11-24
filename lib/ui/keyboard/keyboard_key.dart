@@ -25,7 +25,7 @@ class _KeyboardKeyState extends State<KeyboardKey> {
     return Text(
       widget.label,
       style: const TextStyle(
-        fontSize: 20.0,
+        fontSize: 24,
         fontWeight: FontWeight.bold,
       ),
     );
