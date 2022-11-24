@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moneygram/ui/add_transaction_page.dart';
+import 'package:moneygram/ui/add_transaction/add_transaction_page.dart';
 import 'package:moneygram/ui/transaction_row_header_widget.dart';
 import 'package:moneygram/ui/transaction_row_widget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
