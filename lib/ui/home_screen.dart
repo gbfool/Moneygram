@@ -63,8 +63,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onFabClick() {
-    showCupertinoModalBottomSheet(
+    showBarModalBottomSheet(
       context: context,
+      expand: false,
       backgroundColor: Colors.transparent,
       builder: (context) => const AddTransactionPage(),
     );

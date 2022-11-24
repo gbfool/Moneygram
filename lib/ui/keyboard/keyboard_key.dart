@@ -22,27 +22,35 @@ class _KeyboardKeyState extends State<KeyboardKey> {
       return widget.label;
     }
 
-    return Text(
-      widget.label,
-      style: const TextStyle(
-        fontSize: 24,
-        fontWeight: FontWeight.bold,
+    return Container(
+      alignment: Alignment.center,
+      child: Text(
+        widget.label,
+        style: const TextStyle(
+          fontSize: 28,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        widget.onTap(widget.value);
-      },
-      child: AspectRatio(
-        aspectRatio: 2,
-        child: Center(
-          child: renderLabel(),
-        ),
-      ),
-    );
+    return Material(
+        color: Colors.white,
+        child: Container(
+          margin: EdgeInsets.only(top: 8),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(12))),
+          child: InkWell(
+            onTap: () {
+              widget.onTap(widget.value);
+            },
+            child: AspectRatio(
+              aspectRatio: 1.8,
+              child: renderLabel(),
+            ),
+          ),
+        ));
   }
 }
