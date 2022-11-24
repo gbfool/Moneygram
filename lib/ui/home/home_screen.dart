@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:moneygram/ui/add_transaction/add_transaction_page.dart';
-import 'package:moneygram/ui/transaction_row_header_widget.dart';
-import 'package:moneygram/ui/transaction_row_widget.dart';
+import 'package:moneygram/ui/home/transaction_row_header_widget.dart';
+import 'package:moneygram/ui/home/transaction_row_widget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,13 +17,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: _body(),
-      ),
-      floatingActionButton:
-          _fab(), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+        // Use [SystemUiOverlayStyle.light] for white status bar
+        // or [SystemUiOverlayStyle.dark] for black status bar
+        // https://stackoverflow.com/a/58132007/1321917
+        value: SystemUiOverlayStyle.dark,
+        child: Scaffold(
+          body: SafeArea(
+            child: _body(),
+          ),
+          floatingActionButton:
+              _fab(), // This trailing comma makes auto-formatting nicer for build methods.
+        ));
   }
 
   Widget _body() {

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:moneygram/ui/home_screen.dart';
+import 'package:moneygram/ui/home/home_screen.dart';
 
 class BottomNavigationState extends StatefulWidget {
   const BottomNavigationState({
