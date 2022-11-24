@@ -23,6 +23,15 @@ class _HomePageState extends State<HomePage> {
         // https://stackoverflow.com/a/58132007/1321917
         value: SystemUiOverlayStyle.dark,
         child: Scaffold(
+          appBar: AppBar(
+              toolbarHeight: 0,
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              systemOverlayStyle: const SystemUiOverlayStyle(
+                statusBarColor: Colors.transparent,
+                statusBarIconBrightness: Brightness.dark,
+                statusBarBrightness: Brightness.light,
+              )),
           body: SafeArea(
             child: _body(),
           ),
@@ -32,21 +41,23 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _body() {
-    return Column(
-      children: <Widget>[
-        Text(
-          'You have pushed the button this many times: ${widget.title}',
-        ),
-        _listWidget()
-      ],
+    return Container(
+      padding: EdgeInsets.only(top: 12),
+      child: Column(
+        children: <Widget>[_listWidget()],
+      ),
     );
   }
 
   Widget _listWidget() {
     return Expanded(
         child: ListView.builder(
-      itemCount: 20,
+      itemCount: 21,
       itemBuilder: (context, index) {
+        if (index == 0) {
+          return Container(
+              height: 200, child: Center(child: Text("No chart available")));
+        }
         if (index % 4 == 0) {
           return TransactionRowHeaderWidget();
         }
@@ -71,7 +82,6 @@ class _HomePageState extends State<HomePage> {
   void _onFabClick() {
     showBarModalBottomSheet(
       context: context,
-      expand: false,
       backgroundColor: Colors.transparent,
       builder: (context) => const AddTransactionPage(),
     );
