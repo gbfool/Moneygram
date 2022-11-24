@@ -34,11 +34,11 @@ class _TransactionRowWidgetState extends State<TransactionRowWidget> {
               children: [
                 const Text("Food",
                     style:
-                        TextStyle(fontSize: 24, fontWeight: FontWeight.w600)),
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
                 const Spacer(),
                 const SizedBox(width: 12),
                 const Text("\$200",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600))
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600))
               ],
             ),
             const SizedBox(height: 16),
