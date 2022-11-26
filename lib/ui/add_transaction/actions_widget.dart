@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:moneygram/category/category_hive_helper.dart';
 import 'package:moneygram/category/model/category.dart';
 import 'package:moneygram/ui/category/category_screen.dart';
 import 'package:moneygram/utils/utils.dart';
@@ -79,12 +80,13 @@ class _ActionsWidgetState extends State<ActionsWidget> {
             child: Row(mainAxisSize: MainAxisSize.min, children: widgets)));
   }
 
-  void _openCategoryPage(Category category) {
+  void _openCategoryPage(Category category) async {
+    List<Category> list = await CategoryHiveHelper().getCategories();
     showBarModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
         builder: (context) => SingleChildScrollView(
             controller: ModalScrollController.of(context),
-            child: CategoryScreen(categoryList: Utils.getExpensesCategory())));
+            child: CategoryScreen(categoryList: list)));
   }
 }

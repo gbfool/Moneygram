@@ -8,32 +8,28 @@ class CategoryRepositoryImpl extends CategoryRepository {
   final CategoryLocalDataSource dataSource;
 
   @override
-  Future<void> addCategory({required String emoji, required String name}) {
-    // TODO: implement addCategory
-    throw UnimplementedError();
+  Future<void> addCategory(
+      {required String emoji, required String name}) async {
+    await dataSource.addOrUpdateCategory(Category(name: name, emoji: emoji));
   }
 
   @override
   Future<List<Category>> categories() {
-    // TODO: implement categorys
-    throw UnimplementedError();
+    return dataSource.categories();
   }
 
   @override
   Future<void> deleteCategory(int key) {
-    // TODO: implement deleteCategory
-    throw UnimplementedError();
+    return dataSource.deleteCategory(key);
   }
 
   @override
   Future<Category?> fetchCategoryFromId(int categoryId) {
-    // TODO: implement fetchCategoryFromId
-    throw UnimplementedError();
+    return dataSource.fetchCategoryFromId(categoryId);
   }
 
   @override
   Future<void> updateCategory(Category category) {
-    // TODO: implement updateCategory
-    throw UnimplementedError();
+    return dataSource.addOrUpdateCategory(category);
   }
 }

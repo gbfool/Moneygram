@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:moneygram/category/category_hive_helper.dart';
 import 'package:moneygram/di/service_locator.dart';
 import 'package:moneygram/ui/bottom_navigation_state.dart';
 
@@ -9,6 +10,7 @@ void main() async {
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
   await setupLocator();
+  CategoryHiveHelper().addCategoriesInHive();
   runApp(const MyApp());
 }
 

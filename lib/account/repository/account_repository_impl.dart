@@ -8,32 +8,29 @@ class AccountRepositoryImpl extends AccountRepository {
   final AccountLocalDataSource dataSource;
 
   @override
-  Future<List<Account>> accounts() {
-    // TODO: implement accounts
-    throw UnimplementedError();
+  Future<List<Account>> accounts() async {
+    final accounts = await dataSource.accounts();
+    accounts.sort((a, b) => a.name.compareTo(b.name));
+    return accounts;
   }
 
   @override
-  Future<void> addAccount({required String emoji, required String name}) {
-    // TODO: implement addAccount
-    throw UnimplementedError();
+  Future<void> addAccount({required String emoji, required String name}) async {
+    await dataSource.addOrUpdateAccount(Account(name: name, emoji: emoji));
   }
 
   @override
   Future<void> deleteAccount(int key) {
-    // TODO: implement deleteAccount
-    throw UnimplementedError();
+    return dataSource.deleteAccount(key);
   }
 
   @override
-  Future<Account?> fetchAccountFromId(int accountId) {
-    // TODO: implement fetchAccountFromId
-    throw UnimplementedError();
+  Future<Account?> fetchAccountFromId(int accountId) async {
+    return await dataSource.fetchAccountFromId(accountId);
   }
 
   @override
-  Future<void> updateAccount(Account account) {
-    // TODO: implement updateAccount
-    throw UnimplementedError();
+  Future<void> updateAccount(Account account) async {
+    await dataSource.addOrUpdateAccount(account);
   }
 }
