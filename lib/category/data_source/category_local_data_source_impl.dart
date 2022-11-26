@@ -36,10 +36,8 @@ class CategoryLocalDataSourceImpl implements CategoryLocalDataSource {
 
   @override
   Future<Category?> fetchCategoryFromId(int categoryId) async {
-    // return categoryBox.get(categoryId);
     var values = categoryBox.values;
     return values.firstWhereOrNull((element) {
-      print(element.toJson());
       return element.id == categoryId;
     });
   }

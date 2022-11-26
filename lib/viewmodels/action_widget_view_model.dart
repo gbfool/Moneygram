@@ -2,6 +2,7 @@ import 'package:moneygram/account/model/account.dart';
 import 'package:moneygram/account/repository/account_repository.dart';
 import 'package:moneygram/category/model/category.dart';
 import 'package:moneygram/category/repository/category_repository.dart';
+import 'package:moneygram/viewmodels/add_transaction_view_model.dart';
 import 'package:moneygram/viewmodels/base_view_model.dart';
 
 class ActionWidgetViewModel extends BaseViewModel {
@@ -10,13 +11,16 @@ class ActionWidgetViewModel extends BaseViewModel {
 
   final AccountRepository accountRepository;
   final CategoryRepository categoryRepository;
+  late AddTransactionViewModel _transactionViewModel;
 
   Category? _category;
   Account? _account;
 
-  void setValues({required int? categoryId, required int? accountId}) async {
-    await _setCategory(categoryId: categoryId);
-    await _setAccount(accountId: accountId);
+  void init(
+      {required AddTransactionViewModel transactionViewModel}) async {
+    _transactionViewModel = transactionViewModel;
+    await _setCategory(categoryId: transactionViewModel.selectedCategoryId);
+    await _setAccount(accountId: transactionViewModel.selectedAccountId);
     notifyListeners();
   }
 
@@ -41,11 +45,23 @@ class ActionWidgetViewModel extends BaseViewModel {
     return Category(emoji: "🫠", name: "Default Category");
   }
 
-  Category getAccount() {
-    if (_category != null) {
-      return _category!;
+  Account getAccount() {
+    if (_account != null) {
+      return _account!;
     }
-    return Category(emoji: "🫠", name: "Default Account");
+    return Account(emoji: "🫠", name: "Default Account");
+  }
+
+  void setCategory(Category category) {
+    _category = category;
+    _transactionViewModel.selectedCategoryId = category.id;
+    notifyListeners();
+  }
+
+  void setAccount(Account account) {
+    _account = account;
+    _transactionViewModel.selectedAccountId = account.id;
+    notifyListeners();
   }
 
   // Account getAccount() {

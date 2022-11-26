@@ -1,12 +1,13 @@
-import 'package:intl/intl.dart';
+import 'package:hive/hive.dart';
 import 'package:moneygram/transactions/data_sources/transaction_local_data_source.dart';
 import 'package:moneygram/transactions/models/transaction.dart';
 import 'package:moneygram/transactions/repository/transaction_repository.dart';
 import 'package:moneygram/utils/currency_helper.dart';
+import 'package:moneygram/utils/enum/filter_budget.dart';
 import 'package:moneygram/utils/enum/transaction_type.dart';
 import 'package:moneygram/utils/enum/filter_days.dart';
-import 'package:moneygram/utils/list_utils.dart';
 import 'package:moneygram/utils/time_extension.dart';
+import 'package:moneygram/utils/transaction_extension.dart';
 
 class TransactionRepositoryImpl extends TransactionRepository {
   TransactionRepositoryImpl({
@@ -34,8 +35,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
       bool isRefresh) async {
     final expenses = await fetchAndCache(isRefresh: isRefresh);
     expenses.sort((a, b) => b.time.compareTo(a.time));
-    final Map<String, List<Transaction>> groupedExpense = groupBy(
-        expenses, (Transaction expense) => _readableMonth(expense.time));
+    final Map<String, List<Transaction>> groupedExpense =
+        expenses.groupByTime(FilterBudget.daily);
     return groupedExpense;
   }
 
@@ -68,10 +69,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
     return CurrencyHelper.formattedCurrency(total);
   }
 
-  String _readableMonth(DateTime time) {
-    return DateFormat('MMMM').format(time);
-  }
-
   @override
   Future<String> totalTransactions(TransactionType type) async {
     final List<Transaction> transactions = await fetchAndCache();
@@ -92,5 +89,10 @@ class TransactionRepositoryImpl extends TransactionRepository {
   @override
   Future<void> updateTransaction(Transaction transaction) async {
     await dataSource.addOrUpdateTransaction(transaction);
+  }
+
+  @override
+  Box<Transaction> getBox() {
+    return dataSource.getBox();
   }
 }

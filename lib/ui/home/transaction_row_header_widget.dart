@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class TransactionRowHeaderWidget extends StatefulWidget {
-  const TransactionRowHeaderWidget({Key? key}) : super(key: key);
+class TransactionRowHeaderWidget extends StatelessWidget {
+  final String title;
+  final double total;
+  const TransactionRowHeaderWidget(
+      {Key? key, required this.title, required this.total})
+      : super(key: key);
 
-  @override
-  State<TransactionRowHeaderWidget> createState() =>
-      _TransactionRowHeaderWidgetState();
-}
-
-class _TransactionRowHeaderWidgetState
-    extends State<TransactionRowHeaderWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,7 +22,7 @@ class _TransactionRowHeaderWidgetState
       children: [
         Container(
           child: Text(
-            "12th Nov 2022",
+            title,
             style: GoogleFonts.lato(
                 fontSize: 22,
                 fontWeight: FontWeight.w600,
@@ -35,7 +32,7 @@ class _TransactionRowHeaderWidgetState
         const Spacer(),
         const SizedBox(width: 12),
         Text(
-          "\$600",
+          total.toString(),
           style: GoogleFonts.lato(
               fontSize: 22,
               fontWeight: FontWeight.w600,

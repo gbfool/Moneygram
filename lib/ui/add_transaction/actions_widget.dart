@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:moneygram/account/model/account.dart';
 import 'package:moneygram/category/category_hive_helper.dart';
 import 'package:moneygram/category/model/category.dart';
 import 'package:moneygram/ui/base_screen.dart';
+import 'package:moneygram/ui/category/account_screen.dart';
 import 'package:moneygram/ui/category/category_screen.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:moneygram/viewmodels/action_widget_view_model.dart';
@@ -19,22 +21,14 @@ class ActionsWidget extends StatefulWidget {
 }
 
 class _ActionsWidgetState extends State<ActionsWidget> {
-  late AddTransactionViewModel _addTransactionViewModel;
   late ActionWidgetViewModel _actionWidgetViewModel;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return BaseScreen<ActionWidgetViewModel>(onModelReady: (model) {
-      _addTransactionViewModel =
+      var transactionViewModel =
           Provider.of<AddTransactionViewModel>(context, listen: false);
-      model.setValues(
-          categoryId: _addTransactionViewModel.selectedCategoryId,
-          accountId: _addTransactionViewModel.selectedAccountId);
+      model.init(transactionViewModel: transactionViewModel);
       _actionWidgetViewModel = model;
     }, builder: (context, model, child) {
       return _content();
@@ -77,15 +71,51 @@ class _ActionsWidgetState extends State<ActionsWidget> {
 
   Widget _accountCategory() {
     return Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-      _emojiWidget(category: _actionWidgetViewModel.getAccount()),
+      _accountWidget(account: _actionWidgetViewModel.getAccount()),
       SizedBox(width: 12),
       Icon(Icons.arrow_forward),
       SizedBox(width: 12),
-      _emojiWidget(category: _actionWidgetViewModel.getCategory()),
+      _categoryWidget(category: _actionWidgetViewModel.getCategory()),
     ]);
   }
 
-  Widget _emojiWidget({required Category category}) {
+  Widget _accountWidget({required Account account}) {
+    List<Widget> widgets = [
+      Text(account.emoji, style: GoogleFonts.notoEmoji(fontSize: 24)),
+      SizedBox(width: 4),
+      Flexible(
+        child: Text(
+          account.name,
+          style: TextStyle(fontSize: 16),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      )
+    ];
+    return InkWell(
+        onTap: () {
+          _openAccountPage(account);
+        },
+        child: Container(
+            padding: EdgeInsets.only(top: 12, bottom: 12),
+            child: Row(mainAxisSize: MainAxisSize.min, children: widgets)));
+  }
+
+  void _openAccountPage(Account account) async {
+    List<Account> list = await CategoryHiveHelper().getAccounts();
+    showBarModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.transparent,
+        builder: (context) => SingleChildScrollView(
+            controller: ModalScrollController.of(context),
+            child: AccountScreen(
+                accountList: list,
+                onAccountSelected: (account) {
+                  _actionWidgetViewModel.setAccount(account);
+                })));
+  }
+
+  Widget _categoryWidget({required Category category}) {
     List<Widget> widgets = [
       Text(category.emoji, style: GoogleFonts.notoEmoji(fontSize: 24)),
       SizedBox(width: 4),
@@ -114,6 +144,10 @@ class _ActionsWidgetState extends State<ActionsWidget> {
         backgroundColor: Colors.transparent,
         builder: (context) => SingleChildScrollView(
             controller: ModalScrollController.of(context),
-            child: CategoryScreen(categoryList: list)));
+            child: CategoryScreen(
+                categoryList: list,
+                onCategorySelected: (category) {
+                  _actionWidgetViewModel.setCategory(category);
+                })));
   }
 }
