@@ -23,8 +23,6 @@ class KeyboardWidget extends StatelessWidget {
           (x) => Row(
             children: x.map(
               (y) {
-                print(x);
-                print(y);
                 return Expanded(
                   child: KeyboardKey(
                     label: y,

@@ -1,0 +1,36 @@
+import 'package:moneygram/account/data_source/account_local_data_source.dart';
+import 'package:moneygram/account/model/account.dart';
+import 'package:moneygram/account/repository/account_repository.dart';
+
+class AccountRepositoryImpl extends AccountRepository {
+  AccountRepositoryImpl({required this.dataSource});
+
+  final AccountLocalDataSource dataSource;
+
+  @override
+  Future<List<Account>> accounts() async {
+    final accounts = await dataSource.accounts();
+    accounts.sort((a, b) => a.name.compareTo(b.name));
+    return accounts;
+  }
+
+  @override
+  Future<void> addAccount({required String emoji, required String name}) async {
+    await dataSource.addOrUpdateAccount(Account(name: name, emoji: emoji));
+  }
+
+  @override
+  Future<void> deleteAccount(int key) {
+    return dataSource.deleteAccount(key);
+  }
+
+  @override
+  Future<Account?> fetchAccountFromId(int accountId) async {
+    return await dataSource.fetchAccountFromId(accountId);
+  }
+
+  @override
+  Future<void> updateAccount(Account account) async {
+    await dataSource.addOrUpdateAccount(account);
+  }
+}

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:moneygram/ui/add_transaction/add_transaction_page.dart';
+import 'package:moneygram/ui/base_screen.dart';
 import 'package:moneygram/ui/home/transaction_row_header_widget.dart';
 import 'package:moneygram/ui/home/transaction_row_widget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:moneygram/utils/utils.dart';
+import 'package:moneygram/viewmodels/home_screen_viewmodel.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key, required this.title}) : super(key: key);
@@ -17,6 +20,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    return BaseScreen<HomeScreenViewModel>(builder: (context, model, child) {
+      return _content();
+    });
+  }
+
+  Widget _content() {
     return AnnotatedRegion<SystemUiOverlayStyle>(
         // Use [SystemUiOverlayStyle.light] for white status bar
         // or [SystemUiOverlayStyle.dark] for black status bar
@@ -83,7 +92,9 @@ class _HomePageState extends State<HomePage> {
     showBarModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
-      builder: (context) => const AddTransactionPage(),
+      builder: (context) => AddTransactionPage(
+        transaction: Utils.getDummyTransaction(),
+      ),
     );
   }
 }
