@@ -3,15 +3,15 @@ import 'package:moneygram/utils/enum/filter_days.dart';
 import 'package:moneygram/utils/enum/transaction_type.dart';
 
 abstract class TransactionRepository {
-  Future<Map<String, List<TransactionType>>> getAllTransactions(bool isRefresh);
+  Future<Map<String, List<Transaction>>> getAllTransactions(bool isRefresh);
   Future<String> totalTransactions(TransactionType type);
   Future<String> filterTransactionTotal(FilterDays filterDays);
   Future<void> addTransaction(
-    String name,
+    String? notes,
     double amount,
     DateTime time,
-    int category,
-    int account,
+    int categoryId,
+    int accountId,
     TransactionType transactionType,
   );
   Future<void> clearTransactions();

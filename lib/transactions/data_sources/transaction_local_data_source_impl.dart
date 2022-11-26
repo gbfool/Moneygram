@@ -9,44 +9,41 @@ class TransactionManagerLocalDataSourceImpl
   late final transactionBox =
       Hive.box<Transaction>(BoxType.transactions.stringValue);
   @override
-  Future<void> addOrUpdateTransaction(Transaction transaction) {
-    // TODO: implement addOrUpdateTransaction
-    throw UnimplementedError();
+  Future<void> addOrUpdateTransaction(Transaction transaction) async {
+    final id = await transactionBox.add(transaction);
+    transaction.id = id;
+    transaction.save();
   }
 
   @override
-  Future<void> clearTransaction(int key) {
-    // TODO: implement clearTransaction
-    throw UnimplementedError();
+  Future<List<Transaction>> transactions() async {
+    return transactionBox.values.toList();
   }
 
   @override
-  Future<void> clearTransactions() {
-    // TODO: implement clearTransactions
-    throw UnimplementedError();
+  Future<void> clearTransaction(int key) async {
+    await transactionBox.delete(key);
   }
 
   @override
-  Future<Iterable<Transaction>> exportData() {
-    // TODO: implement exportData
-    throw UnimplementedError();
+  Future<void> clearTransactions() async {
+    await transactionBox.clear();
   }
 
   @override
-  Future<Transaction?> fetchTransactionFromId(int transactionId) {
-    // TODO: implement fetchTransactionFromId
-    throw UnimplementedError();
+  Future<Transaction?> fetchTransactionFromId(int transactionId) async {
+    return transactionBox.get(transactionId);
   }
 
   @override
-  Future<List<Transaction>> filteredTransactions(DateTimeRange dateTimeRange) {
-    // TODO: implement filteredTransactions
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<List<Transaction>> transactions() {
-    // TODO: implement transactions
-    throw UnimplementedError();
+  Future<List<Transaction>> filteredTransactions(
+      DateTimeRange dateTimeRange) async {
+    final List<Transaction> transactions = transactionBox.values.toList();
+    transactions.sort((a, b) => b.time.compareTo(a.time));
+    final filteredTransactions = transactions.takeWhile((value) {
+      return value.time.isAfter(dateTimeRange.start) &&
+          value.time.isBefore(dateTimeRange.end);
+    }).toList();
+    return filteredTransactions;
   }
 }

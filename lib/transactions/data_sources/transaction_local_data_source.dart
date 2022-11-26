@@ -8,5 +8,4 @@ abstract class TransactionManagerLocalDataSource {
   Future<void> clearTransactions();
   Future<void> clearTransaction(int key);
   Future<Transaction?> fetchTransactionFromId(int transactionId);
-  Future<Iterable<Transaction>> exportData();
 }
