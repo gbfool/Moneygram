@@ -30,6 +30,16 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
+  Future<Map<String, List<Transaction>>> getAllTransactions(
+      bool isRefresh) async {
+    final expenses = await fetchAndCache(isRefresh: isRefresh);
+    expenses.sort((a, b) => b.time.compareTo(a.time));
+    final Map<String, List<Transaction>> groupedExpense = groupBy(
+        expenses, (Transaction expense) => _readableMonth(expense.time));
+    return groupedExpense;
+  }
+
+  @override
   Future<void> clearTransaction(int transactionId) async {
     dataSource.clearTransaction(transactionId);
   }
@@ -56,16 +66,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
         .map((e) => e.amount)
         .fold<double>(0, (previousValue, element) => previousValue + element);
     return CurrencyHelper.formattedCurrency(total);
-  }
-
-  @override
-  Future<Map<String, List<Transaction>>> getAllTransactions(
-      bool isRefresh) async {
-    final expenses = await fetchAndCache(isRefresh: isRefresh);
-    expenses.sort((a, b) => b.time.compareTo(a.time));
-    final Map<String, List<Transaction>> groupedExpense = groupBy(
-        expenses, (Transaction expense) => _readableMonth(expense.time));
-    return groupedExpense;
   }
 
   String _readableMonth(DateTime time) {

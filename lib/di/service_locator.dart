@@ -17,6 +17,7 @@ import 'package:moneygram/transactions/repository/transaction_repository.dart';
 import 'package:moneygram/transactions/repository/transaction_repository_impl.dart';
 import 'package:moneygram/utils/enum/box_types.dart';
 import 'package:moneygram/utils/enum/transaction_type.dart';
+import 'package:moneygram/viewmodels/home_screen_viewmodel.dart';
 
 final locator = GetIt.instance;
 
@@ -24,6 +25,7 @@ Future<void> setupLocator() async {
   await _setupHive();
   _localSources();
   _setupRepository();
+  _setupViewModels();
 }
 
 Future<void> _setupHive() async {
@@ -71,4 +73,12 @@ void _setupRepository() {
       dataSource: locator.get(),
     ),
   );
+}
+
+void _setupViewModels() {
+  locator.registerFactory(() => HomeScreenViewModel(
+        accountRepository: locator.get(),
+        categoryRepository: locator.get(),
+        transactionRepository: locator.get(),
+      ));
 }
