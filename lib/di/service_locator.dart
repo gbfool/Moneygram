@@ -17,6 +17,8 @@ import 'package:moneygram/transactions/repository/transaction_repository.dart';
 import 'package:moneygram/transactions/repository/transaction_repository_impl.dart';
 import 'package:moneygram/utils/enum/box_types.dart';
 import 'package:moneygram/utils/enum/transaction_type.dart';
+import 'package:moneygram/viewmodels/action_widget_view_model.dart';
+import 'package:moneygram/viewmodels/add_transaction_view_model.dart';
 import 'package:moneygram/viewmodels/home_screen_viewmodel.dart';
 
 final locator = GetIt.instance;
@@ -80,5 +82,16 @@ void _setupViewModels() {
         accountRepository: locator.get(),
         categoryRepository: locator.get(),
         transactionRepository: locator.get(),
+      ));
+
+  locator.registerFactory(() => AddTransactionViewModel(
+        accountRepository: locator.get(),
+        categoryRepository: locator.get(),
+        transactionRepository: locator.get(),
+      ));
+
+  locator.registerFactory(() => ActionWidgetViewModel(
+        accountRepository: locator.get(),
+        categoryRepository: locator.get(),
       ));
 }

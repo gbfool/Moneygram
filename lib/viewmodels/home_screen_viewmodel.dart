@@ -14,6 +14,5 @@ class HomeScreenViewModel extends BaseViewModel {
 
   void getAllTransactions() async {
     var transactions = await transactionRepository.getAllTransactions(true);
-    print(transactions);
   }
 }

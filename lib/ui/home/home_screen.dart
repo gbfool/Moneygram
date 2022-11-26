@@ -5,6 +5,7 @@ import 'package:moneygram/ui/base_screen.dart';
 import 'package:moneygram/ui/home/transaction_row_header_widget.dart';
 import 'package:moneygram/ui/home/transaction_row_widget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:moneygram/utils/utils.dart';
 import 'package:moneygram/viewmodels/home_screen_viewmodel.dart';
 
 class HomePage extends StatefulWidget {
@@ -91,7 +92,9 @@ class _HomePageState extends State<HomePage> {
     showBarModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
-      builder: (context) => const AddTransactionPage(),
+      builder: (context) => AddTransactionPage(
+        transaction: Utils.getDummyTransaction(),
+      ),
     );
   }
 }

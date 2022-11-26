@@ -25,10 +25,10 @@ class Utils {
     return list;
   }
 
-  Transaction getDummyTransaction() {
+  static Transaction getDummyTransaction() {
     Transaction transaction = Transaction(
         accountId: 1,
-        categoryId: 2,
+        categoryId: 0,
         amount: 200,
         time: DateTime.now(),
         type: TransactionType.expense);

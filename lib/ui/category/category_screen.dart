@@ -42,7 +42,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         onTap: () {
-          print(category);
+          // print(category);
         },
         child: Container(
             clipBehavior: Clip.antiAlias,

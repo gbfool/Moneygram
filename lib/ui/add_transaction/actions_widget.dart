@@ -2,19 +2,46 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:moneygram/category/category_hive_helper.dart';
 import 'package:moneygram/category/model/category.dart';
+import 'package:moneygram/ui/base_screen.dart';
 import 'package:moneygram/ui/category/category_screen.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:moneygram/viewmodels/action_widget_view_model.dart';
+import 'package:moneygram/viewmodels/add_transaction_view_model.dart';
+import 'package:provider/provider.dart';
 
 class ActionsWidget extends StatefulWidget {
-  const ActionsWidget({Key? key}) : super(key: key);
+  final TextEditingController notesTextController;
+  const ActionsWidget({Key? key, required this.notesTextController})
+      : super(key: key);
 
   @override
   State<ActionsWidget> createState() => _ActionsWidgetState();
 }
 
 class _ActionsWidgetState extends State<ActionsWidget> {
+  late AddTransactionViewModel _addTransactionViewModel;
+  late ActionWidgetViewModel _actionWidgetViewModel;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    return BaseScreen<ActionWidgetViewModel>(onModelReady: (model) {
+      _addTransactionViewModel =
+          Provider.of<AddTransactionViewModel>(context, listen: false);
+      model.setValues(
+          categoryId: _addTransactionViewModel.selectedCategoryId,
+          accountId: _addTransactionViewModel.selectedAccountId);
+      _actionWidgetViewModel = model;
+    }, builder: (context, model, child) {
+      return _content();
+    });
+  }
+
+  Container _content() {
     return Container(
       padding: const EdgeInsets.only(top: 12, left: 12, right: 12),
       child: Column(
@@ -41,6 +68,7 @@ class _ActionsWidgetState extends State<ActionsWidget> {
 
   Widget _inputField() {
     return TextField(
+      controller: widget.notesTextController,
       cursorColor: Colors.black,
       decoration:
           InputDecoration(border: InputBorder.none, hintText: "Add notes"),
@@ -49,11 +77,11 @@ class _ActionsWidgetState extends State<ActionsWidget> {
 
   Widget _accountCategory() {
     return Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-      _emojiWidget(category: Category(emoji: "💳", name: "Credit Card")),
+      _emojiWidget(category: _actionWidgetViewModel.getAccount()),
       SizedBox(width: 12),
       Icon(Icons.arrow_forward),
       SizedBox(width: 12),
-      _emojiWidget(category: Category(emoji: "🍿", name: "Entertainment")),
+      _emojiWidget(category: _actionWidgetViewModel.getCategory()),
     ]);
   }
 
