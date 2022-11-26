@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moneygram/models/category.dart';
+import 'package:moneygram/category/model/category.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -53,7 +53,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               Text(category.emoji, style: GoogleFonts.notoEmoji(fontSize: 24)),
               Flexible(
                 child: Text(
-                  category.text,
+                  category.name,
                   style: TextStyle(fontSize: 16),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:moneygram/models/category.dart';
+import 'package:moneygram/category/model/category.dart';
 import 'package:moneygram/ui/category/category_screen.dart';
 import 'package:moneygram/utils/utils.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -49,11 +49,11 @@ class _ActionsWidgetState extends State<ActionsWidget> {
 
   Widget _accountCategory() {
     return Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-      _emojiWidget(category: Category(emoji: "💳", text: "Credit Card")),
+      _emojiWidget(category: Category(emoji: "💳", name: "Credit Card")),
       SizedBox(width: 12),
       Icon(Icons.arrow_forward),
       SizedBox(width: 12),
-      _emojiWidget(category: Category(emoji: "🍿", text: "Entertainment")),
+      _emojiWidget(category: Category(emoji: "🍿", name: "Entertainment")),
     ]);
   }
 
@@ -63,7 +63,7 @@ class _ActionsWidgetState extends State<ActionsWidget> {
       SizedBox(width: 4),
       Flexible(
         child: Text(
-          category.text,
+          category.name,
           style: TextStyle(fontSize: 16),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
