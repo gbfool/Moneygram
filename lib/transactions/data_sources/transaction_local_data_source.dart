@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:moneygram/transactions/models/transaction.dart';
 
 abstract class TransactionManagerLocalDataSource {
@@ -7,5 +8,6 @@ abstract class TransactionManagerLocalDataSource {
   Future<List<Transaction>> filteredTransactions(DateTimeRange dateTimeRange);
   Future<void> clearTransactions();
   Future<void> clearTransaction(int key);
+  Box<Transaction> getBox();
   Future<Transaction?> fetchTransactionFromId(int transactionId);
 }

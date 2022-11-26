@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:moneygram/ui/add_transaction/add_transaction_page.dart';
 import 'package:moneygram/ui/base_screen.dart';
-import 'package:moneygram/ui/home/transaction_row_header_widget.dart';
-import 'package:moneygram/ui/home/transaction_row_widget.dart';
+import 'package:moneygram/ui/home/transaction_card_widget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:moneygram/utils/utils.dart';
 import 'package:moneygram/viewmodels/home_screen_viewmodel.dart';
+import 'package:moneygram/utils/transaction_extension.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key, required this.title}) : super(key: key);
@@ -18,9 +18,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late HomeScreenViewModel _homeScreenViewModel;
   @override
   Widget build(BuildContext context) {
-    return BaseScreen<HomeScreenViewModel>(builder: (context, model, child) {
+    return BaseScreen<HomeScreenViewModel>(onModelReady: (model) {
+      this._homeScreenViewModel = model;
+      this._homeScreenViewModel.init();
+    }, builder: (context, model, child) {
       return _content();
     });
   }
@@ -61,16 +65,23 @@ class _HomePageState extends State<HomePage> {
   Widget _listWidget() {
     return Expanded(
         child: ListView.builder(
-      itemCount: 21,
+      itemCount: _homeScreenViewModel.transactionList.length + 1,
       itemBuilder: (context, index) {
+        var maps = _homeScreenViewModel.transactionList;
         if (index == 0) {
           return Container(
               height: 200, child: Center(child: Text("No chart available")));
         }
-        if (index % 4 == 0) {
-          return TransactionRowHeaderWidget();
-        }
-        return const TransactionRowWidget();
+        final transactions = maps.values.toList()[index - 1];
+        transactions.sort((a, b) => b.time.compareTo(a.time));
+        return TransactionCardWidget(
+            title: maps.keys.toList()[index - 1],
+            total: transactions.filterTotal,
+            transactions: transactions);
+        // if (index % 4 == 0) {
+        //   return TransactionRowHeaderWidget();
+        // }
+        // return TransactionRowWidget(transaction: Utils.getDummyTransaction(), accountLocalDataSource: locator.get(), categoryLocalDataSource: locator.get());
       },
     ));
   }
@@ -96,5 +107,12 @@ class _HomePageState extends State<HomePage> {
         transaction: Utils.getDummyTransaction(),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _homeScreenViewModel.removeBoxListener();
+    print("Removing this");
+    super.dispose();
   }
 }

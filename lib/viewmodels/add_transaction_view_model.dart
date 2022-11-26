@@ -48,7 +48,8 @@ class AddTransactionViewModel extends BaseViewModel {
   }
 
   void addTransaction() {
+    double totalAmount = double.parse(amount ?? "0");
     transactionRepository.addTransaction(
-        transactionNotes, 12, DateTime.now(), 1, 2, transactionType);
+        transactionNotes, totalAmount, DateTime.now(), selectedCategoryId!, selectedAccountId!, transactionType);
   }
 }

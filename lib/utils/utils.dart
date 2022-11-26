@@ -1,3 +1,4 @@
+import 'package:moneygram/account/model/account.dart';
 import 'package:moneygram/category/model/category.dart';
 import 'package:moneygram/transactions/models/transaction.dart';
 import 'package:moneygram/utils/enum/transaction_type.dart';
@@ -25,10 +26,19 @@ class Utils {
     return list;
   }
 
+  static List<Account> getAccounts() {
+    List<Account> list = [];
+    list.add(Account(emoji: "💳", name: "Credit Card"));
+    list.add(Account(emoji: "💵", name: "Cash"));
+    list.add(Account(emoji: "💰", name: "Paytm"));
+    return list;
+  }
+
   static Transaction getDummyTransaction() {
     Transaction transaction = Transaction(
         accountId: 1,
         categoryId: 0,
+        notes: "Hello Himanshu",
         amount: 200,
         time: DateTime.now(),
         type: TransactionType.expense);

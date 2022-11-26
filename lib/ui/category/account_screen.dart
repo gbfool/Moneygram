@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:moneygram/category/model/category.dart';
+import 'package:moneygram/account/model/account.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class CategoryScreen extends StatefulWidget {
-  final List<Category> categoryList;
-  final Function(Category) onCategorySelected;
-  const CategoryScreen(
-      {Key? key, required this.categoryList, required this.onCategorySelected})
+class AccountScreen extends StatefulWidget {
+  final List<Account> accountList;
+  final Function(Account) onAccountSelected;
+  const AccountScreen(
+      {Key? key, required this.accountList, required this.onAccountSelected})
       : super(key: key);
 
   @override
-  State<CategoryScreen> createState() => _CategoryScreenState();
+  State<AccountScreen> createState() => _AccountScreenState();
 }
 
-class _CategoryScreenState extends State<CategoryScreen> {
+class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,7 +25,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   List<Widget> _rows() {
     List<Widget> rows = [];
     List<Widget> currentTiles = [];
-    widget.categoryList.forEach((element) {
+    widget.accountList.forEach((element) {
       var tile = _getTile(element);
       currentTiles.add(tile);
       if (currentTiles.length % 3 == 0) {
@@ -39,14 +39,13 @@ class _CategoryScreenState extends State<CategoryScreen> {
     return rows;
   }
 
-  Widget _getTile(Category category) {
+  Widget _getTile(Account account) {
     return Expanded(
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         onTap: () {
-          widget.onCategorySelected(category);
+          widget.onAccountSelected(account);
           Navigator.of(context).pop();
-          // print(category);
         },
         child: Container(
             clipBehavior: Clip.antiAlias,
@@ -54,10 +53,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
             padding: EdgeInsets.only(top: 14, bottom: 14),
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
             child: Column(mainAxisSize: MainAxisSize.min, children: [
-              Text(category.emoji, style: GoogleFonts.notoEmoji(fontSize: 24)),
+              Text(account.emoji, style: GoogleFonts.notoEmoji(fontSize: 24)),
               Flexible(
                 child: Text(
-                  category.name,
+                  account.name,
                   style: TextStyle(fontSize: 16),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,

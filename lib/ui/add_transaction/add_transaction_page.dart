@@ -66,6 +66,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
   void _onSaveButtonTap() {
     if (_model.validate()) {
       _model.addTransaction();
+      Navigator.of(context).pop();
     }
   }
 

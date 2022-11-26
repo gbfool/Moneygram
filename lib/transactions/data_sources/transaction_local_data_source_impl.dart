@@ -11,6 +11,9 @@ class TransactionManagerLocalDataSourceImpl
   @override
   Future<void> addOrUpdateTransaction(Transaction transaction) async {
     final id = await transactionBox.add(transaction);
+    print("\n===================\nSaving...\n");
+    print(transaction.toJson());
+    print("\n===================\n");
     transaction.id = id;
     transaction.save();
   }
@@ -45,5 +48,10 @@ class TransactionManagerLocalDataSourceImpl
           value.time.isBefore(dateTimeRange.end);
     }).toList();
     return filteredTransactions;
+  }
+
+  @override
+  Box<Transaction> getBox() {
+    return transactionBox;
   }
 }

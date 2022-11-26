@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:moneygram/account/data_source/account_local_data_source.dart';
+import 'package:moneygram/category/data_source/category_local_data_source.dart';
+import 'package:moneygram/transactions/models/transaction.dart';
 
 class TransactionRowWidget extends StatefulWidget {
-  const TransactionRowWidget({Key? key}) : super(key: key);
+  final Transaction transaction;
+  final AccountLocalDataSource accountLocalDataSource;
+  final CategoryLocalDataSource categoryLocalDataSource;
+  const TransactionRowWidget(
+      {Key? key,
+      required this.transaction,
+      required this.accountLocalDataSource,
+      required this.categoryLocalDataSource})
+      : super(key: key);
 
   @override
   State<TransactionRowWidget> createState() => _TransactionRowWidgetState();
@@ -21,7 +32,9 @@ class _TransactionRowWidgetState extends State<TransactionRowWidget> {
     return Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Container(
         child: Text(
-          "😜",
+          widget.categoryLocalDataSource
+              .fetchCategory(widget.transaction.categoryId)
+              .emoji,
           style: GoogleFonts.notoEmoji(fontSize: 24),
         ),
       ),
@@ -32,12 +45,15 @@ class _TransactionRowWidgetState extends State<TransactionRowWidget> {
           children: [
             Row(
               children: [
-                const Text("Food",
+                Text(
+                    widget.categoryLocalDataSource
+                        .fetchCategory(widget.transaction.categoryId)
+                        .name,
                     style:
                         TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
                 const Spacer(),
                 const SizedBox(width: 12),
-                const Text("\$200",
+                Text(widget.transaction.amount.toString(),
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600))
               ],
             ),
