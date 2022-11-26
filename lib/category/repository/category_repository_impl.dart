@@ -14,7 +14,7 @@ class CategoryRepositoryImpl extends CategoryRepository {
   }
 
   @override
-  Future<List<Category>> categorys() {
+  Future<List<Category>> categories() {
     // TODO: implement categorys
     throw UnimplementedError();
   }

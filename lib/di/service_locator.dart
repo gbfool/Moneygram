@@ -30,7 +30,9 @@ Future<void> _setupHive() async {
   await Hive.initFlutter();
   Hive
     ..registerAdapter(TransactionAdapter())
-    ..registerAdapter(TransactionTypeAdapter());
+    ..registerAdapter(TransactionTypeAdapter())
+    ..registerAdapter(AccountAdapter())
+    ..registerAdapter(CategoryAdapter());
 
   final transactionBox =
       await Hive.openBox<Transaction>(BoxType.transactions.stringValue);
