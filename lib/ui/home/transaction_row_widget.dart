@@ -45,12 +45,22 @@ class _TransactionRowWidgetState extends State<TransactionRowWidget> {
           children: [
             Row(
               children: [
-                Text(
-                    widget.categoryLocalDataSource
-                        .fetchCategory(widget.transaction.categoryId)
-                        .name,
-                    style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                        widget.categoryLocalDataSource
+                            .fetchCategory(widget.transaction.categoryId)
+                            .name,
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w600)),
+                    SizedBox(height: 8),
+                    Text(widget.transaction.notes ?? "",
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.black.withOpacity(0.6))),
+                  ],
+                ),
                 const Spacer(),
                 const SizedBox(width: 12),
                 Text(widget.transaction.amount.toString(),

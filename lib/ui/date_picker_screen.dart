@@ -56,7 +56,7 @@ class DatePickerScreenState extends State<DatePickerScreen> {
                     onSelectionChanged: _onSelectionChanged,
                     todayHighlightColor: Colors.black,
                     selectionColor: Colors.black,
-                    initialSelectedDate: DateTime.now(),
+                    initialSelectedDate: _selectedDate,
                     selectionTextStyle:
                         TextStyle(color: Colors.white, fontSize: 18),
                     showNavigationArrow: true,

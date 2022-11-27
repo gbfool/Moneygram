@@ -23,6 +23,9 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
   @override
   void initState() {
     notesTextController = TextEditingController();
+    notesTextController.addListener(() {
+      _model.transactionNotes = notesTextController.text;
+    });
     super.initState();
   }
 
