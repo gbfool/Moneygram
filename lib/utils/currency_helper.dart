@@ -8,7 +8,7 @@ class CurrencyHelper {
   }
 
   static String formattedCurrency(double currency, {int? decimalDigits = 2}) {
-    var currentLocale = "INR";
+    var currentLocale = "en_IN";
     return NumberFormat.simpleCurrency(
       locale: currentLocale.toString(),
       decimalDigits: decimalDigits,

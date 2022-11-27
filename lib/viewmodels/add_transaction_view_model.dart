@@ -3,6 +3,7 @@ import 'package:moneygram/category/repository/category_repository.dart';
 import 'package:moneygram/transactions/models/transaction.dart';
 import 'package:moneygram/transactions/repository/transaction_repository.dart';
 import 'package:moneygram/utils/enum/transaction_type.dart';
+import 'package:moneygram/utils/utils.dart';
 import 'package:moneygram/viewmodels/base_view_model.dart';
 
 class AddTransactionViewModel extends BaseViewModel {
@@ -28,7 +29,7 @@ class AddTransactionViewModel extends BaseViewModel {
       return;
     }
     currentTransaction = transaction;
-    amount = transaction.amount.toString();
+    amount = Utils.getRemovedZeroFromDecimal(transaction.amount);
     transactionNotes = transaction.notes;
     selectedCategoryId = transaction.categoryId;
     selectedAccountId = transaction.accountId;

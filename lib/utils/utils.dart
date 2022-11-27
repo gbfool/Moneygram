@@ -44,4 +44,9 @@ class Utils {
         type: TransactionType.expense);
     return transaction;
   }
+
+  static String getRemovedZeroFromDecimal(double price) {
+    RegExp regex = RegExp(r"([.]*0)(?!.*\d)");
+    return price.toString().replaceAll(regex, "");
+  }
 }

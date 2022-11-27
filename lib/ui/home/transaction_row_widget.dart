@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:moneygram/account/data_source/account_local_data_source.dart';
 import 'package:moneygram/category/data_source/category_local_data_source.dart';
 import 'package:moneygram/transactions/models/transaction.dart';
+import 'package:moneygram/utils/currency_helper.dart';
 
 class TransactionRowWidget extends StatefulWidget {
   final Transaction transaction;
@@ -63,7 +64,8 @@ class _TransactionRowWidgetState extends State<TransactionRowWidget> {
                 ),
                 const Spacer(),
                 const SizedBox(width: 12),
-                Text(widget.transaction.amount.toString(),
+                Text(
+                    CurrencyHelper.formattedCurrency(widget.transaction.amount),
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600))
               ],
             ),

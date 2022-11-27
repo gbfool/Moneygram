@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moneygram/utils/currency_helper.dart';
 
 class AmountWidget extends StatelessWidget {
   final String? amount;
@@ -15,8 +16,8 @@ class AmountWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "\$",
-          style: TextStyle(color: textColor, fontSize: 40),
+          CurrencyHelper.getCurrency(),
+          style: TextStyle(color: textColor, fontSize: 48),
         ),
         const SizedBox(width: 2),
         renderAmount(),
