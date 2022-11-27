@@ -33,7 +33,7 @@ class HomeScreenViewModel extends BaseViewModel {
   }
 
   void removeBoxListener() {
-    var listner = Hive.box(BoxType.transactions.stringValue).listenable();
+    var listner = transactionRepository.getBox().listenable();
     listner.removeListener(transactionListener);
   }
 
