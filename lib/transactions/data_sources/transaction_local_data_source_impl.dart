@@ -9,12 +9,14 @@ class TransactionManagerLocalDataSourceImpl
   late final transactionBox =
       Hive.box<Transaction>(BoxType.transactions.stringValue);
   @override
-  Future<void> addOrUpdateTransaction(Transaction transaction) async {
+  Future<void> addTransaction(Transaction transaction) async {
     final id = await transactionBox.add(transaction);
-    print("\n===================\nSaving...\n");
-    print(transaction.toJson());
-    print("\n===================\n");
     transaction.id = id;
+    transaction.save();
+  }
+
+  @override
+  Future<void> updateTransaction(Transaction transaction) async {
     transaction.save();
   }
 

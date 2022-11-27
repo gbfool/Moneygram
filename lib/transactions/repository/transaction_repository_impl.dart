@@ -27,7 +27,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
         categoryId: categoryId,
         accountId: accountId,
         type: transactionType);
-    await dataSource.addOrUpdateTransaction(transaction);
+    await dataSource.addTransaction(transaction);
   }
 
   @override
@@ -88,7 +88,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
 
   @override
   Future<void> updateTransaction(Transaction transaction) async {
-    await dataSource.addOrUpdateTransaction(transaction);
+    await dataSource.updateTransaction(transaction);
   }
 
   @override

@@ -21,11 +21,13 @@ class AddTransactionViewModel extends BaseViewModel {
   int? selectedAccountId;
   DateTime? selectedDate;
   TransactionType transactionType = TransactionType.expense;
+  Transaction? currentTransaction;
 
   void setValuesForTransaction(Transaction? transaction) {
     if (transaction == null) {
       return;
     }
+    currentTransaction = transaction;
     amount = transaction.amount.toString();
     transactionNotes = transaction.notes;
     selectedCategoryId = transaction.categoryId;
@@ -48,8 +50,20 @@ class AddTransactionViewModel extends BaseViewModel {
   }
 
   void addTransaction() {
-    double totalAmount = double.parse(amount ?? "0");
-    transactionRepository.addTransaction(
-        transactionNotes, totalAmount, DateTime.now(), selectedCategoryId!, selectedAccountId!, transactionType);
+    double validAmount = double.parse(amount ?? "0");
+    var date = selectedDate ?? DateTime.now();
+    if (currentTransaction != null) {
+      currentTransaction!
+        ..accountId = selectedAccountId!
+        ..categoryId = selectedCategoryId!
+        ..amount = validAmount
+        ..notes = transactionNotes
+        ..time = date
+        ..type = transactionType;
+      transactionRepository.updateTransaction(currentTransaction!);
+    } else {
+      transactionRepository.addTransaction(transactionNotes, validAmount, date,
+          selectedCategoryId!, selectedAccountId!, transactionType);
+    }
   }
 }

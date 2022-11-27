@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:moneygram/transactions/models/transaction.dart';
 import 'package:moneygram/ui/add_transaction/add_transaction_page.dart';
 import 'package:moneygram/ui/base_screen.dart';
 import 'package:moneygram/ui/home/transaction_card_widget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:moneygram/utils/utils.dart';
 import 'package:moneygram/viewmodels/home_screen_viewmodel.dart';
 import 'package:moneygram/utils/transaction_extension.dart';
 
@@ -77,7 +77,10 @@ class _HomePageState extends State<HomePage> {
         return TransactionCardWidget(
             title: maps.keys.toList()[index - 1],
             total: transactions.filterTotal,
-            transactions: transactions);
+            transactions: transactions,
+            onTap: (transaction) {
+              _openTransactionPage(transaction: transaction);
+            });
         // if (index % 4 == 0) {
         //   return TransactionRowHeaderWidget();
         // }
@@ -88,7 +91,7 @@ class _HomePageState extends State<HomePage> {
 
   FloatingActionButton _fab() {
     return FloatingActionButton(
-      onPressed: _onFabClick,
+      onPressed: () => _openTransactionPage(),
       tooltip: 'Add Transaction',
       backgroundColor: Colors.white,
       child: const Icon(
@@ -99,12 +102,12 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _onFabClick() {
+  void _openTransactionPage({Transaction? transaction}) {
     showBarModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       builder: (context) => AddTransactionPage(
-        transaction: Utils.getDummyTransaction(),
+        transaction: transaction,
       ),
     );
   }

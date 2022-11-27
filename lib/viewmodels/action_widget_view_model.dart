@@ -4,6 +4,7 @@ import 'package:moneygram/category/model/category.dart';
 import 'package:moneygram/category/repository/category_repository.dart';
 import 'package:moneygram/viewmodels/add_transaction_view_model.dart';
 import 'package:moneygram/viewmodels/base_view_model.dart';
+import 'package:moneygram/utils/time_extension.dart';
 
 class ActionWidgetViewModel extends BaseViewModel {
   ActionWidgetViewModel(
@@ -16,8 +17,16 @@ class ActionWidgetViewModel extends BaseViewModel {
   Category? _category;
   Account? _account;
 
-  void init(
-      {required AddTransactionViewModel transactionViewModel}) async {
+  DateTime? get transactionDate {
+    return _transactionViewModel.selectedDate;
+  }
+
+  String get transactionDecoratedDate {
+    var selectedDateTime = _transactionViewModel.selectedDate ?? DateTime.now();
+    return selectedDateTime.decoratedDate;
+  }
+
+  void init({required AddTransactionViewModel transactionViewModel}) async {
     _transactionViewModel = transactionViewModel;
     await _setCategory(categoryId: transactionViewModel.selectedCategoryId);
     await _setAccount(accountId: transactionViewModel.selectedAccountId);
@@ -61,6 +70,12 @@ class ActionWidgetViewModel extends BaseViewModel {
   void setAccount(Account account) {
     _account = account;
     _transactionViewModel.selectedAccountId = account.id;
+    notifyListeners();
+  }
+
+
+  void setSelectedDate(DateTime date) {
+    _transactionViewModel.selectedDate = date;
     notifyListeners();
   }
 

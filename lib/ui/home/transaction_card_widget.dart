@@ -8,11 +8,13 @@ class TransactionCardWidget extends StatefulWidget {
   final String title;
   final double total;
   final List<Transaction> transactions;
+  final Function(Transaction) onTap;
   const TransactionCardWidget(
       {Key? key,
       required this.title,
       required this.total,
-      required this.transactions})
+      required this.transactions,
+      required this.onTap})
       : super(key: key);
 
   @override
@@ -35,13 +37,16 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
     return ListView.builder(
         itemCount: widget.transactions.length,
         shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
           var transaction = widget.transactions[index];
-          print(transaction.toJson());
-          return TransactionRowWidget(
-              transaction: transaction,
-              accountLocalDataSource: locator.get(),
-              categoryLocalDataSource: locator.get());
+          return InkWell(
+            onTap: () => widget.onTap(transaction),
+            child: TransactionRowWidget(
+                transaction: transaction,
+                accountLocalDataSource: locator.get(),
+                categoryLocalDataSource: locator.get()),
+          );
         });
   }
 }

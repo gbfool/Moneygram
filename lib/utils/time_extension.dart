@@ -66,6 +66,13 @@ extension DateUtils on DateTime {
     return (isAfter(range.start) || isAtSameMomentAs(range.start)) &&
         (isAtSameMomentAs(range.end) || isBefore(range.end));
   }
+
+  String get decoratedDate {
+    if (isToday) {
+      return "Today";
+    }
+    return DateFormat('dd MMM').format(this);
+  }
 }
 
 int daysElapsedSince(DateTime from, DateTime to) {

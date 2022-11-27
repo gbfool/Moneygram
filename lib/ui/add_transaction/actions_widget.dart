@@ -7,6 +7,7 @@ import 'package:moneygram/ui/base_screen.dart';
 import 'package:moneygram/ui/category/account_screen.dart';
 import 'package:moneygram/ui/category/category_screen.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:moneygram/ui/date_picker_screen.dart';
 import 'package:moneygram/viewmodels/action_widget_view_model.dart';
 import 'package:moneygram/viewmodels/add_transaction_view_model.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +42,7 @@ class _ActionsWidgetState extends State<ActionsWidget> {
       child: Column(
         children: [
           Row(children: [
-            Text("Today"),
+            InkWell(onTap: _onDatePickerTap, child: Text(_actionWidgetViewModel.transactionDecoratedDate)),
             const SizedBox(width: 4),
             const Text(
               '\u2022',
@@ -66,6 +67,20 @@ class _ActionsWidgetState extends State<ActionsWidget> {
       cursorColor: Colors.black,
       decoration:
           InputDecoration(border: InputBorder.none, hintText: "Add notes"),
+    );
+  }
+
+
+  void _onDatePickerTap() {
+    showBarModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => DatePickerScreen(
+        selectedDate: _actionWidgetViewModel.transactionDate,
+        onDateSelected: (selectedDate) {
+          _actionWidgetViewModel.setSelectedDate(selectedDate);
+        },
+      ),
     );
   }
 
