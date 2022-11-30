@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:moneygram/ui/home/home_screen.dart';
+import 'package:moneygram/ui/settings/settings_screen.dart';
 
 class BottomNavigationState extends StatefulWidget {
   const BottomNavigationState({
@@ -21,7 +22,7 @@ class _BottomNavigationState extends State<BottomNavigationState> {
 
   static const List<Widget> _widgetOptions = <Widget>[
     HomePage(title: "adfad"),
-    HomePage(title: "adfad1"),
+    SettingsScreen()
   ];
 
   @override
