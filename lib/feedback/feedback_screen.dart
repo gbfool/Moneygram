@@ -137,12 +137,14 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
               });
             },
       child: Container(
-        padding: EdgeInsets.only(left: isFirst ? 0 : 4, right: 4),
+        decoration: BoxDecoration(
+            color: isSelected ? Colors.black.withOpacity(0.1) : null,
+            borderRadius: BorderRadius.circular(8)),
+        padding:
+            EdgeInsets.only(left: isFirst ? 0 : 4, right: 4, top: 6, bottom: 6),
         child: Text(
           emoji,
-          style: isSelected
-              ? TextStyle(fontSize: 38)
-              : GoogleFonts.notoEmoji(fontSize: 32),
+          style: GoogleFonts.notoEmoji(fontSize: isSelected ? 40 : 32),
         ),
       ),
     );
