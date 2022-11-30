@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:moneygram/feedback/feedback_screen.dart';
 import 'package:moneygram/ui/settings/settings_row_widget.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -35,21 +37,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
             subtitle: NumberFormat.compactSimpleCurrency(locale: "en_IN")
                     .currencyName ??
                 '',
+            onTap: () {},
           ),
           const Divider(),
           SettingsRowWidget(
             title: "Account",
             subtitle: "view, edit and create accounts",
+            onTap: () {},
           ),
           const Divider(),
           SettingsRowWidget(
             title: "Category",
             subtitle: "view, edit and create categories",
+            onTap: () {},
           ),
           const Divider(),
           SettingsRowWidget(
             title: "Transaction rows controls",
             subtitle: "Control the visibility of details on transaction rows",
+            onTap: () {},
           ),
           const Divider(),
         ],
@@ -62,11 +68,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
             title: "Give Feedback",
             subtitle:
                 "Suggest your feedbacks and requests, to make this app awesome for you",
+            onTap: () {
+              showBarModalBottomSheet(
+                  context: context,
+                  backgroundColor: Colors.transparent,
+                  builder: (context) => FeedbackScreen());
+            },
           ),
           const Divider(),
           SettingsRowWidget(
             title: "Rate app",
             subtitle: "Share your experience on Play Store",
+            onTap: () {},
           ),
         ],
       )
