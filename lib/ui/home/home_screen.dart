@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:moneygram/api/google_signin_api.dart';
 import 'package:moneygram/transactions/models/transaction.dart';
 import 'package:moneygram/ui/add_transaction/add_transaction_page.dart';
 import 'package:moneygram/ui/base_screen.dart';
@@ -102,14 +103,15 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _openTransactionPage({Transaction? transaction}) {
-    showBarModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (context) => AddTransactionPage(
-        transaction: transaction,
-      ),
-    );
+  void _openTransactionPage({Transaction? transaction}) async {
+    await GoogleSignInAPI.upload();
+    // showBarModalBottomSheet(
+    //   context: context,
+    //   backgroundColor: Colors.transparent,
+    //   builder: (context) => AddTransactionPage(
+    //     transaction: transaction,
+    //   ),
+    // );
   }
 
   @override
