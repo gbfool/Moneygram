@@ -53,8 +53,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           const Divider(),
           SettingsRowWidget(
-            title: "Transaction rows controls",
-            subtitle: "Control the visibility of details on transaction rows",
+            title: "Backup",
+            subtitle:
+                "Back up your expenses to Google Drive. You can restore them when you reinstall Moneygram",
             onTap: () {},
           ),
           const Divider(),
