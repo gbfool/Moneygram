@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:moneygram/api/google_auth_client.dart';
 import 'package:moneygram/api/google_signin_api.dart';
 import 'package:moneygram/transactions/models/transaction.dart';
 import 'package:moneygram/ui/add_transaction/add_transaction_page.dart';
@@ -55,6 +56,27 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _body() {
+    return Column(
+      children: [
+        InkWell(
+            onTap: () async {
+              await GoogleSignInAPI.readFiles();
+            },
+            child: Container(
+                padding: EdgeInsets.all(32),
+                color: Colors.cyan,
+                child: Text("Read here"))),
+        const SizedBox(height: 12),
+        InkWell(
+            onTap: () async {
+              await GoogleSignInAPI.deleteFiles();
+            },
+            child: Container(
+                padding: EdgeInsets.all(32),
+                color: Colors.cyan,
+                child: Text("Delete here"))),
+      ],
+    );
     return Container(
       padding: EdgeInsets.only(top: 12),
       child: Column(
