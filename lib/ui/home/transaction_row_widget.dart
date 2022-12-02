@@ -4,6 +4,7 @@ import 'package:moneygram/account/data_source/account_local_data_source.dart';
 import 'package:moneygram/category/data_source/category_local_data_source.dart';
 import 'package:moneygram/transactions/models/transaction.dart';
 import 'package:moneygram/utils/currency_helper.dart';
+import 'package:moneygram/utils/validation_utils.dart';
 
 class TransactionRowWidget extends StatefulWidget {
   final Transaction transaction;
@@ -55,11 +56,8 @@ class _TransactionRowWidgetState extends State<TransactionRowWidget> {
                             .name,
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.w600)),
-                    SizedBox(height: 8),
-                    Text(widget.transaction.notes ?? "",
-                        style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black.withOpacity(0.6))),
+                    if (ValidationUtils.isValidString(widget.transaction.notes))
+                      ..._notesWidget()
                   ],
                 ),
                 const Spacer(),
@@ -78,5 +76,13 @@ class _TransactionRowWidgetState extends State<TransactionRowWidget> {
         ),
       )
     ]);
+  }
+
+  List<Widget> _notesWidget() {
+    return [
+      SizedBox(height: 4),
+      Text(widget.transaction.notes ?? "",
+          style: TextStyle(fontSize: 14, color: Colors.black.withOpacity(0.6)))
+    ];
   }
 }
