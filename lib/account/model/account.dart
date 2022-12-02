@@ -22,11 +22,15 @@ class Account extends HiveObject {
   @HiveField(5)
   DateTime updatedAt;
 
+  @HiveField(6)
+  bool isActive;
+
   Account(
       {required this.emoji,
       required this.name,
       this.id,
       this.isSync = false,
+      this.isActive = true,
       DateTime? createdAt,
       DateTime? updatedAt})
       : this.createdAt = createdAt ?? DateTime.now(),
@@ -38,7 +42,8 @@ class Account extends HiveObject {
         'id': id,
         'isSync': isSync,
         'createdAt': createdAt.toIso8601String(),
-        'updatedAt': updatedAt.toIso8601String()
+        'updatedAt': updatedAt.toIso8601String(),
+        'isActive': isActive
       };
 
   factory Account.fromJson(Map<String, dynamic> json) => Account(
@@ -46,7 +51,8 @@ class Account extends HiveObject {
       emoji: json["emoji"],
       isSync: json['isSync'] ?? false,
       createdAt: DateTime.parse(json['createdAt']),
-      updatedAt: DateTime.parse(json['updatedAt']))
+      updatedAt: DateTime.parse(json['updatedAt']),
+      isActive: json['isActive'])
     ..id = json["id"];
 
   String uniqueCode() {
