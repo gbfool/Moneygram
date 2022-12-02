@@ -1,7 +1,7 @@
 import 'package:moneygram/category/model/category.dart';
 
 abstract class CategoryRepository {
-  Future<List<Category>> categories();
+  Future<List<Category>> categories({bool isSort});
   Future<void> addCategory({
     required String emoji,
     required String name,

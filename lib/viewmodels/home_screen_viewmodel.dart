@@ -23,7 +23,7 @@ class HomeScreenViewModel extends BaseViewModel {
   }
 
   void setTransactions() async {
-    transactionList = await transactionRepository.getAllTransactions(true);
+    transactionList = await transactionRepository.getGroupedTransactions(true);
     notifyListeners();
   }
 

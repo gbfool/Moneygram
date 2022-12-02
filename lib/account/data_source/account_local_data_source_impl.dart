@@ -9,7 +9,6 @@ class AccountLocalDataSourceImpl implements AccountLocalDataSource {
   @override
   Future<List<Account>> accounts() async {
     final accounts = accountBox.values.toList();
-    accounts.sort((a, b) => a.name.compareTo(b.name));
     return accounts;
   }
 

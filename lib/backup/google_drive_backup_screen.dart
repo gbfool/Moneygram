@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:moneygram/api/google_signin_api.dart';
+import 'package:moneygram/backup/google_drive_service.dart';
 
 class GoogleDriveBackupScreen extends StatefulWidget {
   const GoogleDriveBackupScreen({Key? key}) : super(key: key);
@@ -15,7 +15,7 @@ class _GoogleDriveBackupScreenState extends State<GoogleDriveBackupScreen> {
   Widget build(BuildContext context) {
     return Column(
         mainAxisSize: MainAxisSize.min,
-        children: [_header(), SizedBox(height: 16), _body()]);
+        children: [_header(), SizedBox(height: 16), _body(), _debugWidgets()]);
   }
 
   Widget _header() {
@@ -82,7 +82,7 @@ class _GoogleDriveBackupScreenState extends State<GoogleDriveBackupScreen> {
       children: [
         InkWell(
             onTap: () async {
-              await GoogleSignInAPI.upload();
+              await GoogleDriveService.upload();
             },
             child: Container(
                 padding: EdgeInsets.all(32),
@@ -91,7 +91,7 @@ class _GoogleDriveBackupScreenState extends State<GoogleDriveBackupScreen> {
         const SizedBox(height: 12),
         InkWell(
             onTap: () async {
-              await GoogleSignInAPI.readFiles();
+              await GoogleDriveService.readFiles();
             },
             child: Container(
                 padding: EdgeInsets.all(32),
@@ -100,7 +100,7 @@ class _GoogleDriveBackupScreenState extends State<GoogleDriveBackupScreen> {
         const SizedBox(height: 12),
         InkWell(
             onTap: () async {
-              await GoogleSignInAPI.deleteFiles();
+              await GoogleDriveService.deleteFiles();
             },
             child: Container(
                 padding: EdgeInsets.all(32),

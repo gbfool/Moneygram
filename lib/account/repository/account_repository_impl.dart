@@ -8,9 +8,11 @@ class AccountRepositoryImpl extends AccountRepository {
   final AccountLocalDataSource dataSource;
 
   @override
-  Future<List<Account>> accounts() async {
+  Future<List<Account>> accounts({bool isSort = true}) async {
     final accounts = await dataSource.accounts();
-    accounts.sort((a, b) => a.name.compareTo(b.name));
+    if (isSort) {
+      accounts.sort((a, b) => a.name.compareTo(b.name));
+    }
     return accounts;
   }
 

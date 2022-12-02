@@ -31,13 +31,19 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<Map<String, List<Transaction>>> getAllTransactions(
+  Future<Map<String, List<Transaction>>> getGroupedTransactions(
       bool isRefresh) async {
     final expenses = await fetchAndCache(isRefresh: isRefresh);
     expenses.sort((a, b) => b.time.compareTo(a.time));
     final Map<String, List<Transaction>> groupedExpense =
         expenses.groupByTime(FilterBudget.daily);
     return groupedExpense;
+  }
+
+  @override
+  Future<List<Transaction>> getAllTransactions(bool isRefresh) async {
+    final expenses = await fetchAndCache(isRefresh: isRefresh);
+    return expenses;
   }
 
   @override

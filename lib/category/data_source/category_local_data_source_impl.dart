@@ -17,7 +17,6 @@ class CategoryLocalDataSourceImpl implements CategoryLocalDataSource {
   @override
   Future<List<Category>> categories() async {
     final categories = categoryBox.values.toList();
-    categories.sort((a, b) => a.name.compareTo(b.name));
     return categories;
   }
 

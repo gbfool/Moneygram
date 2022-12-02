@@ -14,8 +14,12 @@ class CategoryRepositoryImpl extends CategoryRepository {
   }
 
   @override
-  Future<List<Category>> categories() {
-    return dataSource.categories();
+  Future<List<Category>> categories({bool isSort = true}) async {
+    var list = await dataSource.categories();
+    if (isSort) {
+      list.sort((a, b) => a.name.compareTo(b.name));
+    }
+    return list;
   }
 
   @override
