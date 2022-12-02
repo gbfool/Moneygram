@@ -48,7 +48,7 @@ class Transaction extends HiveObject {
         'accountId': accountId,
         'categoryId': categoryId,
         'id': id,
-        'is_sync': isSync
+        'isSync': isSync
       };
 
   factory Transaction.fromJson(Map<String, dynamic> json) => Transaction(
@@ -58,6 +58,6 @@ class Transaction extends HiveObject {
       categoryId: json['categoryId'],
       accountId: json['accountId'],
       type: (json['type'] as String).type,
-      isSync: json['is_sync'] ?? false)
+      isSync: json['isSync'] ?? false)
     ..id = json['id'];
 }

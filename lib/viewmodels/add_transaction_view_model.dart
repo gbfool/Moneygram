@@ -24,6 +24,11 @@ class AddTransactionViewModel extends BaseViewModel {
   TransactionType transactionType = TransactionType.expense;
   Transaction? currentTransaction;
 
+  bool get isSaveButtonEnable {
+    if (amount == null || amount!.trim() == "") return false;
+    return true;
+  }
+
   void setValuesForTransaction(Transaction? transaction) {
     if (transaction == null) {
       return;

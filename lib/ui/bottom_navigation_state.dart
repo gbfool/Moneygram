@@ -46,8 +46,8 @@ class _BottomNavigationState extends State<BottomNavigationState> {
         bottomNavigationBar: BottomNavigationBar(
           items: [
             BottomNavigationBarItem(
-              icon: iconEmojiWidget(Icons.settings, Colors.grey),
-              activeIcon: iconEmojiWidget(Icons.settings, Colors.black),
+              icon: iconEmojiWidget(Icons.home, Colors.grey),
+              activeIcon: iconEmojiWidget(Icons.home, Colors.black),
               label: 'Home',
             ),
             BottomNavigationBarItem(

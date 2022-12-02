@@ -20,9 +20,9 @@ class Category extends HiveObject {
       {this.id, this.isSync = false, required this.emoji, required this.name});
 
   Map<String, dynamic> toJson() =>
-      {'emoji': emoji, 'name': name, 'id': id, 'is_sync': isSync};
+      {'emoji': emoji, 'name': name, 'id': id, 'isSync': isSync};
 
-  factory Category.fromJson(Map<String, dynamic> json) => Category(
-      name: json["name"], emoji: json["emoji"], isSync: json['is_sync'])
-    ..id = json["id"];
+  factory Category.fromJson(Map<String, dynamic> json) =>
+      Category(name: json["name"], emoji: json["emoji"], isSync: json['isSync'])
+        ..id = json["id"];
 }

@@ -56,27 +56,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _body() {
-    return Column(
-      children: [
-        InkWell(
-            onTap: () async {
-              await GoogleSignInAPI.readFiles();
-            },
-            child: Container(
-                padding: EdgeInsets.all(32),
-                color: Colors.cyan,
-                child: Text("Read here"))),
-        const SizedBox(height: 12),
-        InkWell(
-            onTap: () async {
-              await GoogleSignInAPI.deleteFiles();
-            },
-            child: Container(
-                padding: EdgeInsets.all(32),
-                color: Colors.cyan,
-                child: Text("Delete here"))),
-      ],
-    );
     return Container(
       padding: EdgeInsets.only(top: 12),
       child: Column(
@@ -126,14 +105,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _openTransactionPage({Transaction? transaction}) async {
-    await GoogleSignInAPI.upload();
-    // showBarModalBottomSheet(
-    //   context: context,
-    //   backgroundColor: Colors.transparent,
-    //   builder: (context) => AddTransactionPage(
-    //     transaction: transaction,
-    //   ),
-    // );
+    showBarModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => AddTransactionPage(
+        transaction: transaction,
+      ),
+    );
   }
 
   @override

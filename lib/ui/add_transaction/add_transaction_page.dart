@@ -58,7 +58,8 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
               ActionsWidget(notesTextController: notesTextController),
               KeyboardWidget(
                   onBackPress: onBackspacePress, onKeyPress: onKeyTap),
-              SaveButton(onTap: _onSaveButtonTap)
+              SaveButton(
+                  isEnable: _model.isSaveButtonEnable, onTap: _onSaveButtonTap)
             ],
           ),
         ),

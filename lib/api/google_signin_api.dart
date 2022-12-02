@@ -93,8 +93,9 @@ class GoogleSignInAPI {
     final authHeaders = await account.authHeaders;
     final authenticateClient = GoogleAuthClient(authHeaders);
     final driveApi = drive.DriveApi(authenticateClient);
-    var response = await driveApi.files
-        .get(fileId, downloadOptions: drive.DownloadOptions.fullMedia);
+    var response = await driveApi.files.get(fileId,
+        downloadOptions: drive.DownloadOptions.fullMedia,
+        $fields: 'items/quotaBytesUsed');
     if (response is! drive.Media) throw Exception("invalid response");
     var decodeString = await utf8.decodeStream(response.stream);
     print("\n-----------------\n");

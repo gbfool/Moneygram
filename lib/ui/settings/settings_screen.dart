@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:moneygram/backup/google_drive_backup_screen.dart';
 import 'package:moneygram/feedback/feedback_screen.dart';
 import 'package:moneygram/ui/settings/settings_row_widget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -56,7 +57,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
             title: "Backup",
             subtitle:
                 "Back up your expenses to Google Drive. You can restore them when you reinstall Moneygram",
-            onTap: () {},
+            onTap: () {
+              showBarModalBottomSheet(
+                  context: context,
+                  backgroundColor: Colors.transparent,
+                  builder: (context) => GoogleDriveBackupScreen());
+            },
           ),
           const Divider(),
         ],
