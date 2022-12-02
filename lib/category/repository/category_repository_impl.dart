@@ -12,9 +12,7 @@ class CategoryRepositoryImpl extends CategoryRepository {
       {required String emoji, required String name}) async {
     var category = Category(
         name: name,
-        emoji: emoji,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now());
+        emoji: emoji);
     await dataSource.addOrUpdateCategory(category);
   }
 

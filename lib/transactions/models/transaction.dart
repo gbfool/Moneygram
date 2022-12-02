@@ -35,17 +35,23 @@ class Transaction extends HiveObject {
   @HiveField(9)
   DateTime updatedAt;
 
+  @HiveField(10)
+  bool isActive;
+
   Transaction(
       {this.notes,
       this.id,
       this.isSync = false,
+      this.isActive = true,
       required this.amount,
       required this.time,
       required this.categoryId,
       required this.accountId,
       required this.type,
-      required this.createdAt,
-      required this.updatedAt});
+      DateTime? createdAt,
+      DateTime? updatedAt})
+      : this.createdAt = createdAt ?? DateTime.now(),
+        this.updatedAt = updatedAt ?? DateTime.now();
 
   Transaction copyWith({required Transaction newTransaction}) {
     var obj = this;
@@ -59,6 +65,7 @@ class Transaction extends HiveObject {
     obj.type = newTransaction.type;
     obj.createdAt = newTransaction.createdAt;
     obj.updatedAt = newTransaction.updatedAt;
+    obj.isActive = newTransaction.isActive;
     return obj;
   }
 
@@ -72,7 +79,8 @@ class Transaction extends HiveObject {
         'id': id,
         'isSync': isSync,
         'createdAt': createdAt.toIso8601String(),
-        'updatedAt': updatedAt.toIso8601String()
+        'updatedAt': updatedAt.toIso8601String(),
+        'isActive': isActive
       };
 
   factory Transaction.fromJson(Map<String, dynamic> json) => Transaction(
@@ -84,7 +92,8 @@ class Transaction extends HiveObject {
       type: (json['type'] as String).type,
       isSync: (json['isSync'] ?? false),
       createdAt: DateTime.parse(json['createdAt']),
-      updatedAt: DateTime.parse(json['updatedAt']))
+      updatedAt: DateTime.parse(json['updatedAt']),
+      isActive: json['isActive'])
     ..id = json['id'];
 
   String uniqueCode() {

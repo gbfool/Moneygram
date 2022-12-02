@@ -26,8 +26,6 @@ class TransactionRepositoryImpl extends TransactionRepository {
         time: time,
         categoryId: categoryId,
         accountId: accountId,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
         type: transactionType);
     await dataSource.addTransaction(transaction);
   }

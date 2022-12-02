@@ -17,12 +17,12 @@ class AccountAdapter extends TypeAdapter<Account> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Account(
-      id: fields[2] as int?,
-      isSync: fields[3] == null ? false : fields[3] as bool,
       emoji: fields[0] as String,
       name: fields[1] as String,
-      createdAt: fields[4] as DateTime,
-      updatedAt: fields[5] as DateTime,
+      id: fields[2] as int?,
+      isSync: fields[3] == null ? false : fields[3] as bool,
+      createdAt: fields[4] as DateTime?,
+      updatedAt: fields[5] as DateTime?,
     );
   }
 

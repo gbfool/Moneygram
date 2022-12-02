@@ -53,9 +53,7 @@ class ActionWidgetViewModel extends BaseViewModel {
     }
     return Category(
         emoji: "🫠",
-        name: "Default Category",
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now());
+        name: "Default Category");
   }
 
   Account getAccount() {
@@ -64,9 +62,7 @@ class ActionWidgetViewModel extends BaseViewModel {
     }
     return Account(
         emoji: "🫠",
-        name: "Default Account",
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now());
+        name: "Default Account");
   }
 
   void setCategory(Category category) {

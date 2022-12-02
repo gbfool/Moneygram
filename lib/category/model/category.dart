@@ -22,13 +22,19 @@ class Category extends HiveObject {
   @HiveField(5)
   DateTime updatedAt;
 
-  Category(
-      {this.id,
-      this.isSync = false,
-      required this.emoji,
-      required this.name,
-      required this.createdAt,
-      required this.updatedAt});
+  @HiveField(6)
+  bool isActive;
+
+  Category({
+    required this.emoji,
+    required this.name,
+    this.isSync = false,
+    this.isActive = true,
+    this.id,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  })  : this.createdAt = createdAt ?? DateTime.now(),
+        this.updatedAt = updatedAt ?? DateTime.now();
 
   Map<String, dynamic> toJson() => {
         'emoji': emoji,
@@ -36,7 +42,8 @@ class Category extends HiveObject {
         'id': id,
         'isSync': isSync,
         'createdAt': createdAt.toIso8601String(),
-        'updatedAt': updatedAt.toIso8601String()
+        'updatedAt': updatedAt.toIso8601String(),
+        'isActive': isActive
       };
 
   String uniqueCode() {
@@ -48,6 +55,7 @@ class Category extends HiveObject {
       emoji: json["emoji"],
       isSync: json['isSync'],
       createdAt: DateTime.parse(json['createdAt']),
-      updatedAt: DateTime.parse(json['updatedAt']))
+      updatedAt: DateTime.parse(json['updatedAt']),
+      isActive: json['isActive'])
     ..id = json["id"];
 }

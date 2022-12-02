@@ -6,111 +6,31 @@ import 'package:moneygram/utils/enum/transaction_type.dart';
 class Utils {
   static List<Category> getExpensesCategory() {
     List<Category> list = [];
-    list.add(Category(
-        emoji: "💧",
-        name: "Water",
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()));
-    list.add(Category(
-        emoji: "🥘",
-        name: "Food",
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()));
-    list.add(Category(
-        emoji: "🛍️",
-        name: "Shopping",
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()));
-    list.add(Category(
-        emoji: "💳",
-        name: "Credit",
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()));
-    list.add(Category(
-        emoji: "🛒",
-        name: "Goods",
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()));
-    list.add(Category(
-        emoji: "🎮",
-        name: "Games",
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()));
-    list.add(Category(
-        emoji: "👕",
-        name: "Clothing",
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()));
-    list.add(Category(
-        emoji: "⚡",
-        name: "Elecricity",
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()));
-    list.add(Category(
-        emoji: "🎁",
-        name: "Gifts",
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()));
-    list.add(Category(
-        emoji: "🍿",
-        name: "Entertainment",
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()));
-    list.add(Category(
-        emoji: "📚",
-        name: "Books",
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()));
-    list.add(Category(
-        emoji: "🤷",
-        name: "Miscellenous",
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()));
-    list.add(Category(
-        emoji: "⚡",
-        name: "Elecricity",
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()));
-    list.add(Category(
-        emoji: "🎁",
-        name: "Gifts",
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()));
-    list.add(Category(
-        emoji: "🍿",
-        name: "Entertainment",
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()));
-    list.add(Category(
-        emoji: "📚",
-        name: "Books",
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()));
-    list.add(Category(
-        emoji: "🤷",
-        name: "Miscellenous",
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()));
+    list.add(Category(emoji: "💧", name: "Water"));
+    list.add(Category(emoji: "🥘", name: "Food"));
+    list.add(Category(emoji: "🛍️", name: "Shopping"));
+    list.add(Category(emoji: "💳", name: "Credit"));
+    list.add(Category(emoji: "🛒", name: "Goods"));
+    list.add(Category(emoji: "🎮", name: "Games"));
+    list.add(Category(emoji: "👕", name: "Clothing"));
+    list.add(Category(emoji: "⚡", name: "Elecricity"));
+    list.add(Category(emoji: "🎁", name: "Gifts"));
+    list.add(Category(emoji: "🍿", name: "Entertainment"));
+    list.add(Category(emoji: "📚", name: "Books"));
+    list.add(Category(emoji: "🤷", name: "Miscellenous"));
+    list.add(Category(emoji: "⚡", name: "Elecricity"));
+    list.add(Category(emoji: "🎁", name: "Gifts"));
+    list.add(Category(emoji: "🍿", name: "Entertainment"));
+    list.add(Category(emoji: "📚", name: "Books"));
+    list.add(Category(emoji: "🤷", name: "Miscellenous"));
     return list;
   }
 
   static List<Account> getAccounts() {
     List<Account> list = [];
-    list.add(Account(
-        emoji: "💳",
-        name: "Credit Card",
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()));
-    list.add(Account(
-        emoji: "💵",
-        name: "Cash",
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()));
-    list.add(Account(
-        emoji: "💰",
-        name: "Paytm",
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now()));
+    list.add(Account(emoji: "💳", name: "Credit Card"));
+    list.add(Account(emoji: "💵", name: "Cash"));
+    list.add(Account(emoji: "💰", name: "Paytm"));
     return list;
   }
 
@@ -121,8 +41,6 @@ class Utils {
         notes: "Hello Himanshu",
         amount: 200,
         time: DateTime.now(),
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
         type: TransactionType.expense);
     return transaction;
   }

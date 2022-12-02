@@ -23,12 +23,14 @@ class Account extends HiveObject {
   DateTime updatedAt;
 
   Account(
-      {this.id,
-      this.isSync = false,
-      required this.emoji,
+      {required this.emoji,
       required this.name,
-      required this.createdAt,
-      required this.updatedAt});
+      this.id,
+      this.isSync = false,
+      DateTime? createdAt,
+      DateTime? updatedAt})
+      : this.createdAt = createdAt ?? DateTime.now(),
+        this.updatedAt = updatedAt ?? DateTime.now();
 
   Map<String, dynamic> toJson() => {
         'emoji': emoji,
