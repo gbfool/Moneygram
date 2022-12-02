@@ -18,8 +18,9 @@ class TransactionManagerLocalDataSourceImpl
 
   @override
   Future<void> updateTransaction(Transaction transaction) async {
-    var previousTransaction = await getTransaction(transaction.id);
+    var previousTransaction = await getTransaction(transaction.uniqueCode());
     if (previousTransaction != null) {
+      print("----------------- Previous transaction found -------------- ${previousTransaction.notes}");
       transaction = previousTransaction.copyWith(newTransaction: transaction);
       transaction.save();
     } else {
@@ -27,10 +28,10 @@ class TransactionManagerLocalDataSourceImpl
     }
   }
 
-  Future<Transaction?> getTransaction(int? id) async {
+  Future<Transaction?> getTransaction(String uniqueCode) async {
     var values = transactionBox.values;
     return values.firstWhereOrNull((element) {
-      return element.id == id;
+      return element.uniqueCode() == uniqueCode;
     });
   }
 

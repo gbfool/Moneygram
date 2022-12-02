@@ -35,15 +35,19 @@ class Account extends HiveObject {
         'name': name,
         'id': id,
         'isSync': isSync,
-        'createdAt': createdAt,
-        'updatedAt': updatedAt
+        'createdAt': createdAt.toIso8601String(),
+        'updatedAt': updatedAt.toIso8601String()
       };
 
   factory Account.fromJson(Map<String, dynamic> json) => Account(
       name: json["name"],
       emoji: json["emoji"],
       isSync: json['isSync'] ?? false,
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'])
+      createdAt: DateTime.parse(json['createdAt']),
+      updatedAt: DateTime.parse(json['updatedAt']))
     ..id = json["id"];
+
+  String uniqueCode() {
+    return "${id}#${createdAt.toIso8601String()}";
+  }
 }

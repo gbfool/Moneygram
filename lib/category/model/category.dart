@@ -35,15 +35,19 @@ class Category extends HiveObject {
         'name': name,
         'id': id,
         'isSync': isSync,
-        'createdAt': createdAt,
-        'updatedAt': updatedAt
+        'createdAt': createdAt.toIso8601String(),
+        'updatedAt': updatedAt.toIso8601String()
       };
+
+  String uniqueCode() {
+    return "${id}#${createdAt.toIso8601String()}";
+  }
 
   factory Category.fromJson(Map<String, dynamic> json) => Category(
       name: json["name"],
       emoji: json["emoji"],
       isSync: json['isSync'],
-      createdAt: json['createdAt'],
-      updatedAt: json['updatedAt'])
+      createdAt: DateTime.parse(json['createdAt']),
+      updatedAt: DateTime.parse(json['updatedAt']))
     ..id = json["id"];
 }

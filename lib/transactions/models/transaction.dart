@@ -71,8 +71,8 @@ class Transaction extends HiveObject {
         'categoryId': categoryId,
         'id': id,
         'isSync': isSync,
-        'createdAt': createdAt,
-        'updatedAt': updatedAt
+        'createdAt': createdAt.toIso8601String(),
+        'updatedAt': updatedAt.toIso8601String()
       };
 
   factory Transaction.fromJson(Map<String, dynamic> json) => Transaction(
@@ -86,4 +86,8 @@ class Transaction extends HiveObject {
       createdAt: DateTime.parse(json['createdAt']),
       updatedAt: DateTime.parse(json['updatedAt']))
     ..id = json['id'];
+
+  String uniqueCode() {
+    return "${id}#${createdAt.toIso8601String()}";
+  }
 }
