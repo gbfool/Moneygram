@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:moneygram/backup/google_auth_client.dart';
-import 'package:moneygram/backup/google_drive_service.dart';
 import 'package:moneygram/transactions/models/transaction.dart';
 import 'package:moneygram/ui/add_transaction/add_transaction_page.dart';
 import 'package:moneygram/ui/base_screen.dart';
@@ -117,7 +115,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void dispose() {
     _homeScreenViewModel.removeBoxListener();
-    print("Removing this");
+    print("-------------- Removing this --------------");
     super.dispose();
   }
 }

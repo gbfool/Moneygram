@@ -1,9 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:moneygram/account/repository/account_repository.dart';
 import 'package:moneygram/category/repository/category_repository.dart';
 import 'package:moneygram/transactions/models/transaction.dart';
 import 'package:moneygram/transactions/repository/transaction_repository.dart';
-import 'package:moneygram/utils/enum/box_types.dart';
 import 'package:moneygram/viewmodels/base_view_model.dart';
 
 class HomeScreenViewModel extends BaseViewModel {
@@ -16,6 +16,7 @@ class HomeScreenViewModel extends BaseViewModel {
   final CategoryRepository categoryRepository;
 
   Map<String, List<Transaction>> transactionList = Map();
+  ValueListenable<Box<Transaction>>? _valueListenable;
 
   void init() {
     setTransactions();
@@ -28,18 +29,16 @@ class HomeScreenViewModel extends BaseViewModel {
   }
 
   void listenToTransactionBox() {
-    var listener = transactionRepository.getBox().listenable();
-    listener.addListener(transactionListener);
+    _valueListenable = transactionRepository.getBox().listenable();
+    _valueListenable?.addListener(transactionListener);
   }
 
   void removeBoxListener() {
-    var listner = transactionRepository.getBox().listenable();
-    listner.removeListener(transactionListener);
+    _valueListenable?.removeListener(transactionListener);
   }
 
   void transactionListener() {
     print("Adding here");
     setTransactions();
-    notifyListeners();
   }
 }

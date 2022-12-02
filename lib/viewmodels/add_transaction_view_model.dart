@@ -65,7 +65,9 @@ class AddTransactionViewModel extends BaseViewModel {
         ..amount = validAmount
         ..notes = transactionNotes
         ..time = date
-        ..type = transactionType;
+        ..type = transactionType
+        ..isSync =
+            false; // TODO: here we need to put a diff function, if anything changes then mark `isSync` to false
       transactionRepository.updateTransaction(currentTransaction!);
     } else {
       transactionRepository.addTransaction(transactionNotes, validAmount, date,

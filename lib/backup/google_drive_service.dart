@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/drive/v3.dart' as drive;
 import 'package:moneygram/account/model/account.dart';
@@ -12,22 +10,23 @@ import 'package:moneygram/category/repository/category_repository.dart';
 import 'package:moneygram/di/service_locator.dart';
 import 'package:moneygram/transactions/models/transaction.dart';
 import 'package:moneygram/transactions/repository/transaction_repository.dart';
-import 'package:moneygram/utils/utils.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:moneygram/utils/validation_utils.dart';
 
 class GoogleDriveService {
   static GoogleSignInAccount? _account;
-  static Future<GoogleSignInAccount?> _getAccount() async {
-    if (_account != null) {
-      return _account;
-    }
-    return await _login();
-  }
 
   static Future<GoogleSignInAccount?> _login() {
     final googleSignIn =
         GoogleSignIn.standard(scopes: [drive.DriveApi.driveAppdataScope]);
-    return googleSignIn.signInSilently();
+    return googleSignIn.signIn();
+  }
+
+  static Future<GoogleSignInAccount?> _getAccount() async {
+    if (_account != null) {
+      return _account;
+    }
+    _account = await _login();
+    return _account;
   }
 
   static Future<drive.DriveApi> _getDriveAPI() async {
@@ -44,24 +43,55 @@ class GoogleDriveService {
 
   static Future<void> upload() async {
     final driveApi = await _getDriveAPI();
-    // drive.File file = drive.File.fromJson({"transaction": Utils.getDummyTransaction().toJson()});
-    // file.id = "jsonFileName";
+
+    await _backupAccounts(driveApi: driveApi);
+    await _backupCategories(driveApi: driveApi);
+    await _backupTransactions(driveApi: driveApi);
+  }
+
+  static Future<void> _backupAccounts(
+      {required drive.DriveApi driveApi}) async {
+    final filename =
+        '${GoogleDriveConstants.ACCOUNTS_FOLDER}/${DateTime.now().millisecondsSinceEpoch}.txt';
+    var accounts = await _getPendingAccounts();
+    var accountContent = "";
+    for (var account in accounts) {
+      accountContent += json.encode(account.toJson()) + "\n";
+    }
+    await _uploadFile(
+        driveApi: driveApi, filename: filename, textContent: accountContent);
+    for (var t in accounts) {
+      t.isSync = true;
+      t.save();
+    }
+  }
+
+  static Future<void> _backupCategories(
+      {required drive.DriveApi driveApi}) async {
+    final filename =
+        '${GoogleDriveConstants.CATEGORIES_FOLDER}/${DateTime.now().millisecondsSinceEpoch}.txt';
+    var categories = await _getPendingCategories();
+    var categoryContent = "";
+    for (var category in categories) {
+      categoryContent += json.encode(category.toJson()) + "\n";
+    }
+    await _uploadFile(
+        driveApi: driveApi, filename: filename, textContent: categoryContent);
+    for (var t in categories) {
+      t.isSync = true;
+      t.save();
+    }
+  }
+
+  static Future<void> _backupTransactions(
+      {required drive.DriveApi driveApi}) async {
     final filename =
         '${GoogleDriveConstants.TRANSACTIONS_FOLDER}/${DateTime.now().millisecondsSinceEpoch}.txt';
-    // Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    // String path = documentsDirectory.path + "/" + filename;
-    // var file = await File(path)
-    //     .writeAsString(Utils.getDummyTransaction().toJson().toString());
-    // var transaction = Utils.getDummyTransaction();
     var transactions = await _getPendingTransactions();
     var transactionContent = "";
-    for (var t in transactions) {
-      transactionContent += json.encode(t.toJson()) + "\n";
+    for (var transaction in transactions) {
+      transactionContent += json.encode(transaction.toJson()) + "\n";
     }
-
-    // final Stream<List<Transaction>> mediaStream =
-    //     Future.value([]).asStream().asBroadcastStream();
-    // var media = new drive.Media(mediaStream, 2);
     await _uploadFile(
         driveApi: driveApi,
         filename: filename,
@@ -80,8 +110,10 @@ class GoogleDriveService {
     var media = drive.Media(Stream.value(content), content.length);
     var driveFile = drive.File(name: filename, parents: ['appDataFolder']);
     var resumableUploadOptions = drive.ResumableUploadOptions();
-    final result = await driveApi.files.create(driveFile,
+    await driveApi.files.create(driveFile,
         uploadMedia: media, uploadOptions: resumableUploadOptions);
+    print("------------- \n uploaded: $filename \n");
+    print("content: $textContent");
   }
 
   static Future<void> readFiles() async {
@@ -97,26 +129,56 @@ class GoogleDriveService {
     }
   }
 
-  static Future<void> deleteFiles() async {
-    print("deleting file\n");
-    final driveApi = await _getDriveAPI();
-    var fileList = await driveApi.files.list(spaces: 'appDataFolder');
-    var files = fileList.files ?? [];
-    for (var file in files) {
-      print(file.name);
-      await deleteFile(file.name!, file.id!);
-      // print(file.)
-    }
-  }
-
-  static Future<String> getFileContent(String name, String fileId) async {
+  static Future<void> getFileContent(String filename, String fileId) async {
     final driveApi = await _getDriveAPI();
     var response = await driveApi.files.get(fileId,
         downloadOptions: drive.DownloadOptions.fullMedia,
         $fields: 'items/quotaBytesUsed');
     if (response is! drive.Media) throw Exception("invalid response");
     var decodeString = await utf8.decodeStream(response.stream);
-    return decodeString;
+    print('\n --------filename: $filename');
+    print("\n $decodeString");
+    var folderName = filename.split('/')[0];
+    if (folderName == GoogleDriveConstants.TRANSACTIONS_FOLDER) {
+      _readTransactions(decodeString);
+    } else if (folderName == GoogleDriveConstants.ACCOUNTS_FOLDER) {
+      _readAccounts(decodeString);
+    } else if (folderName == GoogleDriveConstants.CATEGORIES_FOLDER) {
+      _readCategories(decodeString);
+    }
+  }
+
+  static void _readTransactions(String content) {
+    List<String> list = content.split("\n");
+    TransactionRepository repository = locator.get();
+    for (var body in list) {
+      if (ValidationUtils.isValidString(body)) {
+        var transaction = Transaction.fromJson(json.decode(body));
+        repository.updateTransaction(transaction);
+      }
+    }
+  }
+
+  static void _readAccounts(String content) {
+    List<String> list = content.split("\n");
+    AccountRepository repository = locator.get();
+    for (var body in list) {
+      if (ValidationUtils.isValidString(body)) {
+        var account = Account.fromJson(json.decode(body));
+        repository.updateAccount(account);
+      }
+    }
+  }
+
+  static void _readCategories(String content) {
+    List<String> list = content.split("\n");
+    CategoryRepository repository = locator.get();
+    for (var body in list) {
+      if (ValidationUtils.isValidString(body)) {
+        var category = Category.fromJson(json.decode(body));
+        repository.updateCategory(category);
+      }
+    }
   }
 
   static Future<void> deleteFile(String name, String fileId) async {
@@ -162,5 +224,17 @@ class GoogleDriveService {
       }
     }
     return list;
+  }
+
+  static Future<void> deleteFiles() async {
+    print("deleting file\n");
+    final driveApi = await _getDriveAPI();
+    var fileList = await driveApi.files.list(spaces: 'appDataFolder');
+    var files = fileList.files ?? [];
+    for (var file in files) {
+      print(file.name);
+      await deleteFile(file.name!, file.id!);
+      // print(file.)
+    }
   }
 }

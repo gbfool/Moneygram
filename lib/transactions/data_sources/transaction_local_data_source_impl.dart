@@ -17,7 +17,11 @@ class TransactionManagerLocalDataSourceImpl
 
   @override
   Future<void> updateTransaction(Transaction transaction) async {
-    transaction.save();
+    if (transaction.isInBox) {
+      transaction.save();
+    } else {
+      addTransaction(transaction);
+    }
   }
 
   @override
