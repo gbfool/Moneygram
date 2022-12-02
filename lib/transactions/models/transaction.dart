@@ -29,16 +29,38 @@ class Transaction extends HiveObject {
   @HiveField(7, defaultValue: false)
   bool isSync;
 
-  Transaction({
-    this.notes,
-    this.id,
-    this.isSync = false,
-    required this.amount,
-    required this.time,
-    required this.categoryId,
-    required this.accountId,
-    required this.type,
-  });
+  @HiveField(8)
+  DateTime createdAt;
+
+  @HiveField(9)
+  DateTime updatedAt;
+
+  Transaction(
+      {this.notes,
+      this.id,
+      this.isSync = false,
+      required this.amount,
+      required this.time,
+      required this.categoryId,
+      required this.accountId,
+      required this.type,
+      required this.createdAt,
+      required this.updatedAt});
+
+  Transaction copyWith({required Transaction newTransaction}) {
+    var obj = this;
+    obj.notes = newTransaction.notes;
+    obj.id = newTransaction.id;
+    obj.isSync = newTransaction.isSync;
+    obj.amount = newTransaction.amount;
+    obj.time = newTransaction.time;
+    obj.categoryId = newTransaction.categoryId;
+    obj.accountId = newTransaction.accountId;
+    obj.type = newTransaction.type;
+    obj.createdAt = newTransaction.createdAt;
+    obj.updatedAt = newTransaction.updatedAt;
+    return obj;
+  }
 
   Map<String, dynamic> toJson() => {
         'notes': notes,
@@ -48,7 +70,9 @@ class Transaction extends HiveObject {
         'accountId': accountId,
         'categoryId': categoryId,
         'id': id,
-        'isSync': isSync
+        'isSync': isSync,
+        'createdAt': createdAt,
+        'updatedAt': updatedAt
       };
 
   factory Transaction.fromJson(Map<String, dynamic> json) => Transaction(
@@ -58,6 +82,8 @@ class Transaction extends HiveObject {
       categoryId: json['categoryId'],
       accountId: json['accountId'],
       type: (json['type'] as String).type,
-      isSync: json['isSync'] ?? false)
+      isSync: (json['isSync'] ?? false),
+      createdAt: DateTime.parse(json['createdAt']),
+      updatedAt: DateTime.parse(json['updatedAt']))
     ..id = json['id'];
 }

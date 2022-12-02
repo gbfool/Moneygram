@@ -16,13 +16,34 @@ class Account extends HiveObject {
   @HiveField(3, defaultValue: false)
   bool isSync;
 
-  Account(
-      {this.id, this.isSync = false, required this.emoji, required this.name});
+  @HiveField(4)
+  DateTime createdAt;
 
-  Map<String, dynamic> toJson() =>
-      {'emoji': emoji, 'name': name, 'id': id, 'isSync': isSync};
+  @HiveField(5)
+  DateTime updatedAt;
+
+  Account(
+      {this.id,
+      this.isSync = false,
+      required this.emoji,
+      required this.name,
+      required this.createdAt,
+      required this.updatedAt});
+
+  Map<String, dynamic> toJson() => {
+        'emoji': emoji,
+        'name': name,
+        'id': id,
+        'isSync': isSync,
+        'createdAt': createdAt,
+        'updatedAt': updatedAt
+      };
 
   factory Account.fromJson(Map<String, dynamic> json) => Account(
-      name: json["name"], emoji: json["emoji"], isSync: json['isSync'] ?? false)
+      name: json["name"],
+      emoji: json["emoji"],
+      isSync: json['isSync'] ?? false,
+      createdAt: json['createdAt'],
+      updatedAt: json['updatedAt'])
     ..id = json["id"];
 }

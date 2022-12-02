@@ -16,13 +16,34 @@ class Category extends HiveObject {
   @HiveField(3, defaultValue: false)
   bool isSync;
 
+  @HiveField(4)
+  DateTime createdAt;
+
+  @HiveField(5)
+  DateTime updatedAt;
+
   Category(
-      {this.id, this.isSync = false, required this.emoji, required this.name});
+      {this.id,
+      this.isSync = false,
+      required this.emoji,
+      required this.name,
+      required this.createdAt,
+      required this.updatedAt});
 
-  Map<String, dynamic> toJson() =>
-      {'emoji': emoji, 'name': name, 'id': id, 'isSync': isSync};
+  Map<String, dynamic> toJson() => {
+        'emoji': emoji,
+        'name': name,
+        'id': id,
+        'isSync': isSync,
+        'createdAt': createdAt,
+        'updatedAt': updatedAt
+      };
 
-  factory Category.fromJson(Map<String, dynamic> json) =>
-      Category(name: json["name"], emoji: json["emoji"], isSync: json['isSync'])
-        ..id = json["id"];
+  factory Category.fromJson(Map<String, dynamic> json) => Category(
+      name: json["name"],
+      emoji: json["emoji"],
+      isSync: json['isSync'],
+      createdAt: json['createdAt'],
+      updatedAt: json['updatedAt'])
+    ..id = json["id"];
 }

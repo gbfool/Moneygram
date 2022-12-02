@@ -18,7 +18,12 @@ class AccountRepositoryImpl extends AccountRepository {
 
   @override
   Future<void> addAccount({required String emoji, required String name}) async {
-    await dataSource.addOrUpdateAccount(Account(name: name, emoji: emoji));
+    var account = Account(
+        name: name,
+        emoji: emoji,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now());
+    await dataSource.addOrUpdateAccount(account);
   }
 
   @override

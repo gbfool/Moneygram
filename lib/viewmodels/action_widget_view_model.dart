@@ -51,14 +51,22 @@ class ActionWidgetViewModel extends BaseViewModel {
     if (_category != null) {
       return _category!;
     }
-    return Category(emoji: "🫠", name: "Default Category");
+    return Category(
+        emoji: "🫠",
+        name: "Default Category",
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now());
   }
 
   Account getAccount() {
     if (_account != null) {
       return _account!;
     }
-    return Account(emoji: "🫠", name: "Default Account");
+    return Account(
+        emoji: "🫠",
+        name: "Default Account",
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now());
   }
 
   void setCategory(Category category) {
@@ -72,7 +80,6 @@ class ActionWidgetViewModel extends BaseViewModel {
     _transactionViewModel.selectedAccountId = account.id;
     notifyListeners();
   }
-
 
   void setSelectedDate(DateTime date) {
     _transactionViewModel.selectedDate = date;

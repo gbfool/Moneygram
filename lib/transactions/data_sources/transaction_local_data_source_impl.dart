@@ -1,5 +1,6 @@
 import 'package:flutter/src/material/date.dart';
 import 'package:hive/hive.dart';
+import 'package:collection/collection.dart';
 import 'package:moneygram/transactions/data_sources/transaction_local_data_source.dart';
 import 'package:moneygram/transactions/models/transaction.dart';
 import 'package:moneygram/utils/enum/box_types.dart';
@@ -10,18 +11,27 @@ class TransactionManagerLocalDataSourceImpl
       Hive.box<Transaction>(BoxType.transactions.stringValue);
   @override
   Future<void> addTransaction(Transaction transaction) async {
-    final id = await transactionBox.add(transaction);
-    transaction.id = id;
+    final boxId = await transactionBox.add(transaction);
+    transaction.id = boxId;
     transaction.save();
   }
 
   @override
   Future<void> updateTransaction(Transaction transaction) async {
-    if (transaction.isInBox) {
+    var previousTransaction = await getTransaction(transaction.id);
+    if (previousTransaction != null) {
+      transaction = previousTransaction.copyWith(newTransaction: transaction);
       transaction.save();
     } else {
       addTransaction(transaction);
     }
+  }
+
+  Future<Transaction?> getTransaction(int? id) async {
+    var values = transactionBox.values;
+    return values.firstWhereOrNull((element) {
+      return element.id == id;
+    });
   }
 
   @override

@@ -51,9 +51,12 @@ class GoogleDriveService {
 
   static Future<void> _backupAccounts(
       {required drive.DriveApi driveApi}) async {
+    var accounts = await _getPendingAccounts();
+    if (accounts.isEmpty) {
+      return;
+    }
     final filename =
         '${GoogleDriveConstants.ACCOUNTS_FOLDER}/${DateTime.now().millisecondsSinceEpoch}.txt';
-    var accounts = await _getPendingAccounts();
     var accountContent = "";
     for (var account in accounts) {
       accountContent += json.encode(account.toJson()) + "\n";
@@ -68,9 +71,12 @@ class GoogleDriveService {
 
   static Future<void> _backupCategories(
       {required drive.DriveApi driveApi}) async {
+    var categories = await _getPendingCategories();
+    if (categories.isEmpty) {
+      return;
+    }
     final filename =
         '${GoogleDriveConstants.CATEGORIES_FOLDER}/${DateTime.now().millisecondsSinceEpoch}.txt';
-    var categories = await _getPendingCategories();
     var categoryContent = "";
     for (var category in categories) {
       categoryContent += json.encode(category.toJson()) + "\n";
@@ -85,9 +91,12 @@ class GoogleDriveService {
 
   static Future<void> _backupTransactions(
       {required drive.DriveApi driveApi}) async {
+    var transactions = await _getPendingTransactions();
+    if (transactions.isEmpty) {
+      return;
+    }
     final filename =
         '${GoogleDriveConstants.TRANSACTIONS_FOLDER}/${DateTime.now().millisecondsSinceEpoch}.txt';
-    var transactions = await _getPendingTransactions();
     var transactionContent = "";
     for (var transaction in transactions) {
       transactionContent += json.encode(transaction.toJson()) + "\n";
@@ -119,7 +128,7 @@ class GoogleDriveService {
   static Future<void> readFiles() async {
     print("reading file\n");
     final driveApi = await _getDriveAPI();
-    var fileList = await driveApi.files.list(spaces: 'appDataFolder');
+    var fileList = await driveApi.files.list(spaces: 'appDataFolder', orderBy: 'modifiedTime asc');
     var files = fileList.files ?? [];
     for (var file in files) {
       print(file.name);
@@ -137,7 +146,7 @@ class GoogleDriveService {
     if (response is! drive.Media) throw Exception("invalid response");
     var decodeString = await utf8.decodeStream(response.stream);
     print('\n --------filename: $filename');
-    print("\n $decodeString");
+    // print("\n $decodeString");
     var folderName = filename.split('/')[0];
     if (folderName == GoogleDriveConstants.TRANSACTIONS_FOLDER) {
       _readTransactions(decodeString);
@@ -153,7 +162,8 @@ class GoogleDriveService {
     TransactionRepository repository = locator.get();
     for (var body in list) {
       if (ValidationUtils.isValidString(body)) {
-        var transaction = Transaction.fromJson(json.decode(body));
+        var transaction = Transaction.fromJson(json.decode(body))
+          ..isSync = true;
         repository.updateTransaction(transaction);
       }
     }
@@ -164,7 +174,7 @@ class GoogleDriveService {
     AccountRepository repository = locator.get();
     for (var body in list) {
       if (ValidationUtils.isValidString(body)) {
-        var account = Account.fromJson(json.decode(body));
+        var account = Account.fromJson(json.decode(body))..isSync = true;
         repository.updateAccount(account);
       }
     }
@@ -175,7 +185,7 @@ class GoogleDriveService {
     CategoryRepository repository = locator.get();
     for (var body in list) {
       if (ValidationUtils.isValidString(body)) {
-        var category = Category.fromJson(json.decode(body));
+        var category = Category.fromJson(json.decode(body))..isSync = true;
         repository.updateCategory(category);
       }
     }

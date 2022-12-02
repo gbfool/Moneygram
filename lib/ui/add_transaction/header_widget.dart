@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HeaderWidget extends StatelessWidget {
+  final bool isSync;
   const HeaderWidget({
+    required this.isSync,
     Key? key,
   }) : super(key: key);
 
@@ -19,6 +21,13 @@ class HeaderWidget extends StatelessWidget {
             Stack(
               alignment: Alignment.center,
               children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text("isSync: $isSync",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.lato(
+                          fontSize: 12, fontWeight: FontWeight.w600)),
+                ),
                 Align(
                   alignment: Alignment.center,
                   child: Text("Add transaction",

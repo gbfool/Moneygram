@@ -53,7 +53,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              HeaderWidget(),
+              HeaderWidget(isSync: _model.currentTransaction?.isSync ?? false),
               Expanded(child: AmountWidget(amount: _model.amount)),
               ActionsWidget(notesTextController: notesTextController),
               KeyboardWidget(
