@@ -20,7 +20,8 @@ class TransactionManagerLocalDataSourceImpl
   Future<void> updateTransaction(Transaction transaction) async {
     var previousTransaction = await getTransaction(transaction.uniqueCode());
     if (previousTransaction != null) {
-      print("----------------- Previous transaction found -------------- ${previousTransaction.notes}");
+      print(
+          "----------------- Previous transaction found -------------- ${previousTransaction.notes}");
       transaction = previousTransaction.copyWith(newTransaction: transaction);
       transaction.save();
     } else {
@@ -31,13 +32,13 @@ class TransactionManagerLocalDataSourceImpl
   Future<Transaction?> getTransaction(String uniqueCode) async {
     var values = transactionBox.values;
     return values.firstWhereOrNull((element) {
-      return element.uniqueCode() == uniqueCode;
+      return element.isActive && element.uniqueCode() == uniqueCode;
     });
   }
 
   @override
   Future<List<Transaction>> transactions() async {
-    return transactionBox.values.toList();
+    return transactionBox.values.where((element) => element.isActive).toList();
   }
 
   @override
@@ -52,15 +53,19 @@ class TransactionManagerLocalDataSourceImpl
 
   @override
   Future<Transaction?> fetchTransactionFromId(int transactionId) async {
-    return transactionBox.get(transactionId);
+    var transaction = transactionBox.get(transactionId);
+    if (transaction == null || !transaction.isActive) {
+      return null;
+    }
+    return transaction;
   }
 
   @override
   Future<List<Transaction>> filteredTransactions(
       DateTimeRange dateTimeRange) async {
-    final List<Transaction> transactions = transactionBox.values.toList();
-    transactions.sort((a, b) => b.time.compareTo(a.time));
-    final filteredTransactions = transactions.takeWhile((value) {
+    final List<Transaction> transactionList = await transactions();
+    transactionList.sort((a, b) => b.time.compareTo(a.time));
+    final filteredTransactions = transactionList.takeWhile((value) {
       return value.time.isAfter(dateTimeRange.start) &&
           value.time.isBefore(dateTimeRange.end);
     }).toList();

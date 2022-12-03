@@ -5,7 +5,7 @@ abstract class CategoryLocalDataSource {
   Future<void> addOrUpdateCategory(Category category);
   Future<void> deleteCategory(int key);
   Future<List<Category>> categories();
-  Category fetchCategory(int categoryId);
   Box<Category> getBox();
+  Category? fetchCategory(int categoryId);
   Future<Category?> fetchCategoryFromId(int categoryId);
 }

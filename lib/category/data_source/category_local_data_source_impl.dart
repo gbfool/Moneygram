@@ -9,14 +9,15 @@ class CategoryLocalDataSourceImpl implements CategoryLocalDataSource {
 
   @override
   Future<void> addOrUpdateCategory(Category category) async {
-    final int id = await categoryBox.add(category);
-    category.id = id;
+    final int boxId = await categoryBox.add(category);
+    category.id = boxId;
     await category.save();
   }
 
   @override
   Future<List<Category>> categories() async {
-    final categories = categoryBox.values.toList();
+    final categories =
+        categoryBox.values.where((element) => element.isActive).toList();
     return categories;
   }
 
@@ -27,18 +28,24 @@ class CategoryLocalDataSourceImpl implements CategoryLocalDataSource {
   }
 
   @override
-  Category fetchCategory(int categoryId) {
-    return categoryBox.values.firstWhere((element) {
-      return element.id == categoryId;
+  Category? fetchCategory(int categoryId) {
+    return categoryBox.values.firstWhereOrNull((element) {
+      return element.isActive && element.id == categoryId;
     });
   }
 
   @override
   Future<Category?> fetchCategoryFromId(int categoryId) async {
-    var values = categoryBox.values;
-    return values.firstWhereOrNull((element) {
-      return element.id == categoryId;
-    });
+    // var values = categoryBox.values;
+    // return values.firstWhereOrNull((element) {
+    //   return element.isActive && element.id == categoryId;
+    // });
+    var category = categoryBox.get(categoryId);
+    // if category is null or not active then return null
+    if (category == null || !category.isActive) {
+      return null;
+    }
+    return category;
   }
 
   @override

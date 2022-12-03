@@ -5,7 +5,7 @@ abstract class AccountLocalDataSource {
   Future<void> addOrUpdateAccount(Account account);
   Future<void> deleteAccount(int key);
   Future<List<Account>> accounts();
-  Account fetchAccount(int accountId);
   Box<Account> getBox();
+  Account? fetchAccount(int accountId);
   Future<Account?> fetchAccountFromId(int accountId);
 }

@@ -35,7 +35,7 @@ class _TransactionRowWidgetState extends State<TransactionRowWidget> {
       Container(
         child: Text(
           widget.categoryLocalDataSource
-              .fetchCategory(widget.transaction.categoryId)
+              .fetchCategory(widget.transaction.categoryId)!
               .emoji,
           style: GoogleFonts.notoEmoji(fontSize: 24),
         ),
@@ -52,7 +52,7 @@ class _TransactionRowWidgetState extends State<TransactionRowWidget> {
                   children: [
                     Text(
                         widget.categoryLocalDataSource
-                            .fetchCategory(widget.transaction.categoryId)
+                            .fetchCategory(widget.transaction.categoryId)!
                             .name,
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.w600)),
