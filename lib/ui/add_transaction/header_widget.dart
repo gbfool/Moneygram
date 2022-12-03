@@ -28,8 +28,11 @@ class _HeaderWidgetState extends State<HeaderWidget> {
 
   @override
   Widget build(BuildContext context) {
+    var isTransactionAlreadyExist =
+        _transactionViewModel.currentTransaction != null;
+    double topAndBottomPadding = isTransactionAlreadyExist ? 8 : 16;
     return Container(
-        padding: const EdgeInsets.only(left: 12, right: 12, top: 8),
+        padding: EdgeInsets.only(left: 12, right: 12, top: topAndBottomPadding),
         child: IntrinsicHeight(
             child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -47,16 +50,18 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                 ),
                 Align(
                   alignment: Alignment.center,
-                  child: Text("Add transaction",
+                  child: Text("Transaction",
                       textAlign: TextAlign.center,
                       style: GoogleFonts.lato(
                           fontSize: 18, fontWeight: FontWeight.w600)),
                 ),
-                Align(
-                    alignment: Alignment.centerRight, child: _buildPopupMenu())
+                if (isTransactionAlreadyExist)
+                  Align(
+                      alignment: Alignment.centerRight,
+                      child: _buildPopupMenu())
               ],
             ),
-            const SizedBox(height: 8),
+            SizedBox(height: topAndBottomPadding),
             Divider(height: 1, thickness: 0)
           ],
         )));
