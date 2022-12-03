@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:moneygram/ui/alert_dialog_view.dart';
-import 'package:moneygram/ui/modal_fit.dart';
+import 'package:moneygram/viewmodels/add_transaction_view_model.dart';
+import 'package:provider/provider.dart';
 
 enum Options { delete }
 
@@ -18,6 +18,14 @@ class HeaderWidget extends StatefulWidget {
 }
 
 class _HeaderWidgetState extends State<HeaderWidget> {
+  late AddTransactionViewModel _transactionViewModel;
+  @override
+  void initState() {
+    _transactionViewModel =
+        Provider.of<AddTransactionViewModel>(context, listen: false);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -102,7 +110,12 @@ class _HeaderWidgetState extends State<HeaderWidget> {
   }
 
   _onMenuItemSelected(int value) async {
-    print(value);
+    if (value == Options.delete.index) {
+      _deleteTransaction();
+    }
+  }
+
+  void _deleteTransaction() {
     showDialog(
         context: context,
         builder: (context) {
@@ -114,16 +127,10 @@ class _HeaderWidgetState extends State<HeaderWidget> {
               onTapLeftButton: () {
                 Navigator.of(context).pop();
               },
-              onTapRightButton: () {});
+              onTapRightButton: () {
+                Navigator.of(context).pop();
+                _transactionViewModel.deleteTransaction();
+              });
         });
-  }
-
-  void _openMenuOptions() {
-    showMaterialModalBottomSheet(
-      expand: false,
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (context) => ModalFit(),
-    );
   }
 }

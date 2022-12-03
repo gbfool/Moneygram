@@ -34,10 +34,18 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
     return BaseScreen<AddTransactionViewModel>(onModelReady: (model) {
       _model = model;
       _model.setValuesForTransaction(widget.transaction);
+      _setViewmodelListeners();
       notesTextController.text = _model.transactionNotes ?? "";
     }, builder: (context, model, child) {
       return _content();
     });
+  }
+
+  void _setViewmodelListeners() {
+    _model.exitScreenCallback = () {
+      print("Callback here");
+      Navigator.of(context).pop();
+    };
   }
 
   Widget _content() {
@@ -74,7 +82,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
     }
   }
 
-  onKeyTap(val) {
+  void onKeyTap(val) {
     var amount = _model.amount ?? "";
     setState(() {
       amount = amount + val;
@@ -82,7 +90,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
     });
   }
 
-  onBackspacePress() {
+  void onBackspacePress() {
     var amount = _model.amount ?? "";
     if (amount.isEmpty) {
       return;

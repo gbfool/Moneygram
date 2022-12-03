@@ -93,8 +93,10 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<void> updateTransaction(Transaction transaction) async {
-    await dataSource.updateTransaction(transaction);
+  Future<void> updateTransaction(Transaction transaction,
+      {bool forceOverride = false}) async {
+    await dataSource.updateTransaction(transaction,
+        forceOverride: forceOverride);
   }
 
   @override

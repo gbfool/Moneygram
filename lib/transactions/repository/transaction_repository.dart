@@ -18,7 +18,7 @@ abstract class TransactionRepository {
   );
   Future<void> clearTransactions();
   Future<void> clearTransaction(int transactionId);
-  Future<void> updateTransaction(Transaction transaction);
+  Future<void> updateTransaction(Transaction transaction, {bool forceOverride});
   Box<Transaction> getBox();
   Future<Transaction?> fetchTransactionFromId(int transactionId);
 }

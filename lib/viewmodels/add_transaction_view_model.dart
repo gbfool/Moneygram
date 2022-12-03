@@ -23,6 +23,7 @@ class AddTransactionViewModel extends BaseViewModel {
   DateTime? selectedDate;
   TransactionType transactionType = TransactionType.expense;
   Transaction? currentTransaction;
+  Function()? exitScreenCallback;
 
   bool get isSaveButtonEnable {
     if (amount == null || amount!.trim() == "") return false;
@@ -72,6 +73,19 @@ class AddTransactionViewModel extends BaseViewModel {
     } else {
       transactionRepository.addTransaction(transactionNotes, validAmount, date,
           selectedCategoryId!, selectedAccountId!, transactionType);
+    }
+  }
+
+  void deleteTransaction() {
+    if (currentTransaction == null) {
+      return;
+    }
+    currentTransaction!
+      ..isActive = false
+      ..isSync = false;
+    transactionRepository.updateTransaction(currentTransaction!);
+    if (exitScreenCallback != null) {
+      exitScreenCallback!();
     }
   }
 }

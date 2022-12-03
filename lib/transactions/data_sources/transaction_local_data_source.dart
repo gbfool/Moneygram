@@ -4,7 +4,8 @@ import 'package:moneygram/transactions/models/transaction.dart';
 
 abstract class TransactionManagerLocalDataSource {
   Future<void> addTransaction(Transaction transaction);
-  Future<void> updateTransaction(Transaction transaction);
+  Future<void> updateTransaction(Transaction transaction,
+      {bool forceOverride = false});
   Future<List<Transaction>> transactions();
   Future<List<Transaction>> filteredTransactions(DateTimeRange dateTimeRange);
   Future<void> clearTransactions();

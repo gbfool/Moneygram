@@ -17,15 +17,22 @@ class TransactionManagerLocalDataSourceImpl
   }
 
   @override
-  Future<void> updateTransaction(Transaction transaction) async {
-    var previousTransaction = await getTransaction(transaction.uniqueCode());
-    if (previousTransaction != null) {
-      print(
-          "----------------- Previous transaction found -------------- ${previousTransaction.notes}");
-      transaction = previousTransaction.copyWith(newTransaction: transaction);
-      transaction.save();
+  Future<void> updateTransaction(Transaction transaction,
+      {bool forceOverride = false}) async {
+    if (forceOverride) {
+      var previousTransaction = await getTransaction(transaction.uniqueCode());
+      if (previousTransaction != null) {
+        print(
+            "----------------- Previous transaction found -------------- ${previousTransaction.notes}");
+        transaction = previousTransaction.copyWith(newTransaction: transaction);
+        transaction.save();
+      } else if (transaction.isInBox) {
+        transaction.save();
+      } else {
+        addTransaction(transaction);
+      }
     } else {
-      addTransaction(transaction);
+      transaction.save();
     }
   }
 

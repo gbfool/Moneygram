@@ -128,7 +128,8 @@ class GoogleDriveService {
   static Future<void> readFiles() async {
     print("reading file\n");
     final driveApi = await _getDriveAPI();
-    var fileList = await driveApi.files.list(spaces: 'appDataFolder', orderBy: 'modifiedTime asc');
+    var fileList = await driveApi.files
+        .list(spaces: 'appDataFolder', orderBy: 'modifiedTime asc');
     var files = fileList.files ?? [];
     for (var file in files) {
       print(file.name);
@@ -164,7 +165,7 @@ class GoogleDriveService {
       if (ValidationUtils.isValidString(body)) {
         var transaction = Transaction.fromJson(json.decode(body))
           ..isSync = true;
-        repository.updateTransaction(transaction);
+        repository.updateTransaction(transaction, forceOverride: true);
       }
     }
   }
