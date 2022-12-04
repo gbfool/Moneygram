@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:moneygram/utils/currency_helper.dart';
 
 class TransactionRowHeaderWidget extends StatelessWidget {
   final String title;
@@ -32,7 +33,7 @@ class TransactionRowHeaderWidget extends StatelessWidget {
         const Spacer(),
         const SizedBox(width: 12),
         Text(
-          total.toString(),
+          CurrencyHelper.formattedCurrency(total),
           style: GoogleFonts.lato(
               fontSize: 22,
               fontWeight: FontWeight.w600,

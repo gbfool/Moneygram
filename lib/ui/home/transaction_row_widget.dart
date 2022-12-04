@@ -46,21 +46,24 @@ class _TransactionRowWidgetState extends State<TransactionRowWidget> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Row(
+              mainAxisSize: MainAxisSize.max,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                        widget.categoryLocalDataSource
-                            .fetchCategory(widget.transaction.categoryId)!
-                            .name,
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w600)),
-                    if (ValidationUtils.isValidString(widget.transaction.notes))
-                      ..._notesWidget()
-                  ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                          widget.categoryLocalDataSource
+                              .fetchCategory(widget.transaction.categoryId)!
+                              .name,
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w600)),
+                      if (ValidationUtils.isValidString(
+                          widget.transaction.notes))
+                        ..._notesWidget()
+                    ],
+                  ),
                 ),
-                const Spacer(),
                 const SizedBox(width: 12),
                 Text(
                     CurrencyHelper.formattedCurrency(widget.transaction.amount),
@@ -69,8 +72,8 @@ class _TransactionRowWidgetState extends State<TransactionRowWidget> {
             ),
             const SizedBox(height: 16),
             const Divider(
-              height: 1,
-              thickness: 1,
+              height: 0.5,
+              thickness: 0,
             )
           ],
         ),
@@ -82,6 +85,8 @@ class _TransactionRowWidgetState extends State<TransactionRowWidget> {
     return [
       SizedBox(height: 4),
       Text(widget.transaction.notes ?? "",
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(fontSize: 14, color: Colors.black.withOpacity(0.6)))
     ];
   }
