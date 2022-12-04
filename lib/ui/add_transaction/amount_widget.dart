@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:moneygram/utils/currency_helper.dart';
 
@@ -10,19 +11,14 @@ class AmountWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color textColor =
-        (amount == null || amount!.isEmpty) ? Colors.grey : Colors.black;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          CurrencyHelper.getCurrency(),
-          style: TextStyle(color: textColor, fontSize: 48),
-        ),
-        const SizedBox(width: 2),
-        renderAmount(),
-        // _inputField(),
-      ],
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(child: renderAmount()),
+        ],
+      ),
     );
   }
 
@@ -38,6 +34,16 @@ class AmountWidget extends StatelessWidget {
         color: Colors.black,
       );
     }
-    return Text(display, style: style);
+    Color textColor =
+        (amount == null || amount!.isEmpty) ? Colors.grey : Colors.black;
+    TextSpan textSpan = TextSpan(children: [
+      TextSpan(
+        text: CurrencyHelper.getCurrency(),
+        style: TextStyle(color: textColor, fontSize: 48),
+      ),
+      TextSpan(text: display, style: style),
+    ]);
+    return AutoSizeText.rich(textSpan,
+        textAlign: TextAlign.center, maxLines: 1, minFontSize: 8, style: style);
   }
 }

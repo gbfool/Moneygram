@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:googleapis/keep/v1.dart';
 import 'package:moneygram/ui/keyboard/keyboard_key.dart';
 import 'package:moneygram/utils/keyboard_helper.dart';
 
@@ -13,7 +14,10 @@ class KeyboardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(left: 16, right: 16),
-      child: Column(children: renderKeyboard()),
+      child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: renderKeyboard()),
     );
   }
 

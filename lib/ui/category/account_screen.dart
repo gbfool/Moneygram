@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:googleapis/keep/v1.dart';
 import 'package:moneygram/account/model/account.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -18,8 +19,16 @@ class _AccountScreenState extends State<AccountScreen> {
   Widget build(BuildContext context) {
     return Container(
         padding: EdgeInsets.only(top: 16, left: 12, right: 12),
-        height: MediaQuery.of(context).size.height * 0.7,
-        child: SingleChildScrollView(child: Column(children: [..._rows()])));
+        constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height * 0.3,
+            maxHeight: MediaQuery.of(context).size.height * 0.7),
+        child: SingleChildScrollView(
+            child: Column(children: [
+          Text("Accounts",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+          const SizedBox(height: 12),
+          ..._rows()
+        ])));
   }
 
   List<Widget> _rows() {
@@ -54,6 +63,7 @@ class _AccountScreenState extends State<AccountScreen> {
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
             child: Column(mainAxisSize: MainAxisSize.min, children: [
               Text(account.emoji, style: GoogleFonts.notoEmoji(fontSize: 24)),
+              const SizedBox(height: 2),
               Flexible(
                 child: Text(
                   account.name,

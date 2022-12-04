@@ -17,12 +17,10 @@ class SaveButton extends StatelessWidget {
         child: Text(
           "Save",
           style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.w600,
-              color: isEnable ? Colors.white : Colors.black.withOpacity(0.2)),
+              fontSize: 20, color: isEnable ? Colors.white : Color(0xff81818d)),
         ),
         decoration: BoxDecoration(
-            color: isEnable ? Colors.black : Colors.black.withOpacity(0.2),
+            color: isEnable ? Colors.black : Color(0xffebeaef),
             borderRadius: BorderRadius.all(Radius.circular(24))),
       ),
     );

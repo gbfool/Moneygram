@@ -18,8 +18,16 @@ class _CategoryScreenState extends State<CategoryScreen> {
   Widget build(BuildContext context) {
     return Container(
         padding: EdgeInsets.only(top: 16, left: 12, right: 12),
-        height: MediaQuery.of(context).size.height * 0.7,
-        child: SingleChildScrollView(child: Column(children: [..._rows()])));
+        constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height * 0.3,
+            maxHeight: MediaQuery.of(context).size.height * 0.7),
+        child: SingleChildScrollView(
+            child: Column(children: [
+          Text("Categories",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+          const SizedBox(height: 12),
+          ..._rows()
+        ])));
   }
 
   List<Widget> _rows() {

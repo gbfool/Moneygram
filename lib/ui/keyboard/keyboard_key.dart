@@ -27,7 +27,7 @@ class _KeyboardKeyState extends State<KeyboardKey> {
       child: Text(
         widget.label,
         style: const TextStyle(
-          fontSize: 28,
+          fontSize: 18,
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -36,20 +36,22 @@ class _KeyboardKeyState extends State<KeyboardKey> {
 
   @override
   Widget build(BuildContext context) {
+    double size = MediaQuery.of(context).size.height / 15;
+    print(size);
     return Material(
         color: Colors.white,
         child: Container(
-          margin: EdgeInsets.only(top: 8),
+          height: size,
+          margin: EdgeInsets.all(2),
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(12))),
+              color: Colors.black.withOpacity(0.05),
+              borderRadius: BorderRadius.circular(6)),
           child: InkWell(
+            borderRadius: BorderRadius.circular(6),
             onTap: () {
               widget.onTap(widget.value);
             },
-            child: AspectRatio(
-              aspectRatio: 1.8,
-              child: renderLabel(),
-            ),
+            child: renderLabel(),
           ),
         ));
   }
