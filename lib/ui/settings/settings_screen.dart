@@ -18,7 +18,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Scaffold(
         body: SafeArea(
             child: Container(
-      padding: EdgeInsets.symmetric(horizontal: 16),
       child: SingleChildScrollView(
         padding: EdgeInsets.only(bottom: 64),
         child: _content(),
@@ -40,19 +39,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 '',
             onTap: () {},
           ),
-          const Divider(),
           SettingsRowWidget(
             title: "Account",
             subtitle: "view, edit and create accounts",
             onTap: () {},
           ),
-          const Divider(),
           SettingsRowWidget(
             title: "Category",
             subtitle: "view, edit and create categories",
             onTap: () {},
           ),
-          const Divider(),
           SettingsRowWidget(
             title: "Backup",
             subtitle:
@@ -64,7 +60,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   builder: (context) => GoogleDriveBackupScreen());
             },
           ),
-          const Divider(),
         ],
       ),
       const SizedBox(height: 24),
@@ -82,7 +77,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   builder: (context) => FeedbackScreen());
             },
           ),
-          const Divider(),
           SettingsRowWidget(
             title: "Rate app",
             subtitle: "Share your experience on Play Store",
@@ -94,9 +88,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Widget _settingsLabel() {
-    return Text("Settings",
-        style: TextStyle(
-            color: Colors.black, fontSize: 32, fontWeight: FontWeight.w600));
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Text("Settings",
+          style: TextStyle(
+              color: Colors.black, fontSize: 32, fontWeight: FontWeight.w600)),
+    );
   }
 }
 
@@ -109,10 +106,13 @@ class SettingsGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Text(
-        title,
-        style: TextStyle(
-            color: Colors.black, fontSize: 24, fontWeight: FontWeight.w600),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Text(
+          title,
+          style: TextStyle(
+              color: Colors.black, fontSize: 24, fontWeight: FontWeight.w600),
+        ),
       ),
       ...children,
     ]);

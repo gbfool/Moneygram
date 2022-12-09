@@ -15,8 +15,8 @@ class SettingsRowWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 12, bottom: 12),
+      child: Container(
+        padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(
             title,
@@ -27,7 +27,9 @@ class SettingsRowWidget extends StatelessWidget {
           Text(
             subtitle,
             style: TextStyle(color: Colors.black.withOpacity(0.7)),
-          )
+          ),
+          const SizedBox(height: 16),
+          const Divider(height: 0.5, thickness: 0),
         ]),
       ),
     );
