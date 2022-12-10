@@ -76,12 +76,20 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<String> totalTransactions(TransactionType type) async {
+  Future<String> totalTransactions(
+      TransactionType type, FilterBudget filterBudget) async {
     final List<Transaction> transactions = await fetchAndCache();
-    final total = transactions
-        .where((element) => element.type == type)
-        .map((e) => e.amount)
-        .fold<double>(0, (previousValue, element) => previousValue + element);
+    transactions.sort((a, b) => b.time.compareTo(a.time));
+    double total = 0;
+    for (var transaction in transactions) {
+      if (transaction.type != type) {
+        continue;
+      }
+    }
+    // final total = transactions
+    //     .where((element) => element.type == type)
+    //     .map((e) => e.amount)
+    //     .fold<double>(0, (previousValue, element) => previousValue + element);
     return CurrencyHelper.formattedCurrency(total);
   }
 

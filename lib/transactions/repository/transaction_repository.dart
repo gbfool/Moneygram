@@ -1,12 +1,13 @@
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:moneygram/transactions/models/transaction.dart';
+import 'package:moneygram/utils/enum/filter_budget.dart';
 import 'package:moneygram/utils/enum/filter_days.dart';
 import 'package:moneygram/utils/enum/transaction_type.dart';
 
 abstract class TransactionRepository {
   Future<List<Transaction>> getAllTransactions(bool isRefresh);
   Future<Map<String, List<Transaction>>> getGroupedTransactions(bool isRefresh);
-  Future<String> totalTransactions(TransactionType type);
+  Future<String> totalTransactions(TransactionType type, FilterBudget filterBudget);
   Future<String> filterTransactionTotal(FilterDays filterDays);
   Future<void> addTransaction(
     String? notes,

@@ -68,21 +68,37 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _timeRangeWidget() {
-    var leftArrow = Container(
-        height: 36,
-        width: 36,
-        alignment: Alignment.center,
-        child: Icon(Icons.arrow_back, color: Colors.black.withOpacity(0.5)),
-        decoration: BoxDecoration(
-            color: Color(0xFFF4F4F4), borderRadius: BorderRadius.circular(18)));
-    var rightArrow = Container(
-        height: 36,
-        width: 36,
-        alignment: Alignment.center,
-        child: Icon(Icons.arrow_forward, color: Colors.black.withOpacity(0.5)),
-        decoration: BoxDecoration(
-            color: Color(0xFFF4F4F4), borderRadius: BorderRadius.circular(18)));
-    var rangeWidget = Text("1 Dec - 31 Dec");
+    var leftArrow = InkWell(
+      borderRadius: BorderRadius.circular(18),
+      onTap: () {
+        _homeScreenViewModel.previousDate();
+      },
+      child: Container(
+          height: 36,
+          width: 36,
+          alignment: Alignment.center,
+          child: Icon(Icons.arrow_back, color: Colors.black.withOpacity(0.5)),
+          decoration: BoxDecoration(
+              color: Color(0xFFF4F4F4),
+              borderRadius: BorderRadius.circular(18))),
+    );
+    var rightArrow = InkWell(
+      borderRadius: BorderRadius.circular(18),
+      onTap: () {
+        _homeScreenViewModel.nextDate();
+      },
+      child: Container(
+          height: 36,
+          width: 36,
+          alignment: Alignment.center,
+          child:
+              Icon(Icons.arrow_forward, color: Colors.black.withOpacity(0.5)),
+          decoration: BoxDecoration(
+              color: Color(0xFFF4F4F4),
+              borderRadius: BorderRadius.circular(18))),
+    );
+    var rangeWidget = Text(
+        "${_homeScreenViewModel.timeline.decoratedStartTime} - ${_homeScreenViewModel.timeline.decoratedEndTime}");
     return Container(
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: Row(

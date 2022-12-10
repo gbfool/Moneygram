@@ -4,6 +4,7 @@ import 'package:moneygram/account/repository/account_repository.dart';
 import 'package:moneygram/category/repository/category_repository.dart';
 import 'package:moneygram/transactions/models/transaction.dart';
 import 'package:moneygram/transactions/repository/transaction_repository.dart';
+import 'package:moneygram/ui/home/models/timeline.dart';
 import 'package:moneygram/viewmodels/base_view_model.dart';
 
 class HomeScreenViewModel extends BaseViewModel {
@@ -17,8 +18,10 @@ class HomeScreenViewModel extends BaseViewModel {
 
   Map<String, List<Transaction>> transactionList = Map();
   ValueListenable<Box<Transaction>>? _valueListenable;
+  late Timeline timeline;
 
   void init() {
+    timeline = Timeline.currentWeek();
     setTransactions();
     listenToTransactionBox();
   }
@@ -40,5 +43,15 @@ class HomeScreenViewModel extends BaseViewModel {
   void transactionListener() {
     print("Adding here");
     setTransactions();
+  }
+
+  void previousDate() {
+    timeline = timeline.previousWeek();
+    notifyListeners();
+  }
+
+  void nextDate() {
+    timeline = timeline.nextWeek();
+    notifyListeners();
   }
 }
