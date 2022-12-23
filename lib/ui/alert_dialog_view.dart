@@ -44,10 +44,11 @@ class AlertDialogView extends StatelessWidget {
   Widget _buildButton({required String text, required VoidCallback callback}) {
     return InkWell(
       onTap: callback,
+      borderRadius: BorderRadius.circular(4),
       child: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
-              border: Border.all(color: Colors.black, width: 0.1)),
+              border: Border.all(color: Colors.black, width: 0.5)),
           padding: EdgeInsets.symmetric(vertical: 8, horizontal: 32),
           child: Text(text)),
     );
