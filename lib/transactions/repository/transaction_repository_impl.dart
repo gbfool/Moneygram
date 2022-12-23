@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:moneygram/transactions/data_sources/transaction_local_data_source.dart';
 import 'package:moneygram/transactions/models/transaction.dart';
 import 'package:moneygram/transactions/repository/transaction_repository.dart';
+import 'package:moneygram/ui/home/models/timeline.dart';
 import 'package:moneygram/utils/currency_helper.dart';
 import 'package:moneygram/utils/enum/filter_budget.dart';
 import 'package:moneygram/utils/enum/transaction_type.dart';
@@ -32,11 +34,15 @@ class TransactionRepositoryImpl extends TransactionRepository {
 
   @override
   Future<Map<String, List<Transaction>>> getGroupedTransactions(
-      bool isRefresh) async {
-    final expenses = await fetchAndCache(isRefresh: isRefresh);
-    expenses.sort((a, b) => b.time.compareTo(a.time));
+      bool isRefresh, Timeline? timeline) async {
+    var transactions = await fetchAndCache(isRefresh: isRefresh);
+    transactions.sort((a, b) => b.time.compareTo(a.time));
+    if (timeline != null) {
+      transactions = transactions.isFilterTimeBetween(
+        DateTimeRange(start: timeline.startTime, end: timeline.endTime));
+    }
     final Map<String, List<Transaction>> groupedExpense =
-        expenses.groupByTime(FilterBudget.daily);
+        transactions.groupByTime(FilterBudget.daily);
     return groupedExpense;
   }
 
@@ -77,20 +83,30 @@ class TransactionRepositoryImpl extends TransactionRepository {
 
   @override
   Future<String> totalTransactions(
-      TransactionType type, FilterBudget filterBudget) async {
-    final List<Transaction> transactions = await fetchAndCache();
-    transactions.sort((a, b) => b.time.compareTo(a.time));
+      TransactionType type, Timeline timeline) async {
+    List<Transaction> transactions = await fetchAndCache();
+    transactions = transactions.isFilterTimeBetween(
+        DateTimeRange(start: timeline.startTime, end: timeline.endTime));
     double total = 0;
-    for (var transaction in transactions) {
-      if (transaction.type != type) {
-        continue;
-      }
+    if (type == TransactionType.expense) {
+      total = transactions.totalExpense;
+    } else {
+      total = transactions.totalIncome;
     }
-    // final total = transactions
-    //     .where((element) => element.type == type)
-    //     .map((e) => e.amount)
-    //     .fold<double>(0, (previousValue, element) => previousValue + element);
     return CurrencyHelper.formattedCurrency(total);
+    // transactions.sort((a, b) => b.time.compareTo(a.time));
+    // double total = 0;
+    // for (var transaction in transactions) {
+    //   if (transaction.type == type &&
+    //       timeline.isDateInRange(transaction.time)) {
+    //     total += transaction.amount;
+    //   }
+    // }
+    // // final total = transactions
+    // //     .where((element) => element.type == type)
+    // //     .map((e) => e.amount)
+    // //     .fold<double>(0, (previousValue, element) => previousValue + element);
+    // return CurrencyHelper.formattedCurrency(total);
   }
 
   Future<List<Transaction>> fetchAndCache({bool isRefresh = false}) async {

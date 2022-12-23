@@ -183,10 +183,14 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         children: [
           _buildExpenseIncomeWidgetV2(
-              emoji: "💸", header: "Expenses", amount: "₹200"),
+              emoji: "💸",
+              header: "Expenses",
+              amount: _homeScreenViewModel.totalExpense),
           const SizedBox(height: 16),
           _buildExpenseIncomeWidgetV2(
-              emoji: "💰", header: "Income", amount: "₹90000")
+              emoji: "💰",
+              header: "Income",
+              amount: _homeScreenViewModel.totalIncome)
         ],
       ),
     );

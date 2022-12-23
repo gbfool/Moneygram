@@ -3,6 +3,14 @@ import 'package:intl/intl.dart';
 import 'package:moneygram/utils/enum/filter_budget.dart';
 
 extension DateUtils on DateTime {
+  bool isGreaterThanEqualTo(DateTime dateTime) {
+    return this.isAtSameMomentAs(dateTime) || this.isAfter(dateTime);
+  }
+
+  bool isLessThanEqualTo(DateTime dateTime) {
+    return this.isAtSameMomentAs(dateTime) || this.isBefore(dateTime);
+  }
+
   bool get isToday {
     final now = DateTime.now();
     return now.day == day && now.month == month && now.year == year;

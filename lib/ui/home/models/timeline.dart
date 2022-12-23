@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:moneygram/utils/time_extension.dart';
 
 class Timeline {
   final DateTime startTime;
@@ -75,5 +76,10 @@ class Timeline {
 
   static DateTime findLastDateOfTheMonth(DateTime dateTime) {
     return DateTime(dateTime.year, dateTime.month + 1, 0, 23, 59, 59);
+  }
+
+  bool isDateInRange(DateTime dateTime) {
+    return startTime.isLessThanEqualTo(dateTime) &&
+        endTime.isGreaterThanEqualTo(dateTime);
   }
 }

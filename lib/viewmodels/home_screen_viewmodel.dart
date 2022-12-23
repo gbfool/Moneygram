@@ -5,6 +5,7 @@ import 'package:moneygram/category/repository/category_repository.dart';
 import 'package:moneygram/transactions/models/transaction.dart';
 import 'package:moneygram/transactions/repository/transaction_repository.dart';
 import 'package:moneygram/ui/home/models/timeline.dart';
+import 'package:moneygram/utils/enum/transaction_type.dart';
 import 'package:moneygram/viewmodels/base_view_model.dart';
 
 class HomeScreenViewModel extends BaseViewModel {
@@ -19,15 +20,22 @@ class HomeScreenViewModel extends BaseViewModel {
   Map<String, List<Transaction>> transactionList = Map();
   ValueListenable<Box<Transaction>>? _valueListenable;
   late Timeline timeline;
+  String totalExpense = "0";
+  String totalIncome = "0";
 
   void init() {
-    timeline = Timeline.currentWeek();
+    timeline = Timeline.currentMonth();
     setTransactions();
     listenToTransactionBox();
   }
 
   void setTransactions() async {
-    transactionList = await transactionRepository.getGroupedTransactions(true);
+    transactionList =
+        await transactionRepository.getGroupedTransactions(true, timeline);
+    totalExpense = await transactionRepository.totalTransactions(
+        TransactionType.expense, timeline);
+    totalIncome = await transactionRepository.totalTransactions(
+        TransactionType.income, timeline);
     notifyListeners();
   }
 
@@ -46,12 +54,12 @@ class HomeScreenViewModel extends BaseViewModel {
   }
 
   void previousDate() {
-    timeline = timeline.previousWeek();
-    notifyListeners();
+    timeline = timeline.previousMonth();
+    setTransactions();
   }
 
   void nextDate() {
-    timeline = timeline.nextWeek();
-    notifyListeners();
+    timeline = timeline.nextMonth();
+    setTransactions();
   }
 }
