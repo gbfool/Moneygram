@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:moneygram/account/data_source/account_local_data_source.dart';
 import 'package:moneygram/category/data_source/category_local_data_source.dart';
 import 'package:moneygram/transactions/models/transaction.dart';
 import 'package:moneygram/utils/currency_helper.dart';
+import 'package:moneygram/utils/custom_text_style.dart';
 import 'package:moneygram/utils/validation_utils.dart';
 
 class TransactionRowWidget extends StatefulWidget {
@@ -37,7 +37,7 @@ class _TransactionRowWidgetState extends State<TransactionRowWidget> {
           widget.categoryLocalDataSource
               .fetchCategory(widget.transaction.categoryId)!
               .emoji,
-          style: GoogleFonts.notoEmoji(fontSize: 24),
+          style: CustomTextStyle.emojiStyle(fontSize: 24),
         ),
       ),
       const SizedBox(width: 12),

@@ -75,6 +75,18 @@ extension DateUtils on DateTime {
         (isAtSameMomentAs(range.end) || isBefore(range.end));
   }
 
+  String get decoratedDay {
+    return DateFormat('dd').format(this);
+  }
+
+  String get decoratedWeek {
+    return DateFormat('EEEE').format(this);
+  }
+
+  String get decoratedMonthAndYear {
+    return DateFormat('MMMM yyyy').format(this);
+  }
+
   String get decoratedDate {
     if (isToday) {
       return "Today";

@@ -33,7 +33,7 @@ class TransactionRepositoryImpl extends TransactionRepository {
   }
 
   @override
-  Future<Map<String, List<Transaction>>> getGroupedTransactions(
+  Future<Map<DateTime, List<Transaction>>> getGroupedTransactions(
       bool isRefresh, Timeline? timeline) async {
     var transactions = await fetchAndCache(isRefresh: isRefresh);
     transactions.sort((a, b) => b.time.compareTo(a.time));
@@ -41,8 +41,8 @@ class TransactionRepositoryImpl extends TransactionRepository {
       transactions = transactions.isFilterTimeBetween(
         DateTimeRange(start: timeline.startTime, end: timeline.endTime));
     }
-    final Map<String, List<Transaction>> groupedExpense =
-        transactions.groupByTime(FilterBudget.daily);
+    final Map<DateTime, List<Transaction>> groupedExpense =
+        transactions.groupByDateTime(FilterBudget.daily);
     return groupedExpense;
   }
 

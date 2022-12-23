@@ -5,9 +5,9 @@ import 'package:moneygram/ui/add_transaction/add_transaction_page.dart';
 import 'package:moneygram/ui/base_screen.dart';
 import 'package:moneygram/ui/home/transaction_card_widget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:moneygram/utils/custom_text_style.dart';
 import 'package:moneygram/viewmodels/home_screen_viewmodel.dart';
 import 'package:moneygram/utils/transaction_extension.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key, required this.title}) : super(key: key);
@@ -57,6 +57,7 @@ class _HomePageState extends State<HomePage> {
   Widget _body() {
     return Container(
       padding: EdgeInsets.only(top: 12),
+      color: Color(0xFFFDFCFA),
       child: Column(
         children: [
           _timeRangeWidget(),
@@ -122,7 +123,7 @@ class _HomePageState extends State<HomePage> {
         final transactions = maps.values.toList()[index - 1];
         transactions.sort((a, b) => b.time.compareTo(a.time));
         return TransactionCardWidget(
-            title: maps.keys.toList()[index - 1],
+            dateTime: maps.keys.toList()[index - 1],
             total: transactions.filterTotal,
             transactions: transactions,
             onTap: (transaction) {
@@ -200,7 +201,7 @@ class _HomePageState extends State<HomePage> {
     var textSpan = TextSpan(children: [
       TextSpan(
           text: "💸",
-          style: GoogleFonts.notoEmoji(fontSize: 14, color: Colors.black)),
+          style: CustomTextStyle.emojiStyle(fontSize: 14, color: Colors.black)),
       TextSpan(text: " Expenses", style: TextStyle(color: Color(0xFF8c8c8c)))
     ]);
     var amountWidget = Text(
@@ -227,7 +228,7 @@ class _HomePageState extends State<HomePage> {
     var textSpan = TextSpan(children: [
       TextSpan(
           text: emoji,
-          style: GoogleFonts.notoEmoji(fontSize: 18, color: Colors.black)),
+          style: CustomTextStyle.emojiStyle(fontSize: 18, color: Colors.black)),
       TextSpan(
           text: " $header",
           style: TextStyle(fontSize: 14, color: Colors.black.withOpacity(0.6)))

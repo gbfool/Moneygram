@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:googleapis/keep/v1.dart';
 import 'package:moneygram/account/model/account.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:moneygram/utils/custom_text_style.dart';
 
 class AccountScreen extends StatefulWidget {
   final List<Account> accountList;
@@ -62,7 +61,8 @@ class _AccountScreenState extends State<AccountScreen> {
             padding: EdgeInsets.only(top: 14, bottom: 14),
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
             child: Column(mainAxisSize: MainAxisSize.min, children: [
-              Text(account.emoji, style: GoogleFonts.notoEmoji(fontSize: 24)),
+              Text(account.emoji,
+                  style: CustomTextStyle.emojiStyle(fontSize: 24)),
               const SizedBox(height: 2),
               Flexible(
                 child: Text(

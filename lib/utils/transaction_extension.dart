@@ -6,7 +6,6 @@ import 'package:moneygram/utils/enum/transaction_type.dart';
 import 'package:moneygram/utils/list_utils.dart';
 import 'package:moneygram/utils/time_extension.dart';
 
-
 extension TotalAmountOnTransaction on Iterable<Transaction> {
   List<Transaction> get expenseList =>
       where((element) => element.type == TransactionType.expense).toList();
@@ -14,7 +13,8 @@ extension TotalAmountOnTransaction on Iterable<Transaction> {
   List<Transaction> get incomeList =>
       where((element) => element.type == TransactionType.income).toList();
 
-  String get balance => CurrencyHelper.formattedCurrency(totalIncome - totalExpense);
+  String get balance =>
+      CurrencyHelper.formattedCurrency(totalIncome - totalExpense);
 
   List<Transaction> isFilterTimeBetween(DateTimeRange range) {
     return where((element) => element.time.isAfterBeforeTime(range)).toList();
@@ -57,6 +57,10 @@ extension TotalAmountOnTransaction on Iterable<Transaction> {
 
   Map<String, List<Transaction>> groupByTime(FilterBudget filterBudget) {
     return groupBy(
-            this, (Transaction element) => element.time.formatted(filterBudget));
+        this, (Transaction element) => element.time.formatted(filterBudget));
+  }
+
+  Map<DateTime, List<Transaction>> groupByDateTime(FilterBudget filterBudget) {
+    return groupBy(this, (Transaction element) => element.time);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:moneygram/utils/custom_text_style.dart';
 
 class FeedbackScreen extends StatefulWidget {
   const FeedbackScreen({Key? key}) : super(key: key);
@@ -144,7 +145,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
             EdgeInsets.only(left: isFirst ? 0 : 4, right: 4, top: 6, bottom: 6),
         child: Text(
           emoji,
-          style: GoogleFonts.notoEmoji(fontSize: isSelected ? 40 : 32),
+          style: CustomTextStyle.emojiStyle(fontSize: isSelected ? 40 : 32),
         ),
       ),
     );

@@ -17,7 +17,7 @@ class HomeScreenViewModel extends BaseViewModel {
   final AccountRepository accountRepository;
   final CategoryRepository categoryRepository;
 
-  Map<String, List<Transaction>> transactionList = Map();
+  Map<DateTime, List<Transaction>> transactionList = Map();
   ValueListenable<Box<Transaction>>? _valueListenable;
   late Timeline timeline;
   String totalExpense = "0";

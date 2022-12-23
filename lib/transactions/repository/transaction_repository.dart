@@ -6,7 +6,7 @@ import 'package:moneygram/utils/enum/transaction_type.dart';
 
 abstract class TransactionRepository {
   Future<List<Transaction>> getAllTransactions(bool isRefresh);
-  Future<Map<String, List<Transaction>>> getGroupedTransactions(
+  Future<Map<DateTime, List<Transaction>>> getGroupedTransactions(
       bool isRefresh, Timeline? timeline);
   Future<String> totalTransactions(TransactionType type, Timeline timeline);
   Future<String> filterTransactionTotal(FilterDays filterDays);

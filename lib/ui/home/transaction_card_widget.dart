@@ -5,13 +5,13 @@ import 'package:moneygram/ui/home/transaction_row_header_widget.dart';
 import 'package:moneygram/ui/home/transaction_row_widget.dart';
 
 class TransactionCardWidget extends StatefulWidget {
-  final String title;
+  final DateTime dateTime;
   final double total;
   final List<Transaction> transactions;
   final Function(Transaction) onTap;
   const TransactionCardWidget(
       {Key? key,
-      required this.title,
+      required this.dateTime,
       required this.total,
       required this.transactions,
       required this.onTap})
@@ -25,8 +25,10 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.white,
+      margin: EdgeInsets.only(top: 12),
       child: Column(mainAxisSize: MainAxisSize.min, children: [
-        TransactionRowHeaderWidget(title: widget.title, total: widget.total),
+        TransactionRowHeaderWidget(dateTime: widget.dateTime, total: widget.total),
         const SizedBox(height: 8),
         _transactionList()
       ]),

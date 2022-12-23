@@ -7,6 +7,7 @@ class AlertDialogView extends StatelessWidget {
   final String rightButtonText;
   final VoidCallback onTapLeftButton;
   final VoidCallback onTapRightButton;
+
   const AlertDialogView({
     Key? key,
     required this.title,
