@@ -11,6 +11,8 @@ class ManageCategoryViewModel extends BaseViewModel {
   List<Category> incomeCategories = [];
 
   void fetchCategories() async {
+    expenseCategories = [];
+    incomeCategories = [];
     var categories = await categoryRepository.categories();
     for (var category in categories) {
       if (category.transactionType == TransactionType.expense) {

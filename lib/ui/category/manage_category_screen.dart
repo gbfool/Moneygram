@@ -29,17 +29,23 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
       appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          surfaceTintColor: Colors.transparent,
           title: Text("Categories")),
       body: _body(),
+      floatingActionButton: _fab(),
     );
   }
 
   Widget _body() {
-    return ListView.builder(
-        itemCount: _manageCategoryViewModel.expenseCategories.length,
-        itemBuilder: (context, index) {
-          return _row(_manageCategoryViewModel.expenseCategories[index]);
-        });
+    return Container(
+      color: Colors.white,
+      child: ListView.builder(
+          itemCount: _manageCategoryViewModel.expenseCategories.length,
+          itemBuilder: (context, index) {
+            return _row(_manageCategoryViewModel.expenseCategories[index]);
+          }),
+    );
   }
 
   Widget _row(Category category) {
@@ -54,7 +60,10 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
                 Text(category.emoji,
                     style: CustomTextStyle.emojiStyle(fontSize: 24)),
                 SizedBox(width: 12),
-                Text(category.name)
+                Text(
+                  category.name,
+                  style: TextStyle(fontSize: 16),
+                )
               ],
             ),
             const SizedBox(height: 12),
@@ -65,8 +74,25 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
     );
   }
 
-  void _openAddEditCategoryScreen({required Category category}) {
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => AddEditCategoryScreen(category: category)));
+  void _openAddEditCategoryScreen({Category? category}) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => AddEditCategoryScreen(
+              category: category,
+              addOrEditPerformed: () =>
+                  _manageCategoryViewModel.fetchCategories(),
+            )));
+  }
+
+  Widget _fab() {
+    return FloatingActionButton(
+      onPressed: () => _openAddEditCategoryScreen(),
+      tooltip: 'Add Category',
+      backgroundColor: Colors.white,
+      child: const Icon(
+        Icons.add,
+        size: 32,
+        color: Colors.black,
+      ),
+    );
   }
 }

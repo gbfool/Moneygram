@@ -8,7 +8,7 @@ class CategoryLocalDataSourceImpl implements CategoryLocalDataSource {
   late final categoryBox = Hive.box<Category>(BoxType.category.stringValue);
 
   @override
-  Future<void> addOrUpdateCategory(Category category) async {
+  Future<void> addCategory(Category category) async {
     final int boxId = await categoryBox.add(category);
     category.id = boxId;
     await category.save();

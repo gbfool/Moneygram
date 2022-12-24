@@ -8,9 +8,8 @@ class CategoryRepositoryImpl extends CategoryRepository {
   final CategoryLocalDataSource dataSource;
 
   @override
-  Future<void> addCategory(
-      {required Category category}) async {
-    await dataSource.addOrUpdateCategory(category);
+  Future<void> addCategory({required Category category}) async {
+    await dataSource.addCategory(category);
   }
 
   @override
@@ -34,6 +33,6 @@ class CategoryRepositoryImpl extends CategoryRepository {
 
   @override
   Future<void> updateCategory(Category category) {
-    return dataSource.addOrUpdateCategory(category);
+    return category.save();
   }
 }

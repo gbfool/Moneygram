@@ -2,13 +2,18 @@ import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:moneygram/category/model/category.dart' as Moneygram;
+import 'package:moneygram/category/repository/category_repository.dart';
+import 'package:moneygram/di/service_locator.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
+import 'package:moneygram/utils/validation_utils.dart';
 
 /// Example for EmojiPickerFlutter
 class AddEditCategoryScreen extends StatefulWidget {
   final Moneygram.Category? category;
+  final VoidCallback addOrEditPerformed;
 
-  const AddEditCategoryScreen({required this.category});
+  const AddEditCategoryScreen(
+      {required this.category, required this.addOrEditPerformed});
 
   @override
   _AddEditCategoryScreenState createState() => _AddEditCategoryScreenState();
@@ -20,6 +25,7 @@ class _AddEditCategoryScreenState extends State<AddEditCategoryScreen> {
   TextEditingController _textEditingController = TextEditingController();
   bool _isKeyboardOpen = false;
   String hintText = "";
+  final CategoryRepository _categoryRepository = locator.get();
 
   @override
   void initState() {
@@ -39,20 +45,19 @@ class _AddEditCategoryScreenState extends State<AddEditCategoryScreen> {
       appBar: AppBar(
         title: Text('$title Category'),
         actions: [
-          _doneButton(),
+          _actionDoneButton(),
         ],
       ),
       body: _body(),
     );
   }
 
-  Widget _doneButton() {
-    var color = _textEditingController.text.isEmpty
-        ? Colors.black.withOpacity(0.2)
-        : Colors.black;
+  Widget _actionDoneButton() {
+    var color =
+        isAnythingChange() ? Colors.black : Colors.black.withOpacity(0.2);
     return InkWell(
         onTap: () {
-          // Navigator.of(context).pop();
+          _actionButtonOnClicked();
         },
         child: Container(
             padding: EdgeInsets.symmetric(horizontal: 12),
@@ -152,5 +157,40 @@ class _AddEditCategoryScreenState extends State<AddEditCategoryScreen> {
             ),
           )),
     );
+  }
+
+  bool isAnythingChange() {
+    var inputCategoryName = _textEditingController.text;
+    // in case of category addition
+    // only checks whether name is given or not
+    if (widget.category == null) {
+      return ValidationUtils.isValidString(inputCategoryName);
+    }
+
+    // in case of edit category, we need to check
+    // valid name and whether emoji or name has changed
+    if (!ValidationUtils.isValidString(inputCategoryName)) {
+      return false;
+    }
+
+    return widget.category!.emoji != _selectedEmoji ||
+        widget.category!.name != inputCategoryName;
+  }
+
+  void _actionButtonOnClicked() {
+    var category = widget.category;
+    var inputCategoryName = _textEditingController.text;
+    if (category != null) {
+      category.emoji = _selectedEmoji;
+      category.name = inputCategoryName;
+      _categoryRepository.updateCategory(category);
+    } else {
+      category =
+          Moneygram.Category(emoji: _selectedEmoji, name: inputCategoryName);
+      _categoryRepository.addCategory(category: category);
+    }
+    // callback called so that it refreshs the screen
+    widget.addOrEditPerformed();
+    Navigator.of(context).pop();
   }
 }
