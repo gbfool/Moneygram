@@ -70,6 +70,20 @@ extension DateUtils on DateTime {
     }
   }
 
+  DateTime formattedDateTime(FilterBudget filterBudget) {
+    switch (filterBudget) {
+      case FilterBudget.monthly:
+        return DateFormat('MMMM yyyy')
+            .parse(DateFormat('MMMM yyyy').format(this));
+      case FilterBudget.yearly:
+        return DateFormat('yyyy').parse(DateFormat('yyyy').format(this));
+      default:
+        var formattedDate = DateFormat('dd MMM yyyy').format(this);
+        return DateFormat('dd MMM yyyy')
+            .parse(formattedDate);
+    }
+  }
+
   bool isAfterBeforeTime(DateTimeRange range) {
     return (isAfter(range.start) || isAtSameMomentAs(range.start)) &&
         (isAtSameMomentAs(range.end) || isBefore(range.end));

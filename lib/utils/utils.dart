@@ -23,6 +23,12 @@ class Utils {
     list.add(Category(emoji: "🍿", name: "Entertainment"));
     list.add(Category(emoji: "📚", name: "Books"));
     list.add(Category(emoji: "🤷", name: "Miscellenous"));
+    list.add(Category(
+        emoji: "💼", name: "Income", transactionType: TransactionType.income));
+    list.add(Category(
+        emoji: "🤑",
+        name: "Side Income",
+        transactionType: TransactionType.income));
     return list;
   }
 

@@ -51,23 +51,20 @@ class ActionWidgetViewModel extends BaseViewModel {
     if (_category != null) {
       return _category!;
     }
-    return Category(
-        emoji: "🫠",
-        name: "Default Category");
+    return Category(emoji: "🫠", name: "Default Category");
   }
 
   Account getAccount() {
     if (_account != null) {
       return _account!;
     }
-    return Account(
-        emoji: "🫠",
-        name: "Default Account");
+    return Account(emoji: "🫠", name: "Default Account");
   }
 
   void setCategory(Category category) {
     _category = category;
     _transactionViewModel.selectedCategoryId = category.id;
+    _transactionViewModel.transactionType = category.transactionType;
     notifyListeners();
   }
 

@@ -14,8 +14,7 @@ class CategoryHiveHelper {
     if (categories.isEmpty) {
       List<Category> list = Utils.getExpensesCategory();
       for (var category in list) {
-        _categoryRepository.addCategory(
-            name: category.name, emoji: category.emoji);
+        _categoryRepository.addCategory(category: category);
       }
     }
     List<Account> accountList = Utils.getAccounts();

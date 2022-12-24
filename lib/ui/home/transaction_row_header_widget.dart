@@ -6,9 +6,13 @@ import 'package:moneygram/utils/time_extension.dart';
 
 class TransactionRowHeaderWidget extends StatelessWidget {
   final DateTime dateTime;
-  final double total;
+  final double expense;
+  final double income;
   const TransactionRowHeaderWidget(
-      {Key? key, required this.dateTime, required this.total})
+      {Key? key,
+      required this.dateTime,
+      required this.expense,
+      required this.income})
       : super(key: key);
 
   @override
@@ -26,17 +30,14 @@ class TransactionRowHeaderWidget extends StatelessWidget {
         _date(),
         const Spacer(),
         const SizedBox(width: 12),
-        Text(
-          CurrencyHelper.formattedCurrency(total),
-          style: GoogleFonts.lato(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Colors.black.withOpacity(0.5)),
-        ),
+        ..._amountWidget("E", expense),
+        const SizedBox(width: 6),
+        ..._amountWidget("I", income),
       ],
     );
   }
 
+  // ignore: unused_element
   Widget _date2() {
     return Text(
       dateTime.formatted(FilterBudget.daily),
@@ -78,5 +79,26 @@ class TransactionRowHeaderWidget extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  List<Widget> _amountWidget(String symbol, double amount) {
+    List<Widget> widgets = [];
+    var symbolWidget = Container(
+      padding: EdgeInsets.symmetric(horizontal: 4),
+      child: Text(symbol, style: TextStyle(fontWeight: FontWeight.w600)),
+      decoration: BoxDecoration(
+          color: Colors.black.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(4)),
+    );
+    widgets.add(symbolWidget);
+    widgets.add(SizedBox(width: 4));
+    widgets.add(Text(
+      CurrencyHelper.formattedCurrency(amount),
+      style: GoogleFonts.lato(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+          color: Colors.black.withOpacity(0.5)),
+    ));
+    return widgets;
   }
 }

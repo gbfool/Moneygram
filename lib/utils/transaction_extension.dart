@@ -61,6 +61,7 @@ extension TotalAmountOnTransaction on Iterable<Transaction> {
   }
 
   Map<DateTime, List<Transaction>> groupByDateTime(FilterBudget filterBudget) {
-    return groupBy(this, (Transaction element) => element.time);
+    return groupBy(this,
+        (Transaction element) => element.time.formattedDateTime(filterBudget));
   }
 }

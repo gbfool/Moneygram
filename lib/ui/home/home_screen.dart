@@ -7,7 +7,6 @@ import 'package:moneygram/ui/home/transaction_card_widget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
 import 'package:moneygram/viewmodels/home_screen_viewmodel.dart';
-import 'package:moneygram/utils/transaction_extension.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key, required this.title}) : super(key: key);
@@ -124,7 +123,6 @@ class _HomePageState extends State<HomePage> {
         transactions.sort((a, b) => b.time.compareTo(a.time));
         return TransactionCardWidget(
             dateTime: maps.keys.toList()[index - 1],
-            total: transactions.filterTotal,
             transactions: transactions,
             onTap: (transaction) {
               _openTransactionPage(transaction: transaction);
@@ -160,6 +158,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  // ignore: unused_element
   Widget _topWidgetV1() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16),

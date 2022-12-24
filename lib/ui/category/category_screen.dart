@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:moneygram/category/category_hive_helper.dart';
 import 'package:moneygram/category/model/category.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
+import 'package:moneygram/utils/enum/transaction_type.dart';
+import 'package:moneygram/utils/string_extension.dart';
 
 class CategoryScreen extends StatefulWidget {
-  final List<Category> categoryList;
   final Function(Category) onCategorySelected;
-  const CategoryScreen(
-      {Key? key, required this.categoryList, required this.onCategorySelected})
+  const CategoryScreen({Key? key, required this.onCategorySelected})
       : super(key: key);
 
   @override
@@ -14,26 +15,56 @@ class CategoryScreen extends StatefulWidget {
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
+  TransactionType _selectedType = TransactionType.expense;
+  List<Category> categoryList = [];
+  List<Category> filterList = [];
+  @override
+  void initState() {
+    fetchCategories();
+    super.initState();
+  }
+
+  void fetchCategories() async {
+    categoryList = await CategoryHiveHelper().getCategories();
+    _filteredList();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        _body(),
+        Positioned.fill(
+            child:
+                Align(alignment: Alignment.bottomCenter, child: _chipsRow())),
+      ],
+    );
+  }
+
+  Widget _body() {
     return Container(
         padding: EdgeInsets.only(top: 16, left: 12, right: 12),
         constraints: BoxConstraints(
             minHeight: MediaQuery.of(context).size.height * 0.3,
             maxHeight: MediaQuery.of(context).size.height * 0.7),
         child: SingleChildScrollView(
-            child: Column(children: [
-          Text("Categories",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
-          const SizedBox(height: 12),
-          ..._rows()
-        ])));
+            padding: EdgeInsets.only(bottom: 100),
+            child: Column(
+              children: [
+                Text("Categories",
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+                const SizedBox(height: 12),
+                ..._rows()
+              ],
+            )));
   }
 
   List<Widget> _rows() {
     List<Widget> rows = [];
     List<Widget> currentTiles = [];
-    widget.categoryList.forEach((element) {
+    filterList.forEach((element) {
       var tile = _getTile(element);
       currentTiles.add(tile);
       if (currentTiles.length % 3 == 0) {
@@ -85,5 +116,54 @@ class _CategoryScreenState extends State<CategoryScreen> {
       child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: widgets),
     );
+  }
+
+  Widget _chipsRow() {
+    return SafeArea(
+      child: Container(
+        padding: EdgeInsets.only(bottom: 32),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _getChips(TransactionType.expense),
+            const SizedBox(width: 12),
+            _getChips(TransactionType.income),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _getChips(TransactionType type) {
+    bool check = type == _selectedType;
+    return Container(
+      child: FilterChip(
+        showCheckmark: false,
+        selectedColor: Colors.black,
+        pressElevation: 0,
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18),
+        backgroundColor: Colors.grey[300],
+        label: Text(
+          type.nameString.capitalize(),
+          style: TextStyle(
+              fontSize: 16,
+              color: check ? Colors.white : Colors.black,
+              fontWeight: FontWeight.w600),
+        ),
+        selected: check,
+        onSelected: (bool selected) {
+          setState(() {
+            _selectedType = type;
+            _filteredList();
+          });
+        },
+      ),
+    );
+  }
+
+  void _filteredList() {
+    filterList = categoryList
+        .where((element) => element.transactionType == _selectedType)
+        .toList();
   }
 }

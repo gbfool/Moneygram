@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:moneygram/utils/enum/transaction_type.dart';
 
 part 'category.g.dart';
 
@@ -25,16 +26,21 @@ class Category extends HiveObject {
   @HiveField(6)
   bool isActive;
 
-  Category({
-    required this.emoji,
-    required this.name,
-    this.isSync = false,
-    this.isActive = true,
-    this.id,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-  })  : this.createdAt = createdAt ?? DateTime.now(),
-        this.updatedAt = updatedAt ?? DateTime.now();
+  @HiveField(7)
+  TransactionType transactionType;
+
+  Category(
+      {required this.emoji,
+      required this.name,
+      this.isSync = false,
+      this.isActive = true,
+      this.id,
+      DateTime? createdAt,
+      DateTime? updatedAt,
+      TransactionType? transactionType})
+      : this.createdAt = createdAt ?? DateTime.now(),
+        this.updatedAt = updatedAt ?? DateTime.now(),
+        this.transactionType = transactionType ?? TransactionType.expense;
 
   Map<String, dynamic> toJson() => {
         'emoji': emoji,
@@ -43,7 +49,8 @@ class Category extends HiveObject {
         'isSync': isSync,
         'createdAt': createdAt.toIso8601String(),
         'updatedAt': updatedAt.toIso8601String(),
-        'isActive': isActive
+        'isActive': isActive,
+        'transaction_type': transactionType.nameString
       };
 
   String uniqueCode() {
@@ -51,11 +58,12 @@ class Category extends HiveObject {
   }
 
   factory Category.fromJson(Map<String, dynamic> json) => Category(
-      name: json["name"],
-      emoji: json["emoji"],
-      isSync: json['isSync'],
-      createdAt: DateTime.parse(json['createdAt']),
-      updatedAt: DateTime.parse(json['updatedAt']),
-      isActive: json['isActive'])
-    ..id = json["id"];
+        name: json["name"],
+        emoji: json["emoji"],
+        isSync: json['isSync'],
+        createdAt: DateTime.parse(json['createdAt']),
+        updatedAt: DateTime.parse(json['updatedAt']),
+        isActive: json['isActive'],
+        transactionType: (json['transaction_type'] as String).type,
+      )..id = json["id"];
 }

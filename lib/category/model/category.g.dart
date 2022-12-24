@@ -24,13 +24,14 @@ class CategoryAdapter extends TypeAdapter<Category> {
       id: fields[2] as int?,
       createdAt: fields[4] as DateTime?,
       updatedAt: fields[5] as DateTime?,
+      transactionType: fields[7] as TransactionType?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Category obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.emoji)
       ..writeByte(1)
@@ -44,7 +45,9 @@ class CategoryAdapter extends TypeAdapter<Category> {
       ..writeByte(5)
       ..write(obj.updatedAt)
       ..writeByte(6)
-      ..write(obj.isActive);
+      ..write(obj.isActive)
+      ..writeByte(7)
+      ..write(obj.transactionType);
   }
 
   @override

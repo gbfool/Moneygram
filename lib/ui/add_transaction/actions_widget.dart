@@ -154,14 +154,12 @@ class _ActionsWidgetState extends State<ActionsWidget> {
   }
 
   void _openCategoryPage(Category category) async {
-    List<Category> list = await CategoryHiveHelper().getCategories();
     showBarModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
         builder: (context) => SingleChildScrollView(
             controller: ModalScrollController.of(context),
             child: CategoryScreen(
-                categoryList: list,
                 onCategorySelected: (category) {
                   _actionWidgetViewModel.setCategory(category);
                 })));

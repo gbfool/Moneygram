@@ -25,7 +25,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          androidOverscrollIndicator: AndroidOverscrollIndicator.stretch),
+        useMaterial3: true,
+      ),
       title: 'Money',
       home: BottomNavigationState(),
     );

@@ -9,10 +9,7 @@ class CategoryRepositoryImpl extends CategoryRepository {
 
   @override
   Future<void> addCategory(
-      {required String emoji, required String name}) async {
-    var category = Category(
-        name: name,
-        emoji: emoji);
+      {required Category category}) async {
     await dataSource.addOrUpdateCategory(category);
   }
 
