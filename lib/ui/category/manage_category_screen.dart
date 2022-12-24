@@ -44,7 +44,7 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
 
   Widget _row(Category category) {
     return InkWell(
-      onTap: _openAddEditCategoryScreen,
+      onTap: () => _openAddEditCategoryScreen(category: category),
       child: Container(
         padding: EdgeInsets.only(top: 12, left: 12, right: 12),
         child: Column(
@@ -65,8 +65,8 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
     );
   }
 
-  void _openAddEditCategoryScreen() {
+  void _openAddEditCategoryScreen({required Category category}) {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => MyApp()));
+        .push(MaterialPageRoute(builder: (context) => AddEditCategoryScreen(category: category)));
   }
 }
