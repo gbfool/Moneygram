@@ -1,3 +1,5 @@
+import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moneygram/category/category_hive_helper.dart';
 import 'package:moneygram/category/model/category.dart';
@@ -18,6 +20,8 @@ class _CategoryPickerScreenState extends State<CategoryPickerScreen> {
   TransactionType _selectedType = TransactionType.expense;
   List<Category> categoryList = [];
   List<Category> filterList = [];
+
+  int? groupValue = 0;
   @override
   void initState() {
     fetchCategories();
@@ -120,6 +124,76 @@ class _CategoryPickerScreenState extends State<CategoryPickerScreen> {
 
   Widget _chipsRow() {
     return SafeArea(
+      child: CustomSlidingSegmentedControl<int>(
+        initialValue: groupValue,
+        padding: 18,
+        children: {0: Text('Expense'), 1: Text('Income')},
+        decoration: BoxDecoration(
+          color: CupertinoColors.lightBackgroundGray,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(.1),
+              blurRadius: 4.0,
+              spreadRadius: 1.0,
+              offset: Offset(
+                0.0,
+                2.0,
+              ),
+            ),
+          ],
+        ),
+        thumbDecoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(6),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(.05),
+              blurRadius: 2.0,
+              spreadRadius: 0.5,
+              offset: Offset(
+                0.0,
+                2.0,
+              ),
+            ),
+          ],
+        ),
+        duration: Duration(milliseconds: 200),
+        curve: Curves.easeInToLinear,
+        onValueChanged: (int? value) {
+          groupValue = value;
+          _selectedType =
+              value == 0 ? TransactionType.expense : TransactionType.income;
+          setState(() {
+            _filteredList();
+          });
+        },
+      ),
+    );
+    return SafeArea(
+      child: Container(
+        padding: EdgeInsets.all(10),
+        child: CupertinoSlidingSegmentedControl<int>(
+          backgroundColor: Colors.black.withOpacity(0.3),
+          thumbColor: CupertinoColors.black.withOpacity(0.9),
+          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          groupValue: groupValue,
+          children: {
+            0: buildSegment("Expense"),
+            1: buildSegment("Income"),
+          },
+          onValueChanged: (value) {
+            setState(() {
+              groupValue = value;
+              _selectedType =
+                  value == 0 ? TransactionType.expense : TransactionType.income;
+              _filteredList();
+            });
+          },
+        ),
+      ),
+    );
+    return SafeArea(
       child: Container(
         padding: EdgeInsets.only(bottom: 32),
         child: Row(
@@ -130,6 +204,16 @@ class _CategoryPickerScreenState extends State<CategoryPickerScreen> {
             _getChips(TransactionType.income),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget buildSegment(String text) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
+      child: Text(
+        text,
+        style: TextStyle(fontSize: 16, color: Colors.white),
       ),
     );
   }

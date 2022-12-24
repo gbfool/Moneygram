@@ -9,8 +9,15 @@ class ManageCategoryViewModel extends BaseViewModel {
   final CategoryRepository categoryRepository;
   List<Category> expenseCategories = [];
   List<Category> incomeCategories = [];
+  List<Category> filteredCategories = [];
+  TransactionType selectedTransactionType = TransactionType.expense;
 
-  void fetchCategories() async {
+  void initState() async {
+    await fetchCategories();
+    setTransactionType(selectedTransactionType);
+  }
+
+  Future<void> fetchCategories() async {
     expenseCategories = [];
     incomeCategories = [];
     var categories = await categoryRepository.categories();
@@ -20,6 +27,15 @@ class ManageCategoryViewModel extends BaseViewModel {
       } else {
         incomeCategories.add(category);
       }
+    }
+  }
+
+  void setTransactionType(TransactionType type) {
+    selectedTransactionType = type;
+    if (type == TransactionType.expense) {
+      filteredCategories = expenseCategories;
+    } else {
+      filteredCategories = incomeCategories;
     }
     notifyListeners();
   }
