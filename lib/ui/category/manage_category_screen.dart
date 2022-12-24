@@ -49,7 +49,7 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
         _listView(),
         Positioned.fill(
             child:
-                Align(alignment: Alignment.bottomCenter, child: _chipsRow())),
+                Align(alignment: Alignment.bottomCenter, child: _segmentControl())),
       ],
     );
   }
@@ -67,7 +67,7 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
     );
   }
 
-  Widget _chipsRow() {
+  Widget _segmentControl() {
     return SafeArea(
       child: CustomSlidingSegmentedControl<int>(
         initialValue: groupValue,
@@ -115,37 +115,6 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
         },
       ),
     );
-    return SafeArea(
-      child: Container(
-        padding: EdgeInsets.all(10),
-        child: CupertinoSlidingSegmentedControl<int>(
-          backgroundColor: Colors.black.withOpacity(0.3),
-          thumbColor: CupertinoColors.black.withOpacity(0.9),
-          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-          groupValue: groupValue,
-          children: {
-            0: buildSegment("Expense"),
-            1: buildSegment("Income"),
-          },
-          onValueChanged: (value) {
-            setState(() {
-              groupValue = value;
-            });
-          },
-        ),
-      ),
-    );
-    return Container(
-      padding: EdgeInsets.only(bottom: 32),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _getChips(TransactionType.expense),
-          const SizedBox(width: 12),
-          _getChips(TransactionType.income),
-        ],
-      ),
-    );
   }
 
   Widget buildSegment(String text) {
@@ -158,29 +127,6 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
     );
   }
 
-  Widget _getChips(TransactionType type) {
-    bool check = type == _manageCategoryViewModel.selectedTransactionType;
-    return Container(
-      child: FilterChip(
-        showCheckmark: false,
-        selectedColor: Colors.black,
-        pressElevation: 0,
-        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 18),
-        backgroundColor: Colors.grey[300],
-        label: Text(
-          type.nameString.capitalize(),
-          style: TextStyle(
-              fontSize: 16,
-              color: check ? Colors.white : Colors.black,
-              fontWeight: FontWeight.w600),
-        ),
-        selected: check,
-        onSelected: (bool selected) {
-          _manageCategoryViewModel.setTransactionType(type);
-        },
-      ),
-    );
-  }
 
   Widget _row(Category category) {
     return InkWell(
