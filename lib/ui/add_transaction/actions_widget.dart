@@ -3,8 +3,8 @@ import 'package:moneygram/account/model/account.dart';
 import 'package:moneygram/category/category_hive_helper.dart';
 import 'package:moneygram/category/model/category.dart';
 import 'package:moneygram/ui/base_screen.dart';
-import 'package:moneygram/ui/category/account_screen.dart';
-import 'package:moneygram/ui/category/category_screen.dart';
+import 'package:moneygram/ui/account/account_picker_screen.dart';
+import 'package:moneygram/ui/category/category_picker_screen.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:moneygram/ui/date_picker_screen.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
@@ -124,7 +124,7 @@ class _ActionsWidgetState extends State<ActionsWidget> {
         backgroundColor: Colors.transparent,
         builder: (context) => SingleChildScrollView(
             controller: ModalScrollController.of(context),
-            child: AccountScreen(
+            child: AccountPickerScreen(
                 accountList: list,
                 onAccountSelected: (account) {
                   _actionWidgetViewModel.setAccount(account);
@@ -159,9 +159,8 @@ class _ActionsWidgetState extends State<ActionsWidget> {
         backgroundColor: Colors.transparent,
         builder: (context) => SingleChildScrollView(
             controller: ModalScrollController.of(context),
-            child: CategoryScreen(
-                onCategorySelected: (category) {
-                  _actionWidgetViewModel.setCategory(category);
-                })));
+            child: CategoryPickerScreen(onCategorySelected: (category) {
+              _actionWidgetViewModel.setCategory(category);
+            })));
   }
 }

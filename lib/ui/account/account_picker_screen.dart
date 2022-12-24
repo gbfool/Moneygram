@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:moneygram/account/model/account.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
 
-class AccountScreen extends StatefulWidget {
+class AccountPickerScreen extends StatefulWidget {
   final List<Account> accountList;
   final Function(Account) onAccountSelected;
-  const AccountScreen(
+  const AccountPickerScreen(
       {Key? key, required this.accountList, required this.onAccountSelected})
       : super(key: key);
 
   @override
-  State<AccountScreen> createState() => _AccountScreenState();
+  State<AccountPickerScreen> createState() => _AccountPickerScreenState();
 }
 
-class _AccountScreenState extends State<AccountScreen> {
+class _AccountPickerScreenState extends State<AccountPickerScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(

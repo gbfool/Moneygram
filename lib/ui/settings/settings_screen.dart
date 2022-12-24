@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:moneygram/backup/google_drive_backup_screen.dart';
 import 'package:moneygram/feedback/feedback_screen.dart';
+import 'package:moneygram/ui/category/manage_category_screen.dart';
 import 'package:moneygram/ui/settings/settings_row_widget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
@@ -47,7 +48,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
           SettingsRowWidget(
             title: "Category",
             subtitle: "view, edit and create categories",
-            onTap: () {},
+            onTap: () {
+              _openManageCategoryScreen();
+            },
           ),
           SettingsRowWidget(
             title: "Backup",
@@ -94,6 +97,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
           style: TextStyle(
               color: Colors.black, fontSize: 32, fontWeight: FontWeight.w600)),
     );
+  }
+
+  void _openManageCategoryScreen() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => ManageCategoryScreen()));
   }
 }
 

@@ -43,6 +43,7 @@ dependencies:
   googleapis: ^9.2.0
   google_sign_in: ^5.4.2
   auto_size_text: ^3.0.0
+  emoji_picker_flutter: ^1.5.1
 
 dev_dependencies:
   flutter_test:

@@ -5,16 +5,16 @@ import 'package:moneygram/utils/custom_text_style.dart';
 import 'package:moneygram/utils/enum/transaction_type.dart';
 import 'package:moneygram/utils/string_extension.dart';
 
-class CategoryScreen extends StatefulWidget {
+class CategoryPickerScreen extends StatefulWidget {
   final Function(Category) onCategorySelected;
-  const CategoryScreen({Key? key, required this.onCategorySelected})
+  const CategoryPickerScreen({Key? key, required this.onCategorySelected})
       : super(key: key);
 
   @override
-  State<CategoryScreen> createState() => _CategoryScreenState();
+  State<CategoryPickerScreen> createState() => _CategoryPickerScreenState();
 }
 
-class _CategoryScreenState extends State<CategoryScreen> {
+class _CategoryPickerScreenState extends State<CategoryPickerScreen> {
   TransactionType _selectedType = TransactionType.expense;
   List<Category> categoryList = [];
   List<Category> filterList = [];
