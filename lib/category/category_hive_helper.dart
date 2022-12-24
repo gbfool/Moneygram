@@ -23,7 +23,7 @@ class CategoryHiveHelper {
       return;
     }
     for (var account in accountList) {
-      _accountRepository.addAccount(name: account.name, emoji: account.emoji);
+      _accountRepository.addAccount(account: account);
     }
   }
 

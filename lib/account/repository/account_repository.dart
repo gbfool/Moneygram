@@ -3,8 +3,7 @@ import 'package:moneygram/account/model/account.dart';
 abstract class AccountRepository {
   Future<List<Account>> accounts({bool isSort});
   Future<void> addAccount({
-    required String emoji,
-    required String name,
+    required Account account,
   });
   Future<void> deleteAccount(int key);
 
