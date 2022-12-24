@@ -123,6 +123,7 @@ class _CategoryPickerScreenState extends State<CategoryPickerScreen> {
 
   Widget _chipsRow() {
     return SafeArea(
+      minimum: EdgeInsets.only(bottom: 24),
       child: CustomSlidingSegmentedControl<int>(
         initialValue: groupValue,
         padding: 18,
@@ -180,7 +181,6 @@ class _CategoryPickerScreenState extends State<CategoryPickerScreen> {
       ),
     );
   }
-
 
   void _filteredList() {
     filterList = categoryList

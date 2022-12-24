@@ -48,8 +48,8 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
       children: [
         _listView(),
         Positioned.fill(
-            child:
-                Align(alignment: Alignment.bottomCenter, child: _segmentControl())),
+            child: Align(
+                alignment: Alignment.bottomCenter, child: _segmentControl())),
       ],
     );
   }
@@ -69,6 +69,7 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
 
   Widget _segmentControl() {
     return SafeArea(
+      minimum: EdgeInsets.only(bottom: 24),
       child: CustomSlidingSegmentedControl<int>(
         initialValue: groupValue,
         padding: 18,
@@ -126,7 +127,6 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
       ),
     );
   }
-
 
   Widget _row(Category category) {
     return InkWell(
