@@ -158,6 +158,7 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => AddEditCategoryScreen(
               category: category,
+              transactionType: _manageCategoryViewModel.selectedTransactionType,
               addOrEditPerformed: () => _manageCategoryViewModel.initState(),
             )));
   }

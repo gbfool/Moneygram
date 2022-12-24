@@ -5,15 +5,19 @@ import 'package:moneygram/category/model/category.dart' as Moneygram;
 import 'package:moneygram/category/repository/category_repository.dart';
 import 'package:moneygram/di/service_locator.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
+import 'package:moneygram/utils/enum/transaction_type.dart';
 import 'package:moneygram/utils/validation_utils.dart';
 
 /// Example for EmojiPickerFlutter
 class AddEditCategoryScreen extends StatefulWidget {
   final Moneygram.Category? category;
+  final TransactionType transactionType;
   final VoidCallback addOrEditPerformed;
 
   const AddEditCategoryScreen(
-      {required this.category, required this.addOrEditPerformed});
+      {required this.category,
+      required this.transactionType,
+      required this.addOrEditPerformed});
 
   @override
   _AddEditCategoryScreenState createState() => _AddEditCategoryScreenState();
@@ -185,8 +189,10 @@ class _AddEditCategoryScreenState extends State<AddEditCategoryScreen> {
       category.name = inputCategoryName;
       _categoryRepository.updateCategory(category);
     } else {
-      category =
-          Moneygram.Category(emoji: _selectedEmoji, name: inputCategoryName);
+      category = Moneygram.Category(
+          emoji: _selectedEmoji,
+          name: inputCategoryName,
+          transactionType: widget.transactionType);
       _categoryRepository.addCategory(category: category);
     }
     // callback called so that it refreshs the screen
