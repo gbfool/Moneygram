@@ -20,7 +20,8 @@ class ManageCategoryViewModel extends BaseViewModel {
   Future<void> fetchCategories() async {
     expenseCategories = [];
     incomeCategories = [];
-    var categories = await categoryRepository.categories();
+    var categories =
+        await categoryRepository.categories(includingInActive: true);
     for (var category in categories) {
       if (category.transactionType == TransactionType.expense) {
         expenseCategories.add(category);
@@ -37,6 +38,12 @@ class ManageCategoryViewModel extends BaseViewModel {
     } else {
       filteredCategories = incomeCategories;
     }
+    notifyListeners();
+  }
+
+  void setStatus({required Category category, required bool status}) {
+    category.isActive = status;
+    category.save();
     notifyListeners();
   }
 }

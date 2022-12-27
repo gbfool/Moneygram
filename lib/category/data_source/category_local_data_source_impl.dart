@@ -15,9 +15,14 @@ class CategoryLocalDataSourceImpl implements CategoryLocalDataSource {
   }
 
   @override
-  Future<List<Category>> categories() async {
-    final categories =
-        categoryBox.values.where((element) => element.isActive).toList();
+  Future<List<Category>> categories({bool includingInActive = false}) async {
+    final categories = categoryBox.values.where((element) {
+      // if including inactive is true, means getting all elements
+      if (includingInActive) {
+        return true;
+      }
+      return element.isActive;
+    }).toList();
     return categories;
   }
 

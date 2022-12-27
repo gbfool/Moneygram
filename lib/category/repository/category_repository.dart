@@ -1,7 +1,7 @@
 import 'package:moneygram/category/model/category.dart';
 
 abstract class CategoryRepository {
-  Future<List<Category>> categories({bool isSort});
+  Future<List<Category>> categories({bool isSort, bool includingInActive});
 
   Future<void> addCategory({
     required Category category,

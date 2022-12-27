@@ -69,7 +69,6 @@ class TransactionRowHeaderWidget extends StatelessWidget {
               dateTime.decoratedWeek,
               style: GoogleFonts.lato(fontSize: 14, color: Colors.black),
             ),
-            const SizedBox(height: 2),
             Text(
               dateTime.decoratedMonthAndYear,
               style: GoogleFonts.lato(

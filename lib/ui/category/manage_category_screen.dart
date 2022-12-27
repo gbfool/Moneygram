@@ -6,7 +6,6 @@ import 'package:moneygram/ui/base_screen.dart';
 import 'package:moneygram/ui/category/add_edit_category_screen.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
 import 'package:moneygram/utils/enum/transaction_type.dart';
-import 'package:moneygram/utils/string_extension.dart';
 import 'package:moneygram/viewmodels/manage_category_view_model.dart';
 
 class ManageCategoryScreen extends StatefulWidget {
@@ -20,6 +19,8 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
   late ManageCategoryViewModel _manageCategoryViewModel;
 
   int? groupValue = 0;
+  bool _isEditMode = false;
+
   @override
   Widget build(BuildContext context) {
     return BaseScreen<ManageCategoryViewModel>(
@@ -37,10 +38,41 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
           surfaceTintColor: Colors.transparent,
-          title: Text("Categories")),
+          title: Text("Categories"),
+          actions: _appBarActions()),
       body: _body(),
       floatingActionButton: _fab(),
     );
+  }
+
+  List<Widget> _appBarActions() {
+    List<Widget> list = [];
+    if (!_isEditMode) {
+      var editWidget = InkWell(
+        onTap: () {
+          setState(() {
+            _isEditMode = true;
+          });
+        },
+        child: Container(
+            padding: EdgeInsets.only(left: 16, right: 16),
+            child: Icon(Icons.edit_outlined)),
+      );
+      list.add(editWidget);
+    } else {
+      var doneWidget = InkWell(
+        onTap: () {
+          setState(() {
+            _isEditMode = false;
+          });
+        },
+        child: Container(
+            padding: EdgeInsets.only(left: 16, right: 16),
+            child: Icon(Icons.done)),
+      );
+      list.add(doneWidget);
+    }
+    return list;
   }
 
   Widget _body() {
@@ -130,7 +162,9 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
 
   Widget _row(Category category) {
     return InkWell(
-      onTap: () => _openAddEditCategoryScreen(category: category),
+      onTap: _isEditMode
+          ? null
+          : () => _openAddEditCategoryScreen(category: category),
       child: Container(
         padding: EdgeInsets.only(top: 12, left: 12, right: 12),
         child: Column(
@@ -140,10 +174,31 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
                 Text(category.emoji,
                     style: CustomTextStyle.emojiStyle(fontSize: 24)),
                 SizedBox(width: 12),
-                Text(
-                  category.name,
-                  style: TextStyle(fontSize: 16),
-                )
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        category.name,
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      if (_isEditMode)
+                        Text(category.isActive ? "Show" : "Hidden",
+                            style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.black.withOpacity(0.6))),
+                    ],
+                  ),
+                ),
+                Spacer(),
+                const SizedBox(width: 12),
+                if (_isEditMode)
+                  _switchWidget(category, (value) {
+                    setState(() {
+                      _manageCategoryViewModel.setStatus(
+                          category: category, status: value);
+                    });
+                  })
               ],
             ),
             const SizedBox(height: 12),
@@ -152,6 +207,26 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
         ),
       ),
     );
+  }
+
+  Widget _switchWidget(Category category, ValueChanged<bool> callback) {
+    // var widget = Container(
+    //   height: 34.0,
+    //   width: 42.0,
+    //   child: FittedBox(
+    //       fit: BoxFit.contain,
+    //       child: CupertinoSwitch(
+    //           value: category.isActive,
+    //           activeColor: Colors.black.withOpacity(0.8),
+    //           onChanged: callback)),
+    // );
+
+    var widget = Switch(
+        value: category.isActive,
+        activeColor: Colors.black.withOpacity(0.8),
+        onChanged: callback);
+
+    return widget;
   }
 
   void _openAddEditCategoryScreen({Category? category}) {
