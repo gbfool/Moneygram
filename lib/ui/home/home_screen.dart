@@ -5,6 +5,7 @@ import 'package:moneygram/ui/add_transaction/add_transaction_page.dart';
 import 'package:moneygram/ui/base_screen.dart';
 import 'package:moneygram/ui/home/transaction_card_widget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:moneygram/ui/soft_hard_update/app_update_bottom_sheet.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
 import 'package:moneygram/viewmodels/home_screen_viewmodel.dart';
 
@@ -149,13 +150,25 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _openTransactionPage({Transaction? transaction}) async {
+    bool canDismiss = true;
     showBarModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      builder: (context) => AddTransactionPage(
-        transaction: transaction,
-      ),
-    );
+        enableDrag: canDismiss,
+        isDismissible: canDismiss,
+        context: context,
+        builder: (builder) {
+          return AppUpdateBottomSheet(
+              onUpdateClick: () {
+                // _launch(_getLaunchUrl());
+              },
+              isDismissable: canDismiss);
+        });
+    // showBarModalBottomSheet(
+    //   context: context,
+    //   backgroundColor: Colors.transparent,
+    //   builder: (context) => AddTransactionPage(
+    //     transaction: transaction,
+    //   ),
+    // );
   }
 
   // ignore: unused_element
