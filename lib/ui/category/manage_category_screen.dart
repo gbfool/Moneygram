@@ -182,7 +182,7 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
                         category.name,
                         style: TextStyle(fontSize: 16),
                       ),
-                      if (_isEditMode)
+                      if (_isEditMode || true)
                         Text(category.isActive ? "Show" : "Hidden",
                             style: TextStyle(
                                 fontSize: 12,
