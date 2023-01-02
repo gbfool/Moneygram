@@ -78,7 +78,7 @@ class FireFlag {
       await _remoteConfig?.fetchAndActivate();
     } catch (exception) {
       // print('Unable to fetch remote config. Cached or default values will be '
-      // 'used');
+      //     'used');
       // print(exception);
     }
     return _featureFlagFromLocalStoredFirebaseRemoteConfig();

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:moneygram/transactions/models/transaction.dart';
@@ -6,7 +8,11 @@ import 'package:moneygram/ui/base_screen.dart';
 import 'package:moneygram/ui/home/transaction_card_widget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:moneygram/ui/soft_hard_update/app_update_bottom_sheet.dart';
+import 'package:moneygram/utils/broadcast/broadcast_channels.dart';
+import 'package:moneygram/utils/broadcast/broadcast_receiver.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
+import 'package:moneygram/utils/utils.dart';
+import 'package:moneygram/utils/validation_utils.dart';
 import 'package:moneygram/viewmodels/home_screen_viewmodel.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,6 +26,25 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late HomeScreenViewModel _homeScreenViewModel;
+
+  StreamSubscription? _streamSubscription;
+
+  @override
+  void initState() {
+    setBroadcastListener();
+    super.initState();
+  }
+
+  void setBroadcastListener() {
+    _streamSubscription =
+        BroadcastReciever.broadcastController.stream.listen((event) {
+      if (ValidationUtils.isValidString(event) &&
+          event == BroadcastChannels.refreshAppUpdateChecker) {
+        _showUpdateDialogIfApplicable();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return BaseScreen<HomeScreenViewModel>(onModelReady: (model) {
@@ -150,7 +175,24 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _openTransactionPage({Transaction? transaction}) async {
-    bool canDismiss = true;
+    showBarModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => AddTransactionPage(
+        transaction: transaction,
+      ),
+    );
+  }
+
+  void _showUpdateDialogIfApplicable() {
+    if (Utils.isForceUpdateAvailable()) {
+      showAppUpdateBottomSheet(canDismiss: false);
+    } else if (Utils.isUpdateAvailable()) {
+      showAppUpdateBottomSheet();
+    }
+  }
+
+  void showAppUpdateBottomSheet({bool canDismiss = true}) {
     showBarModalBottomSheet(
         enableDrag: canDismiss,
         isDismissible: canDismiss,
@@ -162,13 +204,6 @@ class _HomePageState extends State<HomePage> {
               },
               isDismissable: canDismiss);
         });
-    // showBarModalBottomSheet(
-    //   context: context,
-    //   backgroundColor: Colors.transparent,
-    //   builder: (context) => AddTransactionPage(
-    //     transaction: transaction,
-    //   ),
-    // );
   }
 
   // ignore: unused_element
@@ -260,7 +295,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void dispose() {
     _homeScreenViewModel.removeBoxListener();
-    print("-------------- Removing this --------------");
+    _streamSubscription?.cancel();
     super.dispose();
   }
 }

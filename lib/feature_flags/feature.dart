@@ -26,6 +26,12 @@ class Features {
     return selectedFeatures.first.isEnabled;
   }
 
+  String? getValue(selectedFeatureName) {
+    final selectedFeatures =
+        features?.where((feature) => feature.name == selectedFeatureName);
+    return selectedFeatures?.first.value;
+  }
+
   bool _isEnum(dynamic data) {
     final split = data.toString().split('.');
     return split.length > 1 && split[0] == data.runtimeType.toString();

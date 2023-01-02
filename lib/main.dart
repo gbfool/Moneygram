@@ -1,16 +1,18 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:moneygram/category/category_hive_helper.dart';
 import 'package:moneygram/di/service_locator.dart';
+import 'package:moneygram/feature_flags/feature_flag_helper.dart';
 import 'package:moneygram/ui/bottom_navigation_state.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
+  await Firebase.initializeApp();
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-
   await setupLocator();
+  FeatureFlagHelper.instance.init();
   CategoryHiveHelper().addCategoriesInHive();
   runApp(const MyApp());
 }
