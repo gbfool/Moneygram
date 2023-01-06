@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:moneygram/utils/enum/box_types.dart';
 
-
 const String themeModeKey = 'key_theme_mode';
 const String appColorKey = 'key_app_color';
 const String dynamicColorKey = 'keydynamicColor';
@@ -13,6 +12,8 @@ const String userLoginKey = 'user_login_key';
 const String userImageKey = 'user_image_key';
 const String userLanguageKey = 'user_laguage_key';
 const String scheduleTime = 'schedule_time_key';
+const String defaultCategory = 'default_category_key';
+const String defaultAccount = 'default_account_key';
 
 abstract class SettingsService {
   Future<void> setThemeMode(ThemeMode themeMode);
@@ -38,6 +39,12 @@ abstract class SettingsService {
 
   Future<Locale> language();
   Future<void> setLanguage(Locale locale);
+
+  Future<void> setDefaultCategory(int categoryId);
+  Future<int?> getDefaultCategory();
+
+  Future<void> setDefaultAccount(int accountId);
+  Future<int?> getDefaultAccount();
 }
 
 class SettingsServiceImpl implements SettingsService {
@@ -122,5 +129,25 @@ class SettingsServiceImpl implements SettingsService {
   @override
   Future<bool> dynamicColor() async {
     return box.get(dynamicColorKey, defaultValue: false);
+  }
+
+  @override
+  Future<void> setDefaultCategory(int categoryId) async {
+    await box.put(defaultCategory, categoryId);
+  }
+
+  @override
+  Future<int?> getDefaultCategory() async {
+    return box.get(defaultCategory, defaultValue: null);
+  }
+
+  @override
+  Future<void> setDefaultAccount(int accountId) async {
+    await box.put(defaultAccount, accountId);
+  }
+
+  @override
+  Future<int?> getDefaultAccount() async {
+    return box.get(defaultAccount);
   }
 }

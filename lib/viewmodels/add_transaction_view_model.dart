@@ -1,5 +1,7 @@
 import 'package:moneygram/account/repository/account_repository.dart';
 import 'package:moneygram/category/repository/category_repository.dart';
+import 'package:moneygram/di/service_locator.dart';
+import 'package:moneygram/settings/settings_service.dart';
 import 'package:moneygram/transactions/models/transaction.dart';
 import 'package:moneygram/transactions/repository/transaction_repository.dart';
 import 'package:moneygram/utils/enum/transaction_type.dart';
@@ -15,6 +17,7 @@ class AddTransactionViewModel extends BaseViewModel {
   final TransactionRepository transactionRepository;
   final AccountRepository accountRepository;
   final CategoryRepository categoryRepository;
+  final SettingsService _settingsService = locator.get();
 
   String? amount;
   String? transactionNotes;
@@ -59,6 +62,8 @@ class AddTransactionViewModel extends BaseViewModel {
   void addTransaction() {
     double validAmount = double.parse(amount ?? "0");
     var date = selectedDate ?? DateTime.now();
+    _settingsService.setDefaultAccount(selectedAccountId!);
+    _settingsService.setDefaultCategory(selectedCategoryId!);
     if (currentTransaction != null) {
       currentTransaction!
         ..accountId = selectedAccountId!

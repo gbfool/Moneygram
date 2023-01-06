@@ -10,6 +10,7 @@ import 'package:moneygram/category/data_source/category_local_data_source_impl.d
 import 'package:moneygram/category/model/category.dart';
 import 'package:moneygram/category/repository/category_repository.dart';
 import 'package:moneygram/category/repository/category_repository_impl.dart';
+import 'package:moneygram/settings/settings_service.dart';
 import 'package:moneygram/transactions/data_sources/transaction_local_data_source.dart';
 import 'package:moneygram/transactions/data_sources/transaction_local_data_source_impl.dart';
 import 'package:moneygram/transactions/models/transaction.dart';
@@ -50,6 +51,9 @@ Future<void> _setupHive() async {
 
   final accountBox = await Hive.openBox<Account>(BoxType.accounts.stringValue);
   locator.registerLazySingleton<Box<Account>>(() => accountBox);
+
+  final settingsBox = await Hive.openBox(BoxType.settings.stringValue);
+  locator.registerLazySingleton<Box<dynamic>>(() => settingsBox);
 }
 
 void _localSources() {
@@ -77,6 +81,8 @@ void _setupRepository() {
       dataSource: locator.get(),
     ),
   );
+
+  locator.registerLazySingleton<SettingsService>(() => SettingsServiceImpl());
 }
 
 void _setupViewModels() {

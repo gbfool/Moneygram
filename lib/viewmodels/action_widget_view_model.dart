@@ -2,6 +2,8 @@ import 'package:moneygram/account/model/account.dart';
 import 'package:moneygram/account/repository/account_repository.dart';
 import 'package:moneygram/category/model/category.dart';
 import 'package:moneygram/category/repository/category_repository.dart';
+import 'package:moneygram/di/service_locator.dart';
+import 'package:moneygram/settings/settings_service.dart';
 import 'package:moneygram/viewmodels/add_transaction_view_model.dart';
 import 'package:moneygram/viewmodels/base_view_model.dart';
 import 'package:moneygram/utils/time_extension.dart';
@@ -13,7 +15,7 @@ class ActionWidgetViewModel extends BaseViewModel {
   final AccountRepository accountRepository;
   final CategoryRepository categoryRepository;
   late AddTransactionViewModel _transactionViewModel;
-
+  SettingsService settingsService = locator.get();
   Category? _category;
   Account? _account;
 
@@ -35,14 +37,20 @@ class ActionWidgetViewModel extends BaseViewModel {
 
   Future<void> _setCategory({required int? categoryId}) async {
     if (categoryId == null) {
-      return;
+      categoryId = await settingsService.getDefaultCategory();
+      if (categoryId == null) {
+        return;
+      }
     }
     _category = await categoryRepository.fetchCategoryFromId(categoryId);
   }
 
   Future<void> _setAccount({required int? accountId}) async {
     if (accountId == null) {
-      return;
+      accountId = await settingsService.getDefaultAccount();
+      if (accountId == null) {
+        return;
+      }
     }
     _account = await accountRepository.fetchAccountFromId(accountId);
   }
