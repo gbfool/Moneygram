@@ -47,18 +47,18 @@ class ActionWidgetViewModel extends BaseViewModel {
     _account = await accountRepository.fetchAccountFromId(accountId);
   }
 
-  Category getCategory() {
+  Category? getCategory() {
     if (_category != null) {
       return _category!;
     }
-    return Category(emoji: "🫠", name: "Default Category");
+    return null;
   }
 
-  Account getAccount() {
+  Account? getAccount() {
     if (_account != null) {
       return _account!;
     }
-    return Account(emoji: "🫠", name: "Default Account");
+    return null;
   }
 
   void setCategory(Category category) {

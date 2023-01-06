@@ -112,8 +112,13 @@ class _CategoryPickerScreenState extends State<CategoryPickerScreen> {
   }
 
   Widget _getRow(List<Widget> widgets) {
-    if (widgets.length % 3 != 0) {
-      widgets.add(Spacer());
+    var widgetLength = widgets.length;
+    if (widgetLength % 3 != 0) {
+      // if widget length is 1, means adding 2 spacer for managing the width
+      // if widget length is 2, will add only 1 spacer
+      for (int i = widgetLength; i < 3; i++) {
+        widgets.add(Spacer());
+      }
     }
     return Container(
       child: Row(

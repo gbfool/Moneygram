@@ -25,6 +25,9 @@ class Account extends HiveObject {
   @HiveField(6)
   bool isActive;
 
+  @HiveField(7)
+  bool isCustomAccount;
+
   Account(
       {required this.emoji,
       required this.name,
@@ -32,9 +35,11 @@ class Account extends HiveObject {
       this.isSync = false,
       this.isActive = true,
       DateTime? createdAt,
-      DateTime? updatedAt})
+      DateTime? updatedAt,
+      bool? isCustomAccount})
       : this.createdAt = createdAt ?? DateTime.now(),
-        this.updatedAt = updatedAt ?? DateTime.now();
+        this.updatedAt = updatedAt ?? DateTime.now(),
+        this.isCustomAccount = isCustomAccount ?? true;
 
   Map<String, dynamic> toJson() => {
         'emoji': emoji,

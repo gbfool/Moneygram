@@ -29,6 +29,9 @@ class Category extends HiveObject {
   @HiveField(7)
   TransactionType transactionType;
 
+  @HiveField(8)
+  bool isCustomCategory;
+
   Category(
       {required this.emoji,
       required this.name,
@@ -37,10 +40,12 @@ class Category extends HiveObject {
       this.id,
       DateTime? createdAt,
       DateTime? updatedAt,
-      TransactionType? transactionType})
+      TransactionType? transactionType,
+      bool? isCustomCategory})
       : this.createdAt = createdAt ?? DateTime.now(),
         this.updatedAt = updatedAt ?? DateTime.now(),
-        this.transactionType = transactionType ?? TransactionType.expense;
+        this.transactionType = transactionType ?? TransactionType.expense,
+        this.isCustomCategory = isCustomCategory ?? true;
 
   Map<String, dynamic> toJson() => {
         'emoji': emoji,

@@ -41,13 +41,13 @@ class _HeaderWidgetState extends State<HeaderWidget> {
             Stack(
               alignment: Alignment.center,
               children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text("isSync: ${widget.isSync}",
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.lato(
-                          fontSize: 12, fontWeight: FontWeight.w600)),
-                ),
+                // Align(
+                //   alignment: Alignment.centerLeft,
+                //   child: Text("isSync: ${widget.isSync}",
+                //       textAlign: TextAlign.center,
+                //       style: GoogleFonts.lato(
+                //           fontSize: 12, fontWeight: FontWeight.w600)),
+                // ),
                 Align(
                   alignment: Alignment.center,
                   child: Text("Transaction",

@@ -34,13 +34,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
       SettingsGroup(
         title: "Preferences",
         children: [
-          SettingsRowWidget(
-            title: "Currency",
-            subtitle: NumberFormat.compactSimpleCurrency(locale: "en_IN")
-                    .currencyName ??
-                '',
-            onTap: () {},
-          ),
+          // SettingsRowWidget(
+          //   title: "Currency",
+          //   subtitle: NumberFormat.compactSimpleCurrency(locale: "en_IN")
+          //           .currencyName ??
+          //       '',
+          //   onTap: () {},
+          // ),
           SettingsRowWidget(
             title: "Account",
             subtitle: "view, edit and create accounts",
@@ -51,17 +51,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
             subtitle: "view, edit and create categories",
             onTap: _openManageCategoryScreen
           ),
-          SettingsRowWidget(
-            title: "Backup",
-            subtitle:
-                "Back up your expenses to Google Drive. You can restore them when you reinstall Moneygram",
-            onTap: () {
-              showBarModalBottomSheet(
-                  context: context,
-                  backgroundColor: Colors.transparent,
-                  builder: (context) => GoogleDriveBackupScreen());
-            },
-          ),
+          // SettingsRowWidget(
+          //   title: "Backup",
+          //   subtitle:
+          //       "Back up your expenses to Google Drive. You can restore them when you reinstall Moneygram",
+          //   onTap: () {
+          //     showBarModalBottomSheet(
+          //         context: context,
+          //         backgroundColor: Colors.transparent,
+          //         builder: (context) => GoogleDriveBackupScreen());
+          //   },
+          // ),
         ],
       ),
       const SizedBox(height: 24),
