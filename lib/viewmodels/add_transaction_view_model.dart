@@ -29,8 +29,7 @@ class AddTransactionViewModel extends BaseViewModel {
   Function()? exitScreenCallback;
 
   bool get isSaveButtonEnable {
-    if (amount == null || amount!.trim() == "") return false;
-    return true;
+    return validate();
   }
 
   void setValuesForTransaction(Transaction? transaction) {

@@ -139,6 +139,7 @@ class _HomePageState extends State<HomePage> {
   Widget _listWidget() {
     return Expanded(
         child: ListView.builder(
+      padding: const EdgeInsets.only(bottom: kFloatingActionButtonMargin + 100),
       itemCount: _homeScreenViewModel.transactionList.length + 1,
       itemBuilder: (context, index) {
         var maps = _homeScreenViewModel.transactionList;
@@ -169,7 +170,8 @@ class _HomePageState extends State<HomePage> {
   FloatingActionButton _fab() {
     return FloatingActionButton(
       onPressed: () {
-        AnalyticsHelper.logEvent(event: AnalyticsHelper.homePageAddTransactionClicked);
+        AnalyticsHelper.logEvent(
+            event: AnalyticsHelper.homePageAddTransactionClicked);
         _openTransactionPage();
       },
       tooltip: 'Add Transaction',
