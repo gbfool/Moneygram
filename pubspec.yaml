@@ -48,6 +48,7 @@ dependencies:
   firebase_remote_config: ^3.0.8
   mixpanel_flutter: ^1.4.6
   url_launcher: ^6.0.9
+  fluttertoast: ^8.1.2
 
 dev_dependencies:
   flutter_test:

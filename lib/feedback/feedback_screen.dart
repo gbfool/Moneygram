@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:moneygram/utils/analytics_helper.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
+import 'package:moneygram/utils/validation_utils.dart';
 
 class FeedbackScreen extends StatefulWidget {
   const FeedbackScreen({Key? key}) : super(key: key);
@@ -12,6 +15,8 @@ class FeedbackScreen extends StatefulWidget {
 class _FeedbackScreenState extends State<FeedbackScreen> {
   String selectedExperience = "";
   bool _isKeyboardOpen = false;
+  String _feedbackText = "";
+
   @override
   Widget build(BuildContext context) {
     _isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom != 0;
@@ -73,39 +78,48 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       style: GoogleFonts.lato(
                           fontSize: 18, fontWeight: FontWeight.w600)),
                 ),
-                AnimatedOpacity(
-                  opacity: _isKeyboardOpen ? 1 : 0,
-                  duration: Duration(milliseconds: 100),
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: InkWell(
-                        onTap: () {
-                          // Navigator.of(context).pop();
-                        },
-                        child: IntrinsicWidth(
-                          child: Container(
-                              height: 26,
-                              padding: EdgeInsets.symmetric(horizontal: 16),
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  borderRadius: BorderRadius.circular(13)),
-                              child: Text(
-                                'Save',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600),
-                              )),
-                        )),
-                  ),
-                )
+                _aboveSaveButton()
               ],
             ),
             const SizedBox(height: 16),
             Divider(height: 1, thickness: 0)
           ],
         )));
+  }
+
+  Widget _aboveSaveButton() {
+    bool isEnable = isValidResponse();
+    return AnimatedOpacity(
+      opacity: _isKeyboardOpen ? 1 : 0,
+      duration: Duration(milliseconds: 100),
+      child: Align(
+        alignment: Alignment.centerRight,
+        child: InkWell(
+            onTap: isEnable
+                ? () {
+                    _feedbackSubmitted(
+                        eventName:
+                            AnalyticsHelper.feedbackAboveSubmitButtonClicked);
+                  }
+                : null,
+            child: IntrinsicWidth(
+              child: Container(
+                  height: 26,
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: isEnable ? Colors.black : Color(0xffebeaef),
+                      borderRadius: BorderRadius.circular(13)),
+                  child: Text(
+                    'Save',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: isEnable ? Colors.white : Color(0xff81818d),
+                        fontWeight: FontWeight.w600),
+                  )),
+            )),
+      ),
+    );
   }
 
   List<Widget> _rateYourExperience() {
@@ -133,6 +147,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
       onTap: isSelected
           ? null
           : () {
+              AnalyticsHelper.logEvent(
+                  event: AnalyticsHelper.feedbackEmojiClicked,
+                  params: {"emoji": emoji});
               setState(() {
                 selectedExperience = emoji;
               });
@@ -152,20 +169,13 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   }
 
   Widget _inputField() {
-    // return TextField(
-    //   cursorColor: Colors.black,
-    //   keyboardType: TextInputType.multiline,
-    //   decoration: InputDecoration(
-    //       border: InputBorder.none, hintText: "Please give your feedback here"),
-    // );
     return TextField(
-      // controller: textMessa/geController,
       keyboardType: TextInputType.multiline,
       textCapitalization: TextCapitalization.sentences,
       maxLines: 8,
       onChanged: ((value) {
         setState(() {
-          // _messageEntrer = value;
+          _feedbackText = value;
         });
       }),
       decoration: InputDecoration(
@@ -195,12 +205,24 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
     );
   }
 
+  bool isValidResponse() {
+    return ValidationUtils.isValidString(_feedbackText) &&
+        ValidationUtils.isValidString(selectedExperience);
+  }
+
   Widget _sendFeedback() {
+    bool isEnable = isValidResponse();
     return AnimatedOpacity(
       opacity: _isKeyboardOpen ? 0 : 1,
       duration: Duration(milliseconds: 100),
       child: InkWell(
-        onTap: () {},
+        onTap: isEnable
+            ? () {
+                _feedbackSubmitted(
+                    eventName:
+                        AnalyticsHelper.feedbackBottomSubmitButtonClicked);
+              }
+            : null,
         child: Container(
           padding: EdgeInsets.only(top: 12),
           child: Container(
@@ -211,10 +233,10 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
               style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w600,
-                  color: Colors.white),
+                  color: isEnable ? Colors.white : Color(0xff81818d)),
             ),
             decoration: BoxDecoration(
-                color: Colors.black,
+                color: isEnable ? Colors.black : Color(0xffebeaef),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.white.withOpacity(0.03),
@@ -228,5 +250,16 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
         ),
       ),
     );
+  }
+
+  void _feedbackSubmitted({required String eventName}) {
+    Fluttertoast.showToast(
+        msg: "Thanks for submitting the feedback 😊",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        fontSize: 16.0);
+    var params = {"reaction": selectedExperience, "feedback": _feedbackText};
+    AnalyticsHelper.logEvent(event: eventName, params: params);
+    Navigator.of(context).pop();
   }
 }

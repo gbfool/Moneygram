@@ -14,7 +14,6 @@ class AnalyticsHelper {
   static const String homePageAddTransactionClicked =
       "home_page_add_transaction_clicked";
 
-      
   static const String bottomBarHomeClicked = "bottom_bar_home_clicked";
   static const String bottomBarSettingsClicked = "bottom_bar_settings_clicked";
 
@@ -37,8 +36,6 @@ class AnalyticsHelper {
       "settings_give_feedback_clicked";
   static const String settingsRateAppClicked = "settings_rate_app_clicked";
 
-
-
   static const String manageCategoryEditModeClicked =
       "manage_category_edit_mode_clicked";
   static const String manageCategoryDoneEditClicked =
@@ -50,8 +47,6 @@ class AnalyticsHelper {
   // switch b/w expense and income
   static const String manageCategoryToggleClicked =
       "manage_category_toggle_clicked";
-
-
 
   static const String manageAccountEditModeClicked =
       "manage_account_edit_mode_clicked";
@@ -66,4 +61,10 @@ class AnalyticsHelper {
   static const String softUpdateButtonClicked = "soft_update_button_clicked";
   static const String softUpdateCrossButtonClicked =
       "soft_update_cross_button_clicked";
+
+  static const String feedbackBottomSubmitButtonClicked =
+      "feedback_bottom_submit_button_clicked";
+  static const String feedbackAboveSubmitButtonClicked =
+      "feedback_above_submit_button_clicked";
+  static const String feedbackEmojiClicked = "feedback_emoji_clicked";
 }
