@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:moneygram/main.dart';
+import 'package:moneygram/utils/analytics_helper.dart';
 
 class AppUpdateBottomSheet extends StatelessWidget {
   final VoidCallback onUpdateClick;
-  final bool isDismissable;
+  final bool isDismissible;
 
   const AppUpdateBottomSheet(
-      {Key? key, required this.onUpdateClick, required this.isDismissable})
+      {Key? key, required this.onUpdateClick, required this.isDismissible})
       : super(key: key);
 
   @override
@@ -14,7 +16,7 @@ class AppUpdateBottomSheet extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (isDismissable) crossIcon(),
+            if (isDismissible) crossIcon(),
             const SizedBox(height: 48),
             const Icon(
               Icons.system_update_outlined,
@@ -87,7 +89,7 @@ class AppUpdateBottomSheet extends StatelessWidget {
   }
 
   void onCrossClick() {
-    // Navigator.pop(navigatorKey.currentContext!);
+    Navigator.of(navigatorKey.currentContext!).pop();
   }
 
   void onClick() {
@@ -96,11 +98,11 @@ class AppUpdateBottomSheet extends StatelessWidget {
   }
 
   void updateButtonAnalytics() {
-    // String eventName = AnalyticsHelper.softUpdateButtonClick;
-    // // if sheet's not dismissable, then it's a hard update
-    // if (!isDismissable) {
-    //   eventName = AnalyticsHelper.hardUpdateButtonClick;
-    // }
-    // AnalyticsHelper.LogEvent(event: eventName);
+    String eventName = AnalyticsHelper.softUpdateButtonClicked;
+    // if sheet's not dismissible, then it's a hard update
+    if (!isDismissible) {
+      eventName = AnalyticsHelper.hardUpdateButtonClicked;
+    }
+    AnalyticsHelper.logEvent(event: eventName);
   }
 }

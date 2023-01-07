@@ -8,6 +8,7 @@ import 'package:moneygram/ui/base_screen.dart';
 import 'package:moneygram/ui/home/transaction_card_widget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:moneygram/ui/soft_hard_update/app_update_bottom_sheet.dart';
+import 'package:moneygram/utils/analytics_helper.dart';
 import 'package:moneygram/utils/broadcast/broadcast_channels.dart';
 import 'package:moneygram/utils/broadcast/broadcast_receiver.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
@@ -37,7 +38,7 @@ class _HomePageState extends State<HomePage> {
 
   void setBroadcastListener() {
     _streamSubscription =
-        BroadcastReciever.broadcastController.stream.listen((event) {
+        BroadcastReceiver.broadcastController.stream.listen((event) {
       if (ValidationUtils.isValidString(event) &&
           event == BroadcastChannels.refreshAppUpdateChecker) {
         _showUpdateDialogIfApplicable();
@@ -97,6 +98,8 @@ class _HomePageState extends State<HomePage> {
     var leftArrow = InkWell(
       borderRadius: BorderRadius.circular(18),
       onTap: () {
+        AnalyticsHelper.logEvent(
+            event: AnalyticsHelper.homePagePreviousTimelineClicked);
         _homeScreenViewModel.previousDate();
       },
       child: Container(
@@ -111,6 +114,8 @@ class _HomePageState extends State<HomePage> {
     var rightArrow = InkWell(
       borderRadius: BorderRadius.circular(18),
       onTap: () {
+        AnalyticsHelper.logEvent(
+            event: AnalyticsHelper.homePageNextTimelineClicked);
         _homeScreenViewModel.nextDate();
       },
       child: Container(
@@ -200,9 +205,9 @@ class _HomePageState extends State<HomePage> {
         builder: (builder) {
           return AppUpdateBottomSheet(
               onUpdateClick: () {
-                // _launch(_getLaunchUrl());
+                Utils.openPlayOrAppStore();
               },
-              isDismissable: canDismiss);
+              isDismissible: canDismiss);
         });
   }
 

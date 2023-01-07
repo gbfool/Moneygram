@@ -4,13 +4,13 @@ import 'package:moneygram/utils/enum/box_types.dart';
 
 const String themeModeKey = 'key_theme_mode';
 const String appColorKey = 'key_app_color';
-const String dynamicColorKey = 'keydynamicColor';
+const String dynamicColorKey = 'key_dynamic_color';
 const String pushNotificationKey = 'key_push_notification';
 const String biometricKey = 'key_biometric';
 const String userNameKey = 'user_name_key';
 const String userLoginKey = 'user_login_key';
 const String userImageKey = 'user_image_key';
-const String userLanguageKey = 'user_laguage_key';
+const String userLanguageKey = 'user_language_key';
 const String scheduleTime = 'schedule_time_key';
 const String defaultCategory = 'default_category_key';
 const String defaultAccount = 'default_account_key';

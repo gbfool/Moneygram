@@ -1,6 +1,6 @@
 import 'dart:async';
 
-class BroadcastReciever {
+class BroadcastReceiver {
   static StreamController<String> broadcastController =
       StreamController<String>.broadcast();
 }

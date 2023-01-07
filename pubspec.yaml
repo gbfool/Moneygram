@@ -46,6 +46,8 @@ dependencies:
   emoji_picker_flutter: ^1.5.1
   custom_sliding_segmented_control: ^1.7.3
   firebase_remote_config: ^3.0.8
+  mixpanel_flutter: ^1.4.6
+  url_launcher: ^6.0.9
 
 dev_dependencies:
   flutter_test:

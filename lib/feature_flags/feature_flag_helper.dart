@@ -42,7 +42,7 @@ class FeatureFlagHelper {
   void retrieveFeatureFlag() {
     fireFlag.featureFlagSubscription().listen((features) {
       features = features;
-      BroadcastReciever.broadcastController
+      BroadcastReceiver.broadcastController
           .add(BroadcastChannels.refreshAppUpdateChecker);
     });
   }

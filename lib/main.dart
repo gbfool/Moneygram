@@ -1,10 +1,14 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mixpanel_flutter/mixpanel_flutter.dart';
 import 'package:moneygram/category/category_hive_helper.dart';
 import 'package:moneygram/di/service_locator.dart';
 import 'package:moneygram/feature_flags/feature_flag_helper.dart';
 import 'package:moneygram/ui/bottom_navigation_state.dart';
+
+final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
+late Mixpanel mixPanel;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,9 +16,15 @@ void main() async {
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await setupLocator();
+  initMixpanel();
   FeatureFlagHelper.instance.init();
   CategoryHiveHelper().addCategoriesInHive();
   runApp(const MyApp());
+}
+
+Future<void> initMixpanel() async {
+  String mixPanelToken = "5dd1a2c11d598f709a4ec52fde4e92d6";
+  mixPanel = await Mixpanel.init(mixPanelToken);
 }
 
 class MyApp extends StatelessWidget {
@@ -28,6 +38,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
       ),
+      navigatorKey: navigatorKey,
       title: 'Money',
       home: BottomNavigationState(),
     );
