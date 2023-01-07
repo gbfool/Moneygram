@@ -41,19 +41,23 @@ class _ActionsWidgetState extends State<ActionsWidget> {
       padding: const EdgeInsets.only(top: 12, left: 12, right: 12),
       child: Column(
         children: [
-          Row(children: [
-            InkWell(
-                onTap: _onDatePickerTap,
-                child: Text(_actionWidgetViewModel.transactionDecoratedDate)),
-            const SizedBox(width: 4),
-            const Text(
-              '\u2022',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 18),
-            ),
-            const SizedBox(width: 4),
-            Expanded(child: _inputField())
-          ]),
+          Row(
+            children: [
+              InkWell(
+                  onTap: _onDatePickerTap,
+                  child: Text(
+                    _actionWidgetViewModel.transactionDecoratedDate,
+                  )),
+              const SizedBox(width: 4),
+              Icon(
+                Icons.circle_rounded,
+                size: 6,
+              ),
+              const SizedBox(width: 4),
+              Expanded(child: _inputField())
+            ],
+            crossAxisAlignment: CrossAxisAlignment.center,
+          ),
           SizedBox(height: 6),
           Divider(height: 1, thickness: 0),
           _accountCategory(),
@@ -67,8 +71,11 @@ class _ActionsWidgetState extends State<ActionsWidget> {
     return TextField(
       controller: widget.notesTextController,
       cursorColor: Colors.black,
-      decoration:
-          InputDecoration(border: InputBorder.none, hintText: "Add notes"),
+      decoration: InputDecoration(
+          border: InputBorder.none,
+          hintText: "Add notes",
+          isDense: true,
+          contentPadding: EdgeInsets.all(0)),
     );
   }
 
@@ -95,19 +102,29 @@ class _ActionsWidgetState extends State<ActionsWidget> {
     ]);
   }
 
-  Widget _accountWidget({required Account account}) {
-    List<Widget> widgets = [
-      Text(account.emoji, style: CustomTextStyle.emojiStyle(fontSize: 24)),
-      SizedBox(width: 4),
-      Flexible(
-        child: Text(
-          account.name,
-          style: TextStyle(fontSize: 16),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-      )
-    ];
+  Widget _accountWidget({Account? account}) {
+    List<Widget> widgets = [];
+    if (account != null) {
+      widgets.addAll([
+        Text(account.emoji, style: CustomTextStyle.emojiStyle(fontSize: 24)),
+        SizedBox(width: 4),
+        Flexible(
+          child: Text(
+            account.name,
+            style: TextStyle(fontSize: 16),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        )
+      ]);
+    } else {
+      widgets.add(Text(
+        "Select Account",
+        style: TextStyle(fontSize: 16, color: Colors.black.withOpacity(0.5)),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ));
+    }
     return InkWell(
         onTap: () {
           _openAccountPage(account);
@@ -117,7 +134,7 @@ class _ActionsWidgetState extends State<ActionsWidget> {
             child: Row(mainAxisSize: MainAxisSize.min, children: widgets)));
   }
 
-  void _openAccountPage(Account account) async {
+  void _openAccountPage(Account? account) async {
     List<Account> list = await CategoryHiveHelper().getAccounts();
     showBarModalBottomSheet(
         context: context,
@@ -131,19 +148,29 @@ class _ActionsWidgetState extends State<ActionsWidget> {
                 })));
   }
 
-  Widget _categoryWidget({required Category category}) {
-    List<Widget> widgets = [
-      Text(category.emoji, style: CustomTextStyle.emojiStyle(fontSize: 24)),
-      SizedBox(width: 4),
-      Flexible(
-        child: Text(
-          category.name,
-          style: TextStyle(fontSize: 16),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-      )
-    ];
+  Widget _categoryWidget({Category? category}) {
+    List<Widget> widgets = [];
+    if (category != null) {
+      widgets.addAll([
+        Text(category.emoji, style: CustomTextStyle.emojiStyle(fontSize: 24)),
+        SizedBox(width: 4),
+        Flexible(
+          child: Text(
+            category.name,
+            style: TextStyle(fontSize: 16),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        )
+      ]);
+    } else {
+      widgets.add(Text(
+        "Select Category",
+        style: TextStyle(fontSize: 16, color: Colors.black.withOpacity(0.5)),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ));
+    }
     return InkWell(
         onTap: () {
           _openCategoryPage(category);
@@ -153,7 +180,7 @@ class _ActionsWidgetState extends State<ActionsWidget> {
             child: Row(mainAxisSize: MainAxisSize.min, children: widgets)));
   }
 
-  void _openCategoryPage(Category category) async {
+  void _openCategoryPage(Category? category) async {
     showBarModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,

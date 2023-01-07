@@ -8,37 +8,38 @@ class Utils {
   static String currentAppVersion = "1.0.0";
   static List<Category> getExpensesCategory() {
     List<Category> list = [];
-    list.add(Category(emoji: "💧", name: "Water"));
-    list.add(Category(emoji: "🥘", name: "Food"));
-    list.add(Category(emoji: "🛍️", name: "Shopping"));
-    list.add(Category(emoji: "💳", name: "Credit"));
-    list.add(Category(emoji: "🛒", name: "Goods"));
-    list.add(Category(emoji: "🎮", name: "Games"));
-    list.add(Category(emoji: "👕", name: "Clothing"));
-    list.add(Category(emoji: "⚡", name: "Elecricity"));
-    list.add(Category(emoji: "🎁", name: "Gifts"));
-    list.add(Category(emoji: "🍿", name: "Entertainment"));
-    list.add(Category(emoji: "📚", name: "Books"));
-    list.add(Category(emoji: "🤷", name: "Miscellenous"));
-    list.add(Category(emoji: "⚡", name: "Elecricity"));
-    list.add(Category(emoji: "🎁", name: "Gifts"));
-    list.add(Category(emoji: "🍿", name: "Entertainment"));
-    list.add(Category(emoji: "📚", name: "Books"));
-    list.add(Category(emoji: "🤷", name: "Miscellenous"));
+    list.add(Category(emoji: "💧", name: "Water", isCustomCategory: false));
+    list.add(Category(emoji: "🥘", name: "Food", isCustomCategory: false));
+    list.add(Category(emoji: "🛍️", name: "Shopping", isCustomCategory: false));
+    list.add(Category(emoji: "🛒", name: "Goods", isCustomCategory: false));
+    list.add(Category(emoji: "🎮", name: "Games", isCustomCategory: false));
+    list.add(Category(emoji: "👕", name: "Clothing", isCustomCategory: false));
+    list.add(Category(emoji: "💪", name: "Fitness", isCustomCategory: false));
+    list.add(Category(emoji: "⚡", name: "Elecricity", isCustomCategory: false));
+    list.add(Category(emoji: "🎁", name: "Gifts", isCustomCategory: false));
+    list.add(
+        Category(emoji: "🍿", name: "Entertainment", isCustomCategory: false));
+    list.add(Category(emoji: "📚", name: "Books", isCustomCategory: false));
+    list.add(Category(emoji: "🍪", name: "Snacks", isCustomCategory: false));
+    list.add(
+        Category(emoji: "🤷", name: "Miscellenous", isCustomCategory: false));
     list.add(Category(
-        emoji: "💼", name: "Income", transactionType: TransactionType.income));
+        emoji: "💼",
+        name: "Income",
+        transactionType: TransactionType.income,
+        isCustomCategory: false));
     list.add(Category(
         emoji: "🤑",
         name: "Side Income",
-        transactionType: TransactionType.income));
+        transactionType: TransactionType.income,
+        isCustomCategory: false));
     return list;
   }
 
   static List<Account> getAccounts() {
     List<Account> list = [];
-    list.add(Account(emoji: "💳", name: "Credit Card"));
-    list.add(Account(emoji: "💵", name: "Cash"));
-    list.add(Account(emoji: "💰", name: "Paytm"));
+    list.add(Account(emoji: "💳", name: "Credit Card", isCustomAccount: false));
+    list.add(Account(emoji: "💵", name: "Cash", isCustomAccount: false));
     return list;
   }
 
