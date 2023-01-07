@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:moneygram/category/model/category.dart';
 import 'package:moneygram/ui/base_screen.dart';
 import 'package:moneygram/ui/category/add_edit_category_screen.dart';
+import 'package:moneygram/utils/analytics_helper.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
 import 'package:moneygram/utils/enum/transaction_type.dart';
 import 'package:moneygram/viewmodels/manage_category_view_model.dart';
@@ -50,6 +51,8 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
     if (!_isEditMode) {
       var editWidget = InkWell(
         onTap: () {
+          AnalyticsHelper.logEvent(
+              event: AnalyticsHelper.manageCategoryEditModeClicked);
           setState(() {
             _isEditMode = true;
           });
@@ -62,6 +65,8 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
     } else {
       var doneWidget = InkWell(
         onTap: () {
+          AnalyticsHelper.logEvent(
+              event: AnalyticsHelper.manageCategoryDoneEditClicked);
           setState(() {
             _isEditMode = false;
           });
@@ -142,6 +147,9 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
           groupValue = value;
           var type =
               value == 0 ? TransactionType.expense : TransactionType.income;
+          AnalyticsHelper.logEvent(
+              event: AnalyticsHelper.manageCategoryToggleClicked,
+              params: {"type": type.nameString});
           setState(() {
             _manageCategoryViewModel.setTransactionType(type);
           });
@@ -182,11 +190,10 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
                         category.name,
                         style: TextStyle(fontSize: 16),
                       ),
-                      if (_isEditMode || true)
-                        Text(category.isActive ? "Show" : "Hidden",
-                            style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.black.withOpacity(0.6))),
+                      Text(category.isActive ? "Show" : "Hidden",
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black.withOpacity(0.6))),
                     ],
                   ),
                 ),
@@ -194,6 +201,10 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
                 const SizedBox(width: 12),
                 if (_isEditMode)
                   _switchWidget(category, (value) {
+                    AnalyticsHelper.logEvent(
+                        event: AnalyticsHelper
+                            .manageCategoryVisibilityToggleClicked,
+                        params: {"value": value});
                     setState(() {
                       _manageCategoryViewModel.setStatus(
                           category: category, status: value);
@@ -230,12 +241,21 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
   }
 
   void _openAddEditCategoryScreen({Category? category}) {
+    _addAnalytics(isAdd: category == null);
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => AddEditCategoryScreen(
               category: category,
               transactionType: _manageCategoryViewModel.selectedTransactionType,
               addOrEditPerformed: () => _manageCategoryViewModel.initState(),
             )));
+  }
+
+  void _addAnalytics({required bool isAdd}) {
+    String eventName = AnalyticsHelper.manageCategoryRowClicked;
+    if (isAdd) {
+      eventName = AnalyticsHelper.manageCategoryAddClicked;
+    }
+    AnalyticsHelper.logEvent(event: eventName);
   }
 
   Widget _fab() {

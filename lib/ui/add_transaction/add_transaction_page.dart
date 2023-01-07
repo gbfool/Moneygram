@@ -6,6 +6,7 @@ import 'package:moneygram/ui/add_transaction/header_widget.dart';
 import 'package:moneygram/ui/add_transaction/keyboard_widget.dart';
 import 'package:moneygram/ui/add_transaction/save_button.dart';
 import 'package:moneygram/ui/base_screen.dart';
+import 'package:moneygram/utils/analytics_helper.dart';
 import 'package:moneygram/viewmodels/add_transaction_view_model.dart';
 
 class AddTransactionPage extends StatefulWidget {
@@ -51,6 +52,8 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
   Widget _content() {
     return GestureDetector(
       onTap: () {
+        AnalyticsHelper.logEvent(
+            event: AnalyticsHelper.addTransactionOutsideClicked);
         /*This method here will hide the soft keyboard.*/
         FocusScope.of(context).requestFocus(new FocusNode());
       },

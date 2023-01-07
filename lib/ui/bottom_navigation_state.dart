@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:moneygram/ui/home/home_screen.dart';
 import 'package:moneygram/ui/settings/settings_screen.dart';
+import 'package:moneygram/utils/analytics_helper.dart';
 
 class BottomNavigationState extends StatefulWidget {
   const BottomNavigationState({
@@ -20,20 +21,21 @@ class _BottomNavigationState extends State<BottomNavigationState> {
   final int HOME_SCREEN = 0;
   final int SETTINGS_SCREEN = 1;
 
-  static const List<Widget> _widgetOptions = <Widget>[
-    HomePage(title: "adfad"),
-    SettingsScreen()
-  ];
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  static const List<Widget> _widgetOptions = [HomePage(), SettingsScreen()];
 
   void _onItemTapped(int index) {
+    _addAnalytics(index);
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  void _addAnalytics(int index) {
+    String eventName = AnalyticsHelper.bottomBarSettingsClicked;
+    if (index == 0) {
+      eventName = AnalyticsHelper.bottomBarHomeClicked;
+    }
+    AnalyticsHelper.logEvent(event: eventName);
   }
 
   @override

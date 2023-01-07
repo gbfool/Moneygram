@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:moneygram/account/model/account.dart';
 import 'package:moneygram/ui/account/add_edit_account_screen.dart';
 import 'package:moneygram/ui/base_screen.dart';
+import 'package:moneygram/utils/analytics_helper.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
 import 'package:moneygram/viewmodels/manage_account_view_model.dart';
 
@@ -46,6 +47,8 @@ class _ManageAccountScreenState extends State<ManageAccountScreen> {
     if (!_isEditMode) {
       var editWidget = InkWell(
         onTap: () {
+          AnalyticsHelper.logEvent(
+              event: AnalyticsHelper.manageAccountEditModeClicked);
           setState(() {
             _isEditMode = true;
           });
@@ -58,6 +61,8 @@ class _ManageAccountScreenState extends State<ManageAccountScreen> {
     } else {
       var doneWidget = InkWell(
         onTap: () {
+          AnalyticsHelper.logEvent(
+              event: AnalyticsHelper.manageAccountDoneEditModeClicked);
           setState(() {
             _isEditMode = false;
           });
@@ -106,11 +111,10 @@ class _ManageAccountScreenState extends State<ManageAccountScreen> {
                         account.name,
                         style: TextStyle(fontSize: 16),
                       ),
-                      if (_isEditMode)
-                        Text(account.isActive ? "Show" : "Hidden",
-                            style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.black.withOpacity(0.6))),
+                      Text(account.isActive ? "Show" : "Hidden",
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black.withOpacity(0.6))),
                     ],
                   ),
                 ),
@@ -118,6 +122,10 @@ class _ManageAccountScreenState extends State<ManageAccountScreen> {
                 const SizedBox(width: 12),
                 if (_isEditMode)
                   _switchWidget(account, (value) {
+                    AnalyticsHelper.logEvent(
+                        event: AnalyticsHelper
+                            .manageAccountVisibilityToggleClicked,
+                        params: {"value": value});
                     setState(() {
                       account.isActive = value;
                     });
@@ -153,11 +161,21 @@ class _ManageAccountScreenState extends State<ManageAccountScreen> {
   }
 
   void _openAddEditAccountScreen({Account? account}) {
+    _addAnalytics(isAdd: account == null);
+
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => AddEditAccountScreen(
               account: account,
               addOrEditPerformed: () => _manageAccountViewModel.fetchAccounts(),
             )));
+  }
+
+  void _addAnalytics({required bool isAdd}) {
+    String eventName = AnalyticsHelper.manageAccountRowClicked;
+    if (isAdd) {
+      eventName = AnalyticsHelper.manageAccountAddClicked;
+    }
+    AnalyticsHelper.logEvent(event: eventName);
   }
 
   Widget _fab() {

@@ -13,6 +13,8 @@ class AnalyticsHelper {
   static const String homePageCardClicked = "home_page_card_clicked";
   static const String homePageAddTransactionClicked =
       "home_page_add_transaction_clicked";
+
+      
   static const String bottomBarHomeClicked = "bottom_bar_home_clicked";
   static const String bottomBarSettingsClicked = "bottom_bar_settings_clicked";
 
@@ -31,11 +33,17 @@ class AnalyticsHelper {
       "settings_manage_category_clicked";
   static const String settingsManageAccountClicked =
       "settings_manage_account_clicked";
-  static const String settingsFeedbackClicked = "settings_feedback_clicked";
+  static const String settingsGiveFeedbackClicked =
+      "settings_give_feedback_clicked";
   static const String settingsRateAppClicked = "settings_rate_app_clicked";
 
-  static const String manageCategoryEditClicked =
-      "manage_category_edit_clicked";
+
+
+  static const String manageCategoryEditModeClicked =
+      "manage_category_edit_mode_clicked";
+  static const String manageCategoryDoneEditClicked =
+      "manage_category_done_edit_mode_clicked";
+  static const String manageCategoryRowClicked = "manage_category_row_clicked";
   static const String manageCategoryAddClicked = "manage_category_add_clicked";
   static const String manageCategoryVisibilityToggleClicked =
       "manage_category_visibility_toggle_clicked";
@@ -43,6 +51,19 @@ class AnalyticsHelper {
   static const String manageCategoryToggleClicked =
       "manage_category_toggle_clicked";
 
+
+
+  static const String manageAccountEditModeClicked =
+      "manage_account_edit_mode_clicked";
+  static const String manageAccountDoneEditModeClicked =
+      "manage_account_done_edit_mode_clicked";
+  static const String manageAccountRowClicked = "manage_account_row_clicked";
+  static const String manageAccountAddClicked = "manage_account_add_clicked";
+  static const String manageAccountVisibilityToggleClicked =
+      "manage_account_visibility_toggle_clicked";
+
   static const String hardUpdateButtonClicked = "hard_update_button_clicked";
   static const String softUpdateButtonClicked = "soft_update_button_clicked";
+  static const String softUpdateCrossButtonClicked =
+      "soft_update_cross_button_clicked";
 }

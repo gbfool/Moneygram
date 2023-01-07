@@ -6,6 +6,8 @@ import 'package:moneygram/ui/account/manage_account_screen.dart';
 import 'package:moneygram/ui/category/manage_category_screen.dart';
 import 'package:moneygram/ui/settings/settings_row_widget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:moneygram/utils/analytics_helper.dart';
+import 'package:moneygram/utils/utils.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
@@ -47,10 +49,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
             onTap: _openManageAccountScreen,
           ),
           SettingsRowWidget(
-            title: "Category",
-            subtitle: "view, edit and create categories",
-            onTap: _openManageCategoryScreen
-          ),
+              title: "Category",
+              subtitle: "view, edit and create categories",
+              onTap: _openManageCategoryScreen),
           // SettingsRowWidget(
           //   title: "Backup",
           //   subtitle:
@@ -72,17 +73,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
             title: "Give Feedback",
             subtitle:
                 "Suggest your feedbacks and requests, to make this app awesome for you",
-            onTap: () {
-              showBarModalBottomSheet(
-                  context: context,
-                  backgroundColor: Colors.transparent,
-                  builder: (context) => FeedbackScreen());
-            },
+            onTap: _giveFeedbackClicked,
           ),
           SettingsRowWidget(
             title: "Rate app",
             subtitle: "Share your experience on Play Store",
-            onTap: () {},
+            onTap: _rateAppClicked,
           ),
         ],
       )
@@ -99,13 +95,31 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void _openManageAccountScreen() {
+    AnalyticsHelper.logEvent(
+        event: AnalyticsHelper.settingsManageAccountClicked);
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => ManageAccountScreen()));
   }
 
   void _openManageCategoryScreen() {
+    AnalyticsHelper.logEvent(
+        event: AnalyticsHelper.settingsManageCategoryClicked);
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => ManageCategoryScreen()));
+  }
+
+  void _giveFeedbackClicked() {
+        AnalyticsHelper.logEvent(
+        event: AnalyticsHelper.settingsGiveFeedbackClicked);
+    showBarModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.transparent,
+        builder: (context) => FeedbackScreen());
+  }
+
+  void _rateAppClicked() {
+    AnalyticsHelper.logEvent(event: AnalyticsHelper.settingsRateAppClicked);
+    Utils.openPlayOrAppStore();
   }
 }
 

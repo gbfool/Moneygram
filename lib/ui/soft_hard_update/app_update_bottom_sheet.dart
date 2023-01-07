@@ -89,6 +89,8 @@ class AppUpdateBottomSheet extends StatelessWidget {
   }
 
   void onCrossClick() {
+    AnalyticsHelper.logEvent(
+        event: AnalyticsHelper.softUpdateCrossButtonClicked);
     Navigator.of(navigatorKey.currentContext!).pop();
   }
 

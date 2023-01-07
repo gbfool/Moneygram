@@ -17,9 +17,7 @@ import 'package:moneygram/utils/validation_utils.dart';
 import 'package:moneygram/viewmodels/home_screen_viewmodel.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -156,6 +154,8 @@ class _HomePageState extends State<HomePage> {
             dateTime: maps.keys.toList()[index - 1],
             transactions: transactions,
             onTap: (transaction) {
+              AnalyticsHelper.logEvent(
+                  event: AnalyticsHelper.homePageCardClicked);
               _openTransactionPage(transaction: transaction);
             });
         // if (index % 4 == 0) {
@@ -168,7 +168,10 @@ class _HomePageState extends State<HomePage> {
 
   FloatingActionButton _fab() {
     return FloatingActionButton(
-      onPressed: () => _openTransactionPage(),
+      onPressed: () {
+        AnalyticsHelper.logEvent(event: AnalyticsHelper.homePageAddTransactionClicked);
+        _openTransactionPage();
+      },
       tooltip: 'Add Transaction',
       backgroundColor: Colors.white,
       child: const Icon(
