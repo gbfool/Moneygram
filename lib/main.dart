@@ -23,7 +23,7 @@ void main() async {
 }
 
 Future<void> initMixpanel() async {
-  String mixPanelToken = "5dd1a2c11d598f709a4ec52fde4e92d6";
+  String mixPanelToken = "ffa03118aba56cd6572f0217d06d5ada";
   mixPanel = await Mixpanel.init(mixPanelToken);
 }
 
