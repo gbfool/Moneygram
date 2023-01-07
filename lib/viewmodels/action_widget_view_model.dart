@@ -38,9 +38,16 @@ class ActionWidgetViewModel extends BaseViewModel {
   Future<void> _setCategory({required int? categoryId}) async {
     if (categoryId == null) {
       categoryId = await settingsService.getDefaultCategory();
-      if (categoryId == null) {
+      if (categoryId != null) {
+        var category = await categoryRepository.fetchCategoryFromId(categoryId);
+        if (category != null) {
+          _category = category;
+          _transactionViewModel.selectedCategoryId = category.id;
+          _transactionViewModel.transactionType = category.transactionType;
+        }
         return;
       }
+      return;
     }
     _category = await categoryRepository.fetchCategoryFromId(categoryId);
   }
@@ -48,9 +55,15 @@ class ActionWidgetViewModel extends BaseViewModel {
   Future<void> _setAccount({required int? accountId}) async {
     if (accountId == null) {
       accountId = await settingsService.getDefaultAccount();
-      if (accountId == null) {
+      if (accountId != null) {
+        var account = await accountRepository.fetchAccountFromId(accountId);
+        if (account != null) {
+          _account = account;
+          _transactionViewModel.selectedAccountId = account.id;
+        }
         return;
       }
+      return;
     }
     _account = await accountRepository.fetchAccountFromId(accountId);
   }

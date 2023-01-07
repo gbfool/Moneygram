@@ -6,6 +6,7 @@ import 'package:moneygram/category/category_hive_helper.dart';
 import 'package:moneygram/di/service_locator.dart';
 import 'package:moneygram/feature_flags/feature_flag_helper.dart';
 import 'package:moneygram/ui/bottom_navigation_state.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
 late Mixpanel mixPanel;
@@ -16,10 +17,21 @@ void main() async {
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await setupLocator();
+  await initSentry();
   initMixpanel();
   FeatureFlagHelper.instance.init();
   CategoryHiveHelper().addCategoriesInHive();
   runApp(const MyApp());
+}
+
+Future<void> initSentry() async {
+  await SentryFlutter.init((options) {
+    options.dsn =
+        'https://1fdd11a606e64298807d4f68ace0b8ff@o4504464326066176.ingest.sentry.io/4504464334258176';
+    // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+    // We recommend adjusting this value in production.
+    options.tracesSampleRate = 1.0;
+  });
 }
 
 Future<void> initMixpanel() async {
