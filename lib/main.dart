@@ -18,7 +18,7 @@ void main() async {
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await setupLocator();
-  // await initSentry();
+  await initSentry();
   initMixpanel();
   await CurrencyHelper.setSettingLevelLocale();
   FeatureFlagHelper.instance.init();
