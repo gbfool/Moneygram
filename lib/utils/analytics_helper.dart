@@ -25,9 +25,13 @@ class AnalyticsHelper {
       "add_transaction_select_date_clicked";
   static const String addTransactionOutsideClicked =
       "add_transaction_outside_clicked";
+  static const String addTransactionSaveClicked =
+      "add_transaction_save_clicked";
   static const String updateTransactionMenuClicked =
       "update_transaction_menu_clicked";
 
+  static const String settingsCurrencySelectorClicked =
+      "settings_currency_selector_clicked";
   static const String settingsManageCategoryClicked =
       "settings_manage_category_clicked";
   static const String settingsManageAccountClicked =
@@ -35,6 +39,9 @@ class AnalyticsHelper {
   static const String settingsGiveFeedbackClicked =
       "settings_give_feedback_clicked";
   static const String settingsRateAppClicked = "settings_rate_app_clicked";
+
+  static const String currencySelectorRowClicked =
+      "currency_selector_row_clicked";
 
   static const String manageCategoryEditModeClicked =
       "manage_category_edit_mode_clicked";

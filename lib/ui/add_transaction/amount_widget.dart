@@ -38,7 +38,7 @@ class AmountWidget extends StatelessWidget {
         (amount == null || amount!.isEmpty) ? Colors.grey : Colors.black;
     TextSpan textSpan = TextSpan(children: [
       TextSpan(
-        text: CurrencyHelper.getCurrency(),
+        text: CurrencyHelper.getCurrencySymbol(),
         style: TextStyle(color: textColor, fontSize: 48),
       ),
       TextSpan(text: display, style: style),

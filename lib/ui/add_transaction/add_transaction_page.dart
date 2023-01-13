@@ -79,6 +79,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
   }
 
   void _onSaveButtonTap() {
+    AnalyticsHelper.logEvent(event: AnalyticsHelper.addTransactionSaveClicked);
     if (_model.validate()) {
       _model.addTransaction();
       Navigator.of(context).pop();

@@ -82,7 +82,7 @@ class SettingsServiceImpl implements SettingsService {
 
   @override
   Future<Locale> language() async {
-    return Locale(box.get(userLanguageKey, defaultValue: 'INR'));
+    return Locale(box.get(userLanguageKey, defaultValue: 'en_IN'));
   }
 
   @override

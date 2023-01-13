@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:moneygram/utils/analytics_helper.dart';
+import 'package:moneygram/utils/custom_colors.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
 import 'package:moneygram/utils/validation_utils.dart';
 
@@ -108,13 +109,17 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      color: isEnable ? Colors.black : Color(0xffebeaef),
+                      color: isEnable
+                          ? Colors.black
+                          : CustomColors.disableBgColorBtn,
                       borderRadius: BorderRadius.circular(13)),
                   child: Text(
                     'Save',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        color: isEnable ? Colors.white : Color(0xff81818d),
+                        color: isEnable
+                            ? Colors.white
+                            : CustomColors.disableTextColorBtn,
                         fontWeight: FontWeight.w600),
                   )),
             )),
@@ -233,10 +238,12 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
               style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w600,
-                  color: isEnable ? Colors.white : Color(0xff81818d)),
+                  color: isEnable
+                      ? Colors.white
+                      : CustomColors.disableTextColorBtn),
             ),
             decoration: BoxDecoration(
-                color: isEnable ? Colors.black : Color(0xffebeaef),
+                color: isEnable ? Colors.black : CustomColors.disableBgColorBtn,
                 boxShadow: [
                   BoxShadow(
                     color: Colors.white.withOpacity(0.03),

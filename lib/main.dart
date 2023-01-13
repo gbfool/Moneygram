@@ -6,6 +6,7 @@ import 'package:moneygram/category/category_hive_helper.dart';
 import 'package:moneygram/di/service_locator.dart';
 import 'package:moneygram/feature_flags/feature_flag_helper.dart';
 import 'package:moneygram/ui/bottom_navigation_state.dart';
+import 'package:moneygram/utils/currency_helper.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
@@ -17,8 +18,9 @@ void main() async {
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await setupLocator();
-  await initSentry();
+  // await initSentry();
   initMixpanel();
+  await CurrencyHelper.setSettingLevelLocale();
   FeatureFlagHelper.instance.init();
   CategoryHiveHelper().addCategoriesInHive();
   runApp(const MyApp());
@@ -37,6 +39,8 @@ Future<void> initSentry() async {
 Future<void> initMixpanel() async {
   String mixPanelToken = "ffa03118aba56cd6572f0217d06d5ada";
   mixPanel = await Mixpanel.init(mixPanelToken);
+  var distinctId = await mixPanel.getDistinctId();
+  mixPanel.identify(distinctId);
 }
 
 class MyApp extends StatelessWidget {
