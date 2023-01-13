@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:moneygram/backup/google_drive_backup_screen.dart';
 import 'package:moneygram/feedback/feedback_screen.dart';
+import 'package:moneygram/settings/currency/currency_screen.dart';
 import 'package:moneygram/ui/account/manage_account_screen.dart';
 import 'package:moneygram/ui/category/manage_category_screen.dart';
 import 'package:moneygram/ui/settings/settings_row_widget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:moneygram/utils/analytics_helper.dart';
+import 'package:moneygram/utils/currency_helper.dart';
 import 'package:moneygram/utils/utils.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -36,13 +36,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
       SettingsGroup(
         title: "Preferences",
         children: [
-          // SettingsRowWidget(
-          //   title: "Currency",
-          //   subtitle: NumberFormat.compactSimpleCurrency(locale: "en_IN")
-          //           .currencyName ??
-          //       '',
-          //   onTap: () {},
-          // ),
+          SettingsRowWidget(
+            title: "Currency",
+            subtitle: CurrencyHelper.getCurrencyName(),
+            onTap: _openCurrencyScreen,
+          ),
           SettingsRowWidget(
             title: "Account",
             subtitle: "view, edit and create accounts",
@@ -94,6 +92,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
+  void _openCurrencyScreen() {
+    AnalyticsHelper.logEvent(
+        event: AnalyticsHelper.settingsCurrencySelectorClicked);
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => CurrencyScreen()));
+  }
+
   void _openManageAccountScreen() {
     AnalyticsHelper.logEvent(
         event: AnalyticsHelper.settingsManageAccountClicked);
@@ -109,7 +114,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   void _giveFeedbackClicked() {
-        AnalyticsHelper.logEvent(
+    AnalyticsHelper.logEvent(
         event: AnalyticsHelper.settingsGiveFeedbackClicked);
     showBarModalBottomSheet(
         context: context,
