@@ -11,6 +11,7 @@ import 'package:moneygram/ui/soft_hard_update/app_update_bottom_sheet.dart';
 import 'package:moneygram/utils/analytics_helper.dart';
 import 'package:moneygram/utils/broadcast/broadcast_channels.dart';
 import 'package:moneygram/utils/broadcast/broadcast_receiver.dart';
+import 'package:moneygram/utils/custom_colors.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
 import 'package:moneygram/utils/utils.dart';
 import 'package:moneygram/utils/validation_utils.dart';
@@ -81,7 +82,7 @@ class _HomePageState extends State<HomePage> {
   Widget _body() {
     return Container(
       padding: EdgeInsets.only(top: 12),
-      color: Color(0xFFFDFCFA),
+      color: CustomColors.homeScreenBgColor,
       child: Column(
         children: [
           _timeRangeWidget(),
@@ -106,7 +107,7 @@ class _HomePageState extends State<HomePage> {
           alignment: Alignment.center,
           child: Icon(Icons.arrow_back, color: Colors.black.withOpacity(0.5)),
           decoration: BoxDecoration(
-              color: Color(0xFFF4F4F4),
+              color: CustomColors.bgColor,
               borderRadius: BorderRadius.circular(18))),
     );
     var rightArrow = InkWell(
@@ -123,7 +124,7 @@ class _HomePageState extends State<HomePage> {
           child:
               Icon(Icons.arrow_forward, color: Colors.black.withOpacity(0.5)),
           decoration: BoxDecoration(
-              color: Color(0xFFF4F4F4),
+              color: CustomColors.bgColor,
               borderRadius: BorderRadius.circular(18))),
     );
     var rangeWidget = Text(
@@ -216,28 +217,12 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
-  // ignore: unused_element
-  Widget _topWidgetV1() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _buildExpenseIncomeWidgetV1(),
-          const SizedBox(width: 16),
-          _buildExpenseIncomeWidgetV1()
-        ],
-      ),
-    );
-  }
-
   Widget _topWidgetV2() {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
       padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8), color: Color(0xFFF4F4F4)),
+          borderRadius: BorderRadius.circular(8), color: CustomColors.bgColor),
       child: Column(
         children: [
           _buildExpenseIncomeWidgetV2(
@@ -251,32 +236,6 @@ class _HomePageState extends State<HomePage> {
               amount: _homeScreenViewModel.totalIncome)
         ],
       ),
-    );
-  }
-
-  Widget _buildExpenseIncomeWidgetV1() {
-    var textSpan = TextSpan(children: [
-      TextSpan(
-          text: "💸",
-          style: CustomTextStyle.emojiStyle(fontSize: 14, color: Colors.black)),
-      TextSpan(text: " Expenses", style: TextStyle(color: Color(0xFF8c8c8c)))
-    ]);
-    var amountWidget = Text(
-      "₹200",
-      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
-    );
-    return Expanded(
-      child: Container(
-          padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8), color: Color(0xFFF4F4F4)),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                RichText(text: textSpan),
-                const SizedBox(height: 8),
-                amountWidget
-              ])),
     );
   }
 

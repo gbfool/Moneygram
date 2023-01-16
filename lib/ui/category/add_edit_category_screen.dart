@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:moneygram/category/model/category.dart' as Moneygram;
 import 'package:moneygram/category/repository/category_repository.dart';
 import 'package:moneygram/di/service_locator.dart';
+import 'package:moneygram/utils/custom_colors.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
 import 'package:moneygram/utils/enum/transaction_type.dart';
 import 'package:moneygram/utils/validation_utils.dart';
@@ -97,7 +98,7 @@ class _AddEditCategoryScreenState extends State<AddEditCategoryScreen> {
       padding: EdgeInsets.only(top: 24),
       child: Container(
           decoration: BoxDecoration(
-              color: Color(0xFFF2F2F2), borderRadius: BorderRadius.circular(8)),
+              color: CustomColors.bgColor, borderRadius: BorderRadius.circular(8)),
           padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
           child: Text(_selectedEmoji,
               style: CustomTextStyle.emojiStyle(
@@ -136,7 +137,7 @@ class _AddEditCategoryScreenState extends State<AddEditCategoryScreen> {
       offstage: _isKeyboardOpen,
       child: Container(
           height: 400,
-          color: const Color(0xFFF2F2F2),
+          color: CustomColors.bgColor,
           child: SafeArea(
             child: EmojiPicker(
               onEmojiSelected: (category, emoji) {
@@ -150,7 +151,7 @@ class _AddEditCategoryScreenState extends State<AddEditCategoryScreen> {
                       (foundation.defaultTargetPlatform == TargetPlatform.iOS
                           ? 1.30
                           : 1.0),
-                  bgColor: const Color(0xFFF2F2F2),
+                  bgColor: CustomColors.bgColor,
                   indicatorColor: Colors.black,
                   iconColor: Colors.grey,
                   iconColorSelected: Colors.black,
@@ -195,7 +196,7 @@ class _AddEditCategoryScreenState extends State<AddEditCategoryScreen> {
           transactionType: widget.transactionType);
       _categoryRepository.addCategory(category: category);
     }
-    // callback called so that it refreshs the screen
+    // callback called so that it refresh the screen
     widget.addOrEditPerformed();
     Navigator.of(context).pop();
   }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:moneygram/account/model/account.dart';
 import 'package:moneygram/account/repository/account_repository.dart';
 import 'package:moneygram/di/service_locator.dart';
+import 'package:moneygram/utils/custom_colors.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
 import 'package:moneygram/utils/validation_utils.dart';
 
@@ -92,7 +93,7 @@ class _AddEditAccountScreenState extends State<AddEditAccountScreen> {
       padding: EdgeInsets.only(top: 24),
       child: Container(
           decoration: BoxDecoration(
-              color: Color(0xFFF2F2F2), borderRadius: BorderRadius.circular(8)),
+              color: CustomColors.bgColor, borderRadius: BorderRadius.circular(8)),
           padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
           child: Text(_selectedEmoji,
               style: CustomTextStyle.emojiStyle(
@@ -131,7 +132,7 @@ class _AddEditAccountScreenState extends State<AddEditAccountScreen> {
       offstage: _isKeyboardOpen,
       child: Container(
           height: 400,
-          color: const Color(0xFFF2F2F2),
+          color: CustomColors.bgColor,
           child: SafeArea(
             child: EmojiPicker(
               onEmojiSelected: (category, emoji) {
@@ -145,7 +146,7 @@ class _AddEditAccountScreenState extends State<AddEditAccountScreen> {
                       (foundation.defaultTargetPlatform == TargetPlatform.iOS
                           ? 1.30
                           : 1.0),
-                  bgColor: const Color(0xFFF2F2F2),
+                  bgColor: CustomColors.bgColor,
                   indicatorColor: Colors.black,
                   iconColor: Colors.grey,
                   iconColorSelected: Colors.black,
@@ -187,7 +188,7 @@ class _AddEditAccountScreenState extends State<AddEditAccountScreen> {
       account = Account(emoji: _selectedEmoji, name: inputAccountName);
       _accountRepository.addAccount(account: account);
     }
-    // callback called so that it refreshs the screen
+    // callback called so that it refresh the screen
     widget.addOrEditPerformed();
     Navigator.of(context).pop();
   }
