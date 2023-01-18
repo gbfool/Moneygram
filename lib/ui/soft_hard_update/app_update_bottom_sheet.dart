@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moneygram/main.dart';
 import 'package:moneygram/utils/analytics_helper.dart';
+import 'package:moneygram/utils/custom_colors.dart';
 
 class AppUpdateBottomSheet extends StatelessWidget {
   final VoidCallback onUpdateClick;
@@ -30,10 +31,10 @@ class AppUpdateBottomSheet extends StatelessWidget {
           ],
         ),
         padding: const EdgeInsets.all(16),
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(10), topLeft: Radius.circular(10)),
-          color: Colors.white,
+          color: CustomColors.secondaryColor,
         ));
   }
 
@@ -41,10 +42,10 @@ class AppUpdateBottomSheet extends StatelessWidget {
     return Align(
       alignment: Alignment.topRight,
       child: InkWell(
-        child: const Icon(
+        child: Icon(
           Icons.cancel,
           size: 30,
-          color: Colors.black,
+          color: CustomColors.primaryColor,
         ),
         onTap: onCrossClick,
       ),
@@ -54,11 +55,13 @@ class AppUpdateBottomSheet extends StatelessWidget {
   Widget headerWidget() {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
-      child: const Text(
+      child: Text(
         "New Update Available!",
         textAlign: TextAlign.center,
         style: TextStyle(
-            color: Colors.black, fontSize: 18, fontWeight: FontWeight.w600),
+            color: CustomColors.primaryColor,
+            fontSize: 18,
+            fontWeight: FontWeight.w600),
       ),
     );
   }
@@ -78,12 +81,15 @@ class AppUpdateBottomSheet extends StatelessWidget {
       child: ElevatedButton(
         child: Text(
           "Update".toUpperCase(),
-          style: const TextStyle(
-              color: Colors.white, fontWeight: FontWeight.w600, fontSize: 18),
+          style: TextStyle(
+              color: CustomColors.secondaryColor,
+              fontWeight: FontWeight.w600,
+              fontSize: 18),
         ),
         onPressed: onClick,
         style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.black, padding: const EdgeInsets.all(10)),
+            backgroundColor: CustomColors.primaryColor,
+            padding: const EdgeInsets.all(10)),
       ),
     ));
   }

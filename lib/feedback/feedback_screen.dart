@@ -63,7 +63,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   Widget _header() {
     return Container(
         padding: const EdgeInsets.only(left: 12, right: 12, top: 16),
-        color: Colors.white,
+        color: CustomColors.secondaryColor,
         child: IntrinsicHeight(
             child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -110,7 +110,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                       color: isEnable
-                          ? Colors.black
+                          ? CustomColors.primaryColor
                           : CustomColors.disableBgColorBtn,
                       borderRadius: BorderRadius.circular(13)),
                   child: Text(
@@ -118,7 +118,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: isEnable
-                            ? Colors.white
+                            ? CustomColors.secondaryColor
                             : CustomColors.disableTextColorBtn,
                         fontWeight: FontWeight.w600),
                   )),
@@ -161,7 +161,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
             },
       child: Container(
         decoration: BoxDecoration(
-            color: isSelected ? Colors.black.withOpacity(0.1) : null,
+            color:
+                isSelected ? CustomColors.primaryColor.withOpacity(0.1) : null,
             borderRadius: BorderRadius.circular(8)),
         padding:
             EdgeInsets.only(left: isFirst ? 0 : 4, right: 4, top: 6, bottom: 6),
@@ -188,21 +189,21 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
         hintMaxLines: 1,
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10),
-        hintStyle:
-            TextStyle(fontSize: 16, color: Colors.black.withOpacity(0.3)),
-        fillColor: Colors.white,
+        hintStyle: TextStyle(
+            fontSize: 16, color: CustomColors.primaryColor.withOpacity(0.3)),
+        fillColor: CustomColors.secondaryColor,
         filled: true,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4),
-          borderSide: const BorderSide(
-            color: Colors.white,
+          borderSide: BorderSide(
+            color: CustomColors.secondaryColor,
             width: 0.2,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4),
-          borderSide: const BorderSide(
-            color: Colors.black26,
+          borderSide: BorderSide(
+            color: CustomColors.primaryColor26,
             width: 0.2,
           ),
         ),
@@ -239,14 +240,16 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                   fontSize: 22,
                   fontWeight: FontWeight.w600,
                   color: isEnable
-                      ? Colors.white
+                      ? CustomColors.secondaryColor
                       : CustomColors.disableTextColorBtn),
             ),
             decoration: BoxDecoration(
-                color: isEnable ? Colors.black : CustomColors.disableBgColorBtn,
+                color: isEnable
+                    ? CustomColors.primaryColor
+                    : CustomColors.disableBgColorBtn,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.white.withOpacity(0.03),
+                    color: CustomColors.secondaryColor.withOpacity(0.03),
                     spreadRadius: 5,
                     blurRadius: 7,
                     offset: Offset(0, 3), // changes position of shadow

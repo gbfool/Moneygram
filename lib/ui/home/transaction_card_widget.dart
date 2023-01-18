@@ -3,6 +3,7 @@ import 'package:moneygram/di/service_locator.dart';
 import 'package:moneygram/transactions/models/transaction.dart';
 import 'package:moneygram/ui/home/transaction_row_header_widget.dart';
 import 'package:moneygram/ui/home/transaction_row_widget.dart';
+import 'package:moneygram/utils/custom_colors.dart';
 import 'package:moneygram/utils/transaction_extension.dart';
 
 class TransactionCardWidget extends StatefulWidget {
@@ -24,7 +25,7 @@ class _TransactionCardWidgetState extends State<TransactionCardWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: CustomColors.secondaryColor,
       margin: EdgeInsets.only(top: 12),
       child: Column(mainAxisSize: MainAxisSize.min, children: [
         TransactionRowHeaderWidget(

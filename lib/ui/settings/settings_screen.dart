@@ -7,6 +7,7 @@ import 'package:moneygram/ui/settings/settings_row_widget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:moneygram/utils/analytics_helper.dart';
 import 'package:moneygram/utils/currency_helper.dart';
+import 'package:moneygram/utils/custom_colors.dart';
 import 'package:moneygram/utils/utils.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -88,7 +89,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Text("Settings",
           style: TextStyle(
-              color: Colors.black, fontSize: 32, fontWeight: FontWeight.w600)),
+              color: CustomColors.primaryColor,
+              fontSize: 32,
+              fontWeight: FontWeight.w600)),
     );
   }
 
@@ -142,7 +145,9 @@ class SettingsGroup extends StatelessWidget {
         child: Text(
           title,
           style: TextStyle(
-              color: Colors.black, fontSize: 24, fontWeight: FontWeight.w600),
+              color: CustomColors.primaryColor,
+              fontSize: 24,
+              fontWeight: FontWeight.w600),
         ),
       ),
       ...children,

@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:moneygram/utils/currency_helper.dart';
+import 'package:moneygram/utils/custom_colors.dart';
 
 class AmountWidget extends StatelessWidget {
   final String? amount;
@@ -31,11 +32,12 @@ class AmountWidget extends StatelessWidget {
       display = amount!;
       // display = f.format(int.parse(amount));
       style = style.copyWith(
-        color: Colors.black,
+        color: CustomColors.primaryColor,
       );
     }
-    Color textColor =
-        (amount == null || amount!.isEmpty) ? Colors.grey : Colors.black;
+    Color textColor = (amount == null || amount!.isEmpty)
+        ? Colors.grey
+        : CustomColors.primaryColor;
     TextSpan textSpan = TextSpan(children: [
       TextSpan(
         text: CurrencyHelper.getCurrencySymbol(),

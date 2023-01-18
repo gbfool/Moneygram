@@ -19,11 +19,14 @@ class SaveButton extends StatelessWidget {
           "Save",
           style: TextStyle(
               fontSize: 20,
-              color:
-                  isEnable ? Colors.white : CustomColors.disableTextColorBtn),
+              color: isEnable
+                  ? CustomColors.secondaryColor
+                  : CustomColors.disableTextColorBtn),
         ),
         decoration: BoxDecoration(
-            color: isEnable ? Colors.black : CustomColors.disableBgColorBtn,
+            color: isEnable
+                ? CustomColors.primaryColor
+                : CustomColors.disableBgColorBtn,
             borderRadius: BorderRadius.all(Radius.circular(24))),
       ),
     );

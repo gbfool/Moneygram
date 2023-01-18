@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moneygram/utils/custom_colors.dart';
 
 class AlertDialogView extends StatelessWidget {
   final String title;
@@ -28,7 +29,7 @@ class AlertDialogView extends StatelessWidget {
         Text(title,
             style: TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Colors.black,
+                color: CustomColors.primaryColor,
                 fontSize: 20)),
         const SizedBox(height: 12),
         Text(description),
@@ -49,7 +50,7 @@ class AlertDialogView extends StatelessWidget {
       child: Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
-              border: Border.all(color: Colors.black, width: 0.5)),
+              border: Border.all(color: CustomColors.primaryColor, width: 0.5)),
           padding: EdgeInsets.symmetric(vertical: 8, horizontal: 32),
           child: Text(text)),
     );

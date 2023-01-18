@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:moneygram/utils/currency_helper.dart';
+import 'package:moneygram/utils/custom_colors.dart';
 import 'package:moneygram/utils/enum/filter_budget.dart';
 import 'package:moneygram/utils/time_extension.dart';
 
@@ -44,7 +45,7 @@ class TransactionRowHeaderWidget extends StatelessWidget {
       style: GoogleFonts.lato(
           fontSize: 22,
           fontWeight: FontWeight.w600,
-          color: Colors.black.withOpacity(0.5)),
+          color: CustomColors.primaryColor.withOpacity(0.5)),
     );
   }
 
@@ -58,7 +59,7 @@ class TransactionRowHeaderWidget extends StatelessWidget {
             style: GoogleFonts.lato(
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
-                color: Colors.black.withOpacity(0.8)),
+                color: CustomColors.primaryColor.withOpacity(0.8)),
           ),
         ),
         const SizedBox(width: 8),
@@ -67,12 +68,14 @@ class TransactionRowHeaderWidget extends StatelessWidget {
           children: [
             Text(
               dateTime.decoratedWeek,
-              style: GoogleFonts.lato(fontSize: 14, color: Colors.black),
+              style: GoogleFonts.lato(
+                  fontSize: 14, color: CustomColors.primaryColor),
             ),
             Text(
               dateTime.decoratedMonthAndYear,
               style: GoogleFonts.lato(
-                  fontSize: 12, color: Colors.black.withOpacity(0.4)),
+                  fontSize: 12,
+                  color: CustomColors.primaryColor.withOpacity(0.4)),
             ),
           ],
         ),
@@ -86,7 +89,7 @@ class TransactionRowHeaderWidget extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 4),
       child: Text(symbol, style: TextStyle(fontWeight: FontWeight.w600)),
       decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.1),
+          color: CustomColors.primaryColor.withOpacity(0.1),
           borderRadius: BorderRadius.circular(4)),
     );
     widgets.add(symbolWidget);
@@ -96,7 +99,7 @@ class TransactionRowHeaderWidget extends StatelessWidget {
       style: GoogleFonts.lato(
           fontSize: 16,
           fontWeight: FontWeight.w600,
-          color: Colors.black.withOpacity(0.5)),
+          color: CustomColors.primaryColor.withOpacity(0.5)),
     ));
     return widgets;
   }

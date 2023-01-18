@@ -7,6 +7,7 @@ import 'package:moneygram/ui/add_transaction/keyboard_widget.dart';
 import 'package:moneygram/ui/add_transaction/save_button.dart';
 import 'package:moneygram/ui/base_screen.dart';
 import 'package:moneygram/utils/analytics_helper.dart';
+import 'package:moneygram/utils/custom_colors.dart';
 import 'package:moneygram/viewmodels/add_transaction_view_model.dart';
 
 class AddTransactionPage extends StatefulWidget {
@@ -58,7 +59,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
         FocusScope.of(context).requestFocus(new FocusNode());
       },
       child: Container(
-        color: Colors.white,
+        color: CustomColors.secondaryColor,
         child: SafeArea(
           minimum: EdgeInsets.only(bottom: 16),
           child: Column(

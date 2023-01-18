@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moneygram/category/category_hive_helper.dart';
 import 'package:moneygram/category/model/category.dart';
+import 'package:moneygram/utils/custom_colors.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
 import 'package:moneygram/utils/enum/transaction_type.dart';
 
@@ -138,7 +139,7 @@ class _CategoryPickerScreenState extends State<CategoryPickerScreen> {
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(.1),
+              color: CustomColors.primaryColor.withOpacity(.1),
               blurRadius: 4.0,
               spreadRadius: 1.0,
               offset: Offset(
@@ -149,11 +150,11 @@ class _CategoryPickerScreenState extends State<CategoryPickerScreen> {
           ],
         ),
         thumbDecoration: BoxDecoration(
-          color: Colors.white,
+          color: CustomColors.secondaryColor,
           borderRadius: BorderRadius.circular(6),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(.05),
+              color: CustomColors.primaryColor.withOpacity(.05),
               blurRadius: 2.0,
               spreadRadius: 0.5,
               offset: Offset(
@@ -182,7 +183,7 @@ class _CategoryPickerScreenState extends State<CategoryPickerScreen> {
       padding: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
       child: Text(
         text,
-        style: TextStyle(fontSize: 16, color: Colors.white),
+        style: TextStyle(fontSize: 16, color: CustomColors.secondaryColor),
       ),
     );
   }

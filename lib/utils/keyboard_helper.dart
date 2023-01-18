@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moneygram/utils/custom_colors.dart';
 
 class KeyboardHelper {
   static KeyboardHelper? _instance;
@@ -28,9 +29,9 @@ class KeyboardHelper {
       [
         '.',
         '0',
-        const Icon(
+        Icon(
           Icons.backspace_outlined,
-          color: Colors.black,
+          color: CustomColors.primaryColor,
         ),
       ],
     ];

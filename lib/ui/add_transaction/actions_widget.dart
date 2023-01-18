@@ -7,6 +7,7 @@ import 'package:moneygram/ui/account/account_picker_screen.dart';
 import 'package:moneygram/ui/category/category_picker_screen.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:moneygram/ui/date_picker_screen.dart';
+import 'package:moneygram/utils/custom_colors.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
 import 'package:moneygram/viewmodels/action_widget_view_model.dart';
 import 'package:moneygram/viewmodels/add_transaction_view_model.dart';
@@ -70,7 +71,7 @@ class _ActionsWidgetState extends State<ActionsWidget> {
   Widget _inputField() {
     return TextField(
       controller: widget.notesTextController,
-      cursorColor: Colors.black,
+      cursorColor: CustomColors.primaryColor,
       decoration: InputDecoration(
           border: InputBorder.none,
           hintText: "Add notes",
@@ -120,7 +121,8 @@ class _ActionsWidgetState extends State<ActionsWidget> {
     } else {
       widgets.add(Text(
         "Select Account",
-        style: TextStyle(fontSize: 16, color: Colors.black.withOpacity(0.5)),
+        style: TextStyle(
+            fontSize: 16, color: CustomColors.primaryColor.withOpacity(0.5)),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ));
@@ -166,7 +168,8 @@ class _ActionsWidgetState extends State<ActionsWidget> {
     } else {
       widgets.add(Text(
         "Select Category",
-        style: TextStyle(fontSize: 16, color: Colors.black.withOpacity(0.5)),
+        style: TextStyle(
+            fontSize: 16, color: CustomColors.primaryColor.withOpacity(0.5)),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ));

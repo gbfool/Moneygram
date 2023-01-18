@@ -5,6 +5,7 @@ import 'package:moneygram/category/model/category.dart';
 import 'package:moneygram/ui/base_screen.dart';
 import 'package:moneygram/ui/category/add_edit_category_screen.dart';
 import 'package:moneygram/utils/analytics_helper.dart';
+import 'package:moneygram/utils/custom_colors.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
 import 'package:moneygram/utils/enum/transaction_type.dart';
 import 'package:moneygram/viewmodels/manage_category_view_model.dart';
@@ -36,8 +37,8 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
     return Scaffold(
       appBar: AppBar(
           elevation: 0,
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
+          backgroundColor: CustomColors.secondaryColor,
+          foregroundColor: CustomColors.primaryColor,
           surfaceTintColor: Colors.transparent,
           title: Text("Categories"),
           actions: _appBarActions()),
@@ -93,7 +94,7 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
 
   Widget _listView() {
     return Container(
-      color: Colors.white,
+      color: CustomColors.secondaryColor,
       child: ListView.builder(
           padding:
               const EdgeInsets.only(bottom: kFloatingActionButtonMargin + 100),
@@ -116,7 +117,7 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(.1),
+              color: CustomColors.primaryColor.withOpacity(.1),
               blurRadius: 4.0,
               spreadRadius: 1.0,
               offset: Offset(
@@ -127,11 +128,11 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
           ],
         ),
         thumbDecoration: BoxDecoration(
-          color: Colors.white,
+          color: CustomColors.secondaryColor,
           borderRadius: BorderRadius.circular(6),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(.05),
+              color: CustomColors.primaryColor.withOpacity(.05),
               blurRadius: 2.0,
               spreadRadius: 0.5,
               offset: Offset(
@@ -163,7 +164,7 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
       padding: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
       child: Text(
         text,
-        style: TextStyle(fontSize: 16, color: Colors.white),
+        style: TextStyle(fontSize: 16, color: CustomColors.secondaryColor),
       ),
     );
   }
@@ -193,7 +194,8 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
                       Text(category.isActive ? "Show" : "Hidden",
                           style: TextStyle(
                               fontSize: 12,
-                              color: Colors.black.withOpacity(0.6))),
+                              color:
+                                  CustomColors.primaryColor.withOpacity(0.6))),
                     ],
                   ),
                 ),
@@ -228,13 +230,13 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
     //       fit: BoxFit.contain,
     //       child: CupertinoSwitch(
     //           value: category.isActive,
-    //           activeColor: Colors.black.withOpacity(0.8),
+    //           activeColor: CustomColors.primaryColor.withOpacity(0.8),
     //           onChanged: callback)),
     // );
 
     var widget = Switch(
         value: category.isActive,
-        activeColor: Colors.black.withOpacity(0.8),
+        activeColor: CustomColors.primaryColor.withOpacity(0.8),
         onChanged: callback);
 
     return widget;
@@ -262,11 +264,11 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
     return FloatingActionButton(
       onPressed: () => _openAddEditCategoryScreen(),
       tooltip: 'Add Category',
-      backgroundColor: Colors.white,
-      child: const Icon(
+      backgroundColor: CustomColors.secondaryColor,
+      child: Icon(
         Icons.add,
         size: 32,
-        color: Colors.black,
+        color: CustomColors.primaryColor,
       ),
     );
   }

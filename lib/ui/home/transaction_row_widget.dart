@@ -3,6 +3,7 @@ import 'package:moneygram/account/data_source/account_local_data_source.dart';
 import 'package:moneygram/category/data_source/category_local_data_source.dart';
 import 'package:moneygram/transactions/models/transaction.dart';
 import 'package:moneygram/utils/currency_helper.dart';
+import 'package:moneygram/utils/custom_colors.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
 import 'package:moneygram/utils/validation_utils.dart';
 
@@ -87,7 +88,8 @@ class _TransactionRowWidgetState extends State<TransactionRowWidget> {
       Text(widget.transaction.notes ?? "",
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: TextStyle(fontSize: 14, color: Colors.black.withOpacity(0.6)))
+          style: TextStyle(
+              fontSize: 14, color: CustomColors.primaryColor.withOpacity(0.6)))
     ];
   }
 }

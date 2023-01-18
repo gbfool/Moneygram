@@ -105,7 +105,8 @@ class _HomePageState extends State<HomePage> {
           height: 36,
           width: 36,
           alignment: Alignment.center,
-          child: Icon(Icons.arrow_back, color: Colors.black.withOpacity(0.5)),
+          child: Icon(Icons.arrow_back,
+              color: CustomColors.primaryColor.withOpacity(0.5)),
           decoration: BoxDecoration(
               color: CustomColors.bgColor,
               borderRadius: BorderRadius.circular(18))),
@@ -121,8 +122,8 @@ class _HomePageState extends State<HomePage> {
           height: 36,
           width: 36,
           alignment: Alignment.center,
-          child:
-              Icon(Icons.arrow_forward, color: Colors.black.withOpacity(0.5)),
+          child: Icon(Icons.arrow_forward,
+              color: CustomColors.primaryColor.withOpacity(0.5)),
           decoration: BoxDecoration(
               color: CustomColors.bgColor,
               borderRadius: BorderRadius.circular(18))),
@@ -176,11 +177,11 @@ class _HomePageState extends State<HomePage> {
         _openTransactionPage();
       },
       tooltip: 'Add Transaction',
-      backgroundColor: Colors.white,
-      child: const Icon(
+      backgroundColor: CustomColors.secondaryColor,
+      child: Icon(
         Icons.add,
         size: 32,
-        color: Colors.black,
+        color: CustomColors.primaryColor,
       ),
     );
   }
@@ -244,10 +245,12 @@ class _HomePageState extends State<HomePage> {
     var textSpan = TextSpan(children: [
       TextSpan(
           text: emoji,
-          style: CustomTextStyle.emojiStyle(fontSize: 18, color: Colors.black)),
+          style: CustomTextStyle.emojiStyle(
+              fontSize: 18, color: CustomColors.primaryColor)),
       TextSpan(
           text: " $header",
-          style: TextStyle(fontSize: 14, color: Colors.black.withOpacity(0.6)))
+          style: TextStyle(
+              fontSize: 14, color: CustomColors.primaryColor.withOpacity(0.6)))
     ]);
     var amountWidget = Text(
       amount,

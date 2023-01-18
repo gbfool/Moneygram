@@ -46,7 +46,7 @@ class _AddEditCategoryScreenState extends State<AddEditCategoryScreen> {
     _isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom != 0;
     var title = widget.category != null ? "Edit" : "Add";
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: CustomColors.secondaryColor,
       appBar: AppBar(
         title: Text('$title Category'),
         actions: [
@@ -58,8 +58,9 @@ class _AddEditCategoryScreenState extends State<AddEditCategoryScreen> {
   }
 
   Widget _actionDoneButton() {
-    var color =
-        isAnythingChange() ? Colors.black : Colors.black.withOpacity(0.2);
+    var color = isAnythingChange()
+        ? CustomColors.primaryColor
+        : CustomColors.primaryColor.withOpacity(0.2);
     return InkWell(
         onTap: () {
           _actionButtonOnClicked();
@@ -98,7 +99,8 @@ class _AddEditCategoryScreenState extends State<AddEditCategoryScreen> {
       padding: EdgeInsets.only(top: 24),
       child: Container(
           decoration: BoxDecoration(
-              color: CustomColors.bgColor, borderRadius: BorderRadius.circular(8)),
+              color: CustomColors.bgColor,
+              borderRadius: BorderRadius.circular(8)),
           padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
           child: Text(_selectedEmoji,
               style: CustomTextStyle.emojiStyle(
@@ -114,14 +116,15 @@ class _AddEditCategoryScreenState extends State<AddEditCategoryScreen> {
         child: IntrinsicWidth(
           child: TextField(
             controller: _textEditingController,
-            cursorColor: Colors.black,
+            cursorColor: CustomColors.primaryColor,
             style: TextStyle(fontSize: 24),
             onChanged: (value) {
               setState(() {});
             },
             decoration: InputDecoration(
                 hintStyle: TextStyle(
-                    fontSize: 24, color: Colors.black.withOpacity(0.3)),
+                    fontSize: 24,
+                    color: CustomColors.primaryColor.withOpacity(0.3)),
                 border: InputBorder.none,
                 hintText: _textEditingController.text.isEmpty
                     ? "Add Category Name"
@@ -152,10 +155,10 @@ class _AddEditCategoryScreenState extends State<AddEditCategoryScreen> {
                           ? 1.30
                           : 1.0),
                   bgColor: CustomColors.bgColor,
-                  indicatorColor: Colors.black,
+                  indicatorColor: CustomColors.primaryColor,
                   iconColor: Colors.grey,
-                  iconColorSelected: Colors.black,
-                  skinToneDialogBgColor: Colors.white,
+                  iconColorSelected: CustomColors.primaryColor,
+                  skinToneDialogBgColor: CustomColors.secondaryColor,
                   enableSkinTones: false,
                   showRecentsTab: false,
                   emojiTextStyle: CustomTextStyle.emojiStyle(fontSize: 16)),

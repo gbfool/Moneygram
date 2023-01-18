@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:moneygram/ui/alert_dialog_view.dart';
+import 'package:moneygram/utils/custom_colors.dart';
 import 'package:moneygram/viewmodels/add_transaction_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -106,7 +107,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
         children: [
           Icon(
             iconData,
-            color: Colors.black,
+            color: CustomColors.primaryColor,
           ),
           Text(title),
         ],

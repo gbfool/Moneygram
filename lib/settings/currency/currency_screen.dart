@@ -3,6 +3,7 @@ import 'package:moneygram/settings/currency/currency_utils.dart';
 import 'package:moneygram/ui/base_screen.dart';
 import 'package:moneygram/utils/analytics_helper.dart';
 import 'package:moneygram/utils/currency_helper.dart';
+import 'package:moneygram/utils/custom_colors.dart';
 import 'package:moneygram/viewmodels/currency_viewmodel.dart';
 
 class CurrencyScreen extends StatefulWidget {
@@ -29,8 +30,8 @@ class _CurrencyScreenState extends State<CurrencyScreen> {
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
+          backgroundColor: CustomColors.secondaryColor,
+          foregroundColor: CustomColors.primaryColor,
           surfaceTintColor: Colors.transparent,
           title: Text("Currency"),
         ),
@@ -39,7 +40,7 @@ class _CurrencyScreenState extends State<CurrencyScreen> {
 
   Widget _listView() {
     return Container(
-      color: Colors.white,
+      color: CustomColors.secondaryColor,
       child: ListView.builder(
           padding:
               const EdgeInsets.only(bottom: kFloatingActionButtonMargin + 100),
@@ -63,7 +64,7 @@ class _CurrencyScreenState extends State<CurrencyScreen> {
       },
       child: Container(
         padding: EdgeInsets.only(top: 12, left: 16, right: 16),
-        color: isSelected ? Colors.black.withOpacity(0.05) : null,
+        color: isSelected ? CustomColors.primaryColor.withOpacity(0.05) : null,
         child: Column(
           children: [
             Row(
