@@ -6,8 +6,10 @@ import 'package:moneygram/ui/category/manage_category_screen.dart';
 import 'package:moneygram/ui/settings/settings_row_widget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:moneygram/utils/analytics_helper.dart';
+import 'package:moneygram/utils/broadcast/broadcast_channels.dart';
+import 'package:moneygram/utils/broadcast/broadcast_receiver.dart';
 import 'package:moneygram/utils/currency_helper.dart';
-import 'package:moneygram/utils/custom_colors.dart';
+import 'package:moneygram/core/theme/moneygram_theme.dart';
 import 'package:moneygram/utils/utils.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -21,13 +23,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: context.appHomeScreenBgColor,
         body: SafeArea(
             child: Container(
-      child: SingleChildScrollView(
-        padding: EdgeInsets.only(bottom: 64),
-        child: _content(),
-      ),
-    )));
+          child: SingleChildScrollView(
+            padding: EdgeInsets.only(bottom: 64),
+            child: _content(),
+          ),
+        )));
   }
 
   Column _content() {
@@ -37,6 +40,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
       SettingsGroup(
         title: "Preferences",
         children: [
+          SettingsRowWidget(
+            title: "Theme",
+            subtitle: "light",
+            onTap: () {
+              BroadcastReceiver.broadcastController
+                  .add(BroadcastChannels.refreshTheme);
+            },
+          ),
           SettingsRowWidget(
             title: "Currency",
             subtitle: CurrencyHelper.getCurrencyName(),
@@ -89,7 +100,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Text("Settings",
           style: TextStyle(
-              color: CustomColors.primaryColor,
+              color: context.appPrimaryColor,
               fontSize: 32,
               fontWeight: FontWeight.w600)),
     );
@@ -145,7 +156,7 @@ class SettingsGroup extends StatelessWidget {
         child: Text(
           title,
           style: TextStyle(
-              color: CustomColors.primaryColor,
+              color: Theme.of(context).disabledColor,
               fontSize: 24,
               fontWeight: FontWeight.w600),
         ),

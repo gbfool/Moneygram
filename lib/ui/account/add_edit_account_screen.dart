@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:moneygram/account/model/account.dart';
 import 'package:moneygram/account/repository/account_repository.dart';
 import 'package:moneygram/di/service_locator.dart';
-import 'package:moneygram/utils/custom_colors.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
 import 'package:moneygram/utils/validation_utils.dart';
+import 'package:moneygram/core/theme/moneygram_theme.dart';
 
 /// Example for EmojiPickerFlutter
 class AddEditAccountScreen extends StatefulWidget {
@@ -41,7 +41,7 @@ class _AddEditAccountScreenState extends State<AddEditAccountScreen> {
     _isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom != 0;
     var title = widget.account != null ? "Edit" : "Add";
     return Scaffold(
-      backgroundColor: CustomColors.secondaryColor,
+      backgroundColor: context.appSecondaryColor,
       appBar: AppBar(
         title: Text('$title Account'),
         actions: [
@@ -54,8 +54,8 @@ class _AddEditAccountScreenState extends State<AddEditAccountScreen> {
 
   Widget _actionDoneButton() {
     var color = isAnythingChange()
-        ? CustomColors.primaryColor
-        : CustomColors.primaryColor.withOpacity(0.2);
+        ? context.appPrimaryColor
+        : context.appPrimaryColor.withOpacity(0.2);
     return InkWell(
         onTap: () {
           _actionButtonOnClicked();
@@ -94,12 +94,14 @@ class _AddEditAccountScreenState extends State<AddEditAccountScreen> {
       padding: EdgeInsets.only(top: 24),
       child: Container(
           decoration: BoxDecoration(
-              color: CustomColors.bgColor,
+              color: context.appBgColor,
               borderRadius: BorderRadius.circular(8)),
           padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
           child: Text(_selectedEmoji,
               style: CustomTextStyle.emojiStyle(
-                  fontSize: 40, fontWeight: FontWeight.bold))),
+                  context: context,
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold))),
     );
   }
 
@@ -111,7 +113,7 @@ class _AddEditAccountScreenState extends State<AddEditAccountScreen> {
         child: IntrinsicWidth(
           child: TextField(
             controller: _textEditingController,
-            cursorColor: CustomColors.primaryColor,
+            cursorColor: context.appPrimaryColor,
             style: TextStyle(fontSize: 24),
             onChanged: (value) {
               setState(() {});
@@ -119,8 +121,9 @@ class _AddEditAccountScreenState extends State<AddEditAccountScreen> {
             decoration: InputDecoration(
                 hintStyle: TextStyle(
                     fontSize: 24,
-                    color: CustomColors.primaryColor.withOpacity(0.3)),
+                    color: context.appPrimaryColor.withOpacity(0.3)),
                 border: InputBorder.none,
+                fillColor: Colors.transparent,
                 hintText: _textEditingController.text.isEmpty
                     ? "Add Account Name"
                     : null),
@@ -135,7 +138,7 @@ class _AddEditAccountScreenState extends State<AddEditAccountScreen> {
       offstage: _isKeyboardOpen,
       child: Container(
           height: 400,
-          color: CustomColors.bgColor,
+          color: context.appBgColor,
           child: SafeArea(
             child: EmojiPicker(
               onEmojiSelected: (category, emoji) {
@@ -149,14 +152,15 @@ class _AddEditAccountScreenState extends State<AddEditAccountScreen> {
                       (foundation.defaultTargetPlatform == TargetPlatform.iOS
                           ? 1.30
                           : 1.0),
-                  bgColor: CustomColors.bgColor,
-                  indicatorColor: CustomColors.primaryColor,
+                  bgColor: context.appBgColor,
+                  indicatorColor: context.appPrimaryColor,
                   iconColor: Colors.grey,
-                  iconColorSelected: CustomColors.primaryColor,
-                  skinToneDialogBgColor: CustomColors.secondaryColor,
+                  iconColorSelected: context.appPrimaryColor,
+                  skinToneDialogBgColor: context.appSecondaryColor,
                   enableSkinTones: false,
                   showRecentsTab: false,
-                  emojiTextStyle: CustomTextStyle.emojiStyle(fontSize: 16)),
+                  emojiTextStyle: CustomTextStyle.emojiStyle(
+                      context: context, fontSize: 16)),
             ),
           )),
     );

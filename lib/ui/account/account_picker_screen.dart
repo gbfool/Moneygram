@@ -62,7 +62,7 @@ class _AccountPickerScreenState extends State<AccountPickerScreen> {
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
             child: Column(mainAxisSize: MainAxisSize.min, children: [
               Text(account.emoji,
-                  style: CustomTextStyle.emojiStyle(fontSize: 24)),
+                  style: CustomTextStyle.emojiStyle(context: context, fontSize: 24)),
               const SizedBox(height: 2),
               Flexible(
                 child: Text(

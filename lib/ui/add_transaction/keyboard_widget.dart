@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moneygram/ui/keyboard/keyboard_key.dart';
 import 'package:moneygram/utils/keyboard_helper.dart';
+import 'package:moneygram/core/theme/moneygram_theme.dart';
 
 class KeyboardWidget extends StatelessWidget {
   final Function() onBackPress;
@@ -16,12 +17,12 @@ class KeyboardWidget extends StatelessWidget {
       child: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: renderKeyboard()),
+          children: renderKeyboard(context)),
     );
   }
 
-  renderKeyboard() {
-    return KeyboardHelper.instance.keys
+  renderKeyboard(BuildContext context) {
+    return KeyboardHelper.getKeys(context.appPrimaryColor)
         .map(
           (x) => Row(
             children: x.map(
