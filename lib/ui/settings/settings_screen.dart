@@ -5,9 +5,8 @@ import 'package:moneygram/ui/account/manage_account_screen.dart';
 import 'package:moneygram/ui/category/manage_category_screen.dart';
 import 'package:moneygram/ui/settings/settings_row_widget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:moneygram/ui/theme/theme_selector_screen.dart';
 import 'package:moneygram/utils/analytics_helper.dart';
-import 'package:moneygram/utils/broadcast/broadcast_channels.dart';
-import 'package:moneygram/utils/broadcast/broadcast_receiver.dart';
 import 'package:moneygram/utils/currency_helper.dart';
 import 'package:moneygram/core/theme/moneygram_theme.dart';
 import 'package:moneygram/utils/utils.dart';
@@ -48,13 +47,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         title: "Preferences",
         children: [
           SettingsRowWidget(
-            title: "Theme",
-            subtitle: "light",
-            onTap: () {
-              BroadcastReceiver.broadcastController
-                  .add(BroadcastChannels.refreshTheme);
-            },
-          ),
+              title: "Theme", subtitle: ThemeModeHelper.currentThemeStr(), onTap: _themeSelectorClicked),
           SettingsRowWidget(
             title: "Currency",
             subtitle: CurrencyHelper.getCurrencyName(),
@@ -100,6 +93,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ],
       )
     ]);
+  }
+
+  void _themeSelectorClicked() {
+    AnalyticsHelper.logEvent(event: AnalyticsHelper.settingsThemeClicked);
+    showBarModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.transparent,
+        builder: (context) => ThemeSelectorScreen());
   }
 
   void _openCurrencyScreen() {

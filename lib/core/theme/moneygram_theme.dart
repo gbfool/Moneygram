@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:moneygram/di/service_locator.dart';
+import 'package:moneygram/settings/settings_service.dart';
 import 'package:moneygram/utils/custom_colors.dart';
+import 'package:moneygram/utils/enum/theme_mode.dart';
 
 extension ColorSchemeExtension on ColorScheme {
   Color get primaryColor => this.brightness == Brightness.light
@@ -152,6 +155,42 @@ DialogTheme dialogTheme() {
       borderRadius: BorderRadius.circular(24),
     ),
   );
+}
+
+class ThemeModeHelper {
+  static ThemeMode currentTheme() {
+    SettingsService settingsService = locator.get();
+    return settingsService.themeMode();
+  }
+
+  static String currentThemeStr() {
+    return currentTheme().themeName;
+  }
+
+  static void setTheme(ThemeMode mode) {
+    SettingsService settingsService = locator.get();
+    settingsService.setThemeMode(mode);
+  }
+
+  static int index(ThemeMode mode) {
+    if (mode == ThemeMode.light) {
+      return 0;
+    }
+    if (mode == ThemeMode.dark) {
+      return 1;
+    }
+    return 2;
+  }
+
+  static ThemeMode themeMode(int index) {
+    if (index == 0) {
+      return ThemeMode.light;
+    }
+    if (index == 1) {
+      return ThemeMode.dark;
+    }
+    return ThemeMode.system;
+  }
 }
 
 // CustomColors lightCustomColor = CustomColors(

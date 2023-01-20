@@ -32,6 +32,7 @@ class DatePickerScreenState extends State<DatePickerScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
+        color: context.appHomeScreenBgColor,
         padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         child: Column(
           mainAxisSize: MainAxisSize.min,

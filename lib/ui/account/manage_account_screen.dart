@@ -31,6 +31,7 @@ class _ManageAccountScreenState extends State<ManageAccountScreen> {
 
   Widget _scaffold() {
     return Scaffold(
+      backgroundColor: context.appHomeScreenBgColor,
       appBar: AppBar(title: Text("Accounts"), actions: _appBarActions()),
       body: _listView(),
       floatingActionButton: _fab(),
@@ -73,7 +74,6 @@ class _ManageAccountScreenState extends State<ManageAccountScreen> {
 
   Widget _listView() {
     return Container(
-      color: context.appSecondaryColor,
       child: ListView.builder(
           padding:
               const EdgeInsets.only(bottom: kFloatingActionButtonMargin + 100),

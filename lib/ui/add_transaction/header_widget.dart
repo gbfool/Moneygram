@@ -71,6 +71,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
   Widget _buildPopupMenu() {
     return PopupMenuButton(
       padding: EdgeInsets.zero,
+      color: context.appHomeScreenBgColor,
       child: Container(
         height: 36,
         width: 48,

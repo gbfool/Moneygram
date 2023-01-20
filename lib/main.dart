@@ -87,8 +87,7 @@ class _MyAppState extends State<MyApp> {
     return ValueListenableBuilder<bool>(
         valueListenable: darkThemeListenable,
         builder: (context, value, _) {
-          ThemeMode themeMode =
-              darkThemeListenable.value ? ThemeMode.dark : ThemeMode.light;
+          ThemeMode themeMode = ThemeModeHelper.currentTheme();
           print(themeMode);
           ColorScheme lightColorScheme = ColorScheme.fromSeed(
             seedColor: context.appPrimaryColor,

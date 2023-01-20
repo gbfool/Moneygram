@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:moneygram/account/model/account.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
+import 'package:moneygram/core/theme/moneygram_theme.dart';
 
 class AccountPickerScreen extends StatefulWidget {
   final List<Account> accountList;
@@ -17,6 +18,7 @@ class _AccountPickerScreenState extends State<AccountPickerScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
+        color: context.appHomeScreenBgColor,
         padding: EdgeInsets.only(top: 16, left: 12, right: 12),
         constraints: BoxConstraints(
             minHeight: MediaQuery.of(context).size.height * 0.3,
@@ -62,7 +64,8 @@ class _AccountPickerScreenState extends State<AccountPickerScreen> {
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
             child: Column(mainAxisSize: MainAxisSize.min, children: [
               Text(account.emoji,
-                  style: CustomTextStyle.emojiStyle(context: context, fontSize: 24)),
+                  style: CustomTextStyle.emojiStyle(
+                      context: context, fontSize: 24)),
               const SizedBox(height: 2),
               Flexible(
                 child: Text(

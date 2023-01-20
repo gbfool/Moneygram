@@ -1,5 +1,4 @@
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moneygram/category/category_hive_helper.dart';
 import 'package:moneygram/category/model/category.dart';
@@ -48,6 +47,7 @@ class _CategoryPickerScreenState extends State<CategoryPickerScreen> {
 
   Widget _body() {
     return Container(
+        color: context.appHomeScreenBgColor,
         padding: EdgeInsets.only(top: 16, left: 12, right: 12),
         constraints: BoxConstraints(
             minHeight: MediaQuery.of(context).size.height * 0.3,
