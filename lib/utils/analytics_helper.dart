@@ -30,6 +30,8 @@ class AnalyticsHelper {
   static const String updateTransactionMenuClicked =
       "update_transaction_menu_clicked";
 
+  static const String settingsThemeClicked =
+      "settings_theme_clicked";
   static const String settingsCurrencySelectorClicked =
       "settings_currency_selector_clicked";
   static const String settingsManageCategoryClicked =

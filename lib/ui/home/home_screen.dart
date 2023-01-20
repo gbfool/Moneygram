@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:moneygram/transactions/models/transaction.dart';
 import 'package:moneygram/ui/add_transaction/add_transaction_page.dart';
 import 'package:moneygram/ui/base_screen.dart';
@@ -11,8 +10,8 @@ import 'package:moneygram/ui/soft_hard_update/app_update_bottom_sheet.dart';
 import 'package:moneygram/utils/analytics_helper.dart';
 import 'package:moneygram/utils/broadcast/broadcast_channels.dart';
 import 'package:moneygram/utils/broadcast/broadcast_receiver.dart';
-import 'package:moneygram/utils/custom_colors.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
+import 'package:moneygram/core/theme/moneygram_theme.dart';
 import 'package:moneygram/utils/utils.dart';
 import 'package:moneygram/utils/validation_utils.dart';
 import 'package:moneygram/viewmodels/home_screen_viewmodel.dart';
@@ -56,33 +55,23 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _content() {
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-        // Use [SystemUiOverlayStyle.light] for white status bar
-        // or [SystemUiOverlayStyle.dark] for black status bar
-        // https://stackoverflow.com/a/58132007/1321917
-        value: SystemUiOverlayStyle.dark,
-        child: Scaffold(
-          appBar: AppBar(
-              toolbarHeight: 0,
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              systemOverlayStyle: const SystemUiOverlayStyle(
-                statusBarColor: Colors.transparent,
-                statusBarIconBrightness: Brightness.dark,
-                statusBarBrightness: Brightness.light,
-              )),
-          body: SafeArea(
-            child: _body(),
-          ),
-          floatingActionButton:
-              _fab(), // This trailing comma makes auto-formatting nicer for build methods.
-        ));
+    return Scaffold(
+      appBar: AppBar(
+          toolbarHeight: 0,
+          backgroundColor: context.appHomeScreenBgColor,
+          elevation: 0),
+      body: SafeArea(
+        child: _body(),
+      ),
+      floatingActionButton:
+          _fab(), // This trailing comma makes auto-formatting nicer for build methods.
+    );
   }
 
   Widget _body() {
     return Container(
       padding: EdgeInsets.only(top: 12),
-      color: CustomColors.homeScreenBgColor,
+      color: context.appHomeScreenBgColor,
       child: Column(
         children: [
           _timeRangeWidget(),
@@ -106,9 +95,9 @@ class _HomePageState extends State<HomePage> {
           width: 36,
           alignment: Alignment.center,
           child: Icon(Icons.arrow_back,
-              color: CustomColors.primaryColor.withOpacity(0.5)),
+              color: context.appPrimaryColor.withOpacity(0.5)),
           decoration: BoxDecoration(
-              color: CustomColors.bgColor,
+              color: context.appBgColor,
               borderRadius: BorderRadius.circular(18))),
     );
     var rightArrow = InkWell(
@@ -123,9 +112,9 @@ class _HomePageState extends State<HomePage> {
           width: 36,
           alignment: Alignment.center,
           child: Icon(Icons.arrow_forward,
-              color: CustomColors.primaryColor.withOpacity(0.5)),
+              color: context.appPrimaryColor.withOpacity(0.5)),
           decoration: BoxDecoration(
-              color: CustomColors.bgColor,
+              color: context.appBgColor,
               borderRadius: BorderRadius.circular(18))),
     );
     var rangeWidget = Text(
@@ -177,11 +166,11 @@ class _HomePageState extends State<HomePage> {
         _openTransactionPage();
       },
       tooltip: 'Add Transaction',
-      backgroundColor: CustomColors.secondaryColor,
+      backgroundColor: context.appSecondaryColor,
       child: Icon(
         Icons.add,
         size: 32,
-        color: CustomColors.primaryColor,
+        color: context.appPrimaryColor,
       ),
     );
   }
@@ -223,7 +212,7 @@ class _HomePageState extends State<HomePage> {
       margin: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
       padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8), color: CustomColors.bgColor),
+          borderRadius: BorderRadius.circular(8), color: context.appBgColor),
       child: Column(
         children: [
           _buildExpenseIncomeWidgetV2(
@@ -246,11 +235,11 @@ class _HomePageState extends State<HomePage> {
       TextSpan(
           text: emoji,
           style: CustomTextStyle.emojiStyle(
-              fontSize: 18, color: CustomColors.primaryColor)),
+              context: context, fontSize: 18)),
       TextSpan(
           text: " $header",
           style: TextStyle(
-              fontSize: 14, color: CustomColors.primaryColor.withOpacity(0.6)))
+              fontSize: 14, color: context.appPrimaryColor.withOpacity(0.6)))
     ]);
     var amountWidget = Text(
       amount,

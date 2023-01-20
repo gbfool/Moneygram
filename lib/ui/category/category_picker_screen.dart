@@ -1,11 +1,10 @@
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moneygram/category/category_hive_helper.dart';
 import 'package:moneygram/category/model/category.dart';
-import 'package:moneygram/utils/custom_colors.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
 import 'package:moneygram/utils/enum/transaction_type.dart';
+import 'package:moneygram/core/theme/moneygram_theme.dart';
 
 class CategoryPickerScreen extends StatefulWidget {
   final Function(Category) onCategorySelected;
@@ -48,6 +47,7 @@ class _CategoryPickerScreenState extends State<CategoryPickerScreen> {
 
   Widget _body() {
     return Container(
+        color: context.appHomeScreenBgColor,
         padding: EdgeInsets.only(top: 16, left: 12, right: 12),
         constraints: BoxConstraints(
             minHeight: MediaQuery.of(context).size.height * 0.3,
@@ -98,7 +98,8 @@ class _CategoryPickerScreenState extends State<CategoryPickerScreen> {
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
             child: Column(mainAxisSize: MainAxisSize.min, children: [
               Text(category.emoji,
-                  style: CustomTextStyle.emojiStyle(fontSize: 24)),
+                  style: CustomTextStyle.emojiStyle(
+                      context: context, fontSize: 24)),
               Flexible(
                 child: Text(
                   category.name,
@@ -135,11 +136,11 @@ class _CategoryPickerScreenState extends State<CategoryPickerScreen> {
         padding: 18,
         children: {0: Text('Expense'), 1: Text('Income')},
         decoration: BoxDecoration(
-          color: CupertinoColors.lightBackgroundGray,
+          color: context.appToggleBgColor,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: CustomColors.primaryColor.withOpacity(.1),
+              color: context.appPrimaryColor.withOpacity(.1),
               blurRadius: 4.0,
               spreadRadius: 1.0,
               offset: Offset(
@@ -150,11 +151,11 @@ class _CategoryPickerScreenState extends State<CategoryPickerScreen> {
           ],
         ),
         thumbDecoration: BoxDecoration(
-          color: CustomColors.secondaryColor,
+          color: context.appSecondaryColor,
           borderRadius: BorderRadius.circular(6),
           boxShadow: [
             BoxShadow(
-              color: CustomColors.primaryColor.withOpacity(.05),
+              color: context.appPrimaryColor.withOpacity(.05),
               blurRadius: 2.0,
               spreadRadius: 0.5,
               offset: Offset(
@@ -183,7 +184,7 @@ class _CategoryPickerScreenState extends State<CategoryPickerScreen> {
       padding: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
       child: Text(
         text,
-        style: TextStyle(fontSize: 16, color: CustomColors.secondaryColor),
+        style: TextStyle(fontSize: 16, color: context.appSecondaryColor),
       ),
     );
   }

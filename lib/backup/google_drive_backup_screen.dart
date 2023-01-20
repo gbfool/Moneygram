@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:moneygram/backup/google_drive_service.dart';
-import 'package:moneygram/utils/custom_colors.dart';
+import 'package:moneygram/core/theme/moneygram_theme.dart';
 
 class GoogleDriveBackupScreen extends StatefulWidget {
   const GoogleDriveBackupScreen({Key? key}) : super(key: key);
@@ -22,7 +22,7 @@ class _GoogleDriveBackupScreenState extends State<GoogleDriveBackupScreen> {
   Widget _header() {
     return Container(
         padding: const EdgeInsets.only(left: 12, right: 12, top: 16),
-        color: CustomColors.secondaryColor,
+        color: context.appSecondaryColor,
         child: IntrinsicHeight(
             child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -55,7 +55,7 @@ class _GoogleDriveBackupScreenState extends State<GoogleDriveBackupScreen> {
           Text(
               "Keep your data safe and easily accessible by backing up to Google Drive. If you ever need to reinstall the app, you can restore your data quickly and easily.",
               style:
-                  TextStyle(color: CustomColors.primaryColor.withOpacity(0.7))),
+                  TextStyle(color: context.appPrimaryColor.withOpacity(0.7))),
           const SizedBox(height: 24),
           Text("Last synced at : time_here"),
           const SizedBox(height: 12),
@@ -65,13 +65,13 @@ class _GoogleDriveBackupScreenState extends State<GoogleDriveBackupScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                    color: CustomColors.primaryColor,
+                    color: context.appPrimaryColor,
                     borderRadius: BorderRadius.circular(4)),
                 child: Text(
                   'BACK UP',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      color: CustomColors.secondaryColor,
+                      color: context.appSecondaryColor,
                       fontWeight: FontWeight.w600),
                 )),
           ),

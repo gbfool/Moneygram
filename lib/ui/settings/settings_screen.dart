@@ -5,9 +5,10 @@ import 'package:moneygram/ui/account/manage_account_screen.dart';
 import 'package:moneygram/ui/category/manage_category_screen.dart';
 import 'package:moneygram/ui/settings/settings_row_widget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:moneygram/ui/theme/theme_selector_screen.dart';
 import 'package:moneygram/utils/analytics_helper.dart';
 import 'package:moneygram/utils/currency_helper.dart';
-import 'package:moneygram/utils/custom_colors.dart';
+import 'package:moneygram/core/theme/moneygram_theme.dart';
 import 'package:moneygram/utils/utils.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -21,22 +22,32 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: context.appHomeScreenBgColor,
+        appBar: AppBar(
+            title: Text(
+          "Settings",
+          style: TextStyle(
+              color: context.appPrimaryColor,
+              fontSize: 24,
+              fontWeight: FontWeight.w600),
+        )),
         body: SafeArea(
             child: Container(
-      child: SingleChildScrollView(
-        padding: EdgeInsets.only(bottom: 64),
-        child: _content(),
-      ),
-    )));
+          child: SingleChildScrollView(
+            padding: EdgeInsets.only(bottom: 64),
+            child: _content(),
+          ),
+        )));
   }
 
   Column _content() {
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      _settingsLabel(),
       SizedBox(height: 32),
       SettingsGroup(
         title: "Preferences",
         children: [
+          SettingsRowWidget(
+              title: "Theme", subtitle: ThemeModeHelper.currentThemeStr(), onTap: _themeSelectorClicked),
           SettingsRowWidget(
             title: "Currency",
             subtitle: CurrencyHelper.getCurrencyName(),
@@ -84,15 +95,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     ]);
   }
 
-  Widget _settingsLabel() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Text("Settings",
-          style: TextStyle(
-              color: CustomColors.primaryColor,
-              fontSize: 32,
-              fontWeight: FontWeight.w600)),
-    );
+  void _themeSelectorClicked() {
+    AnalyticsHelper.logEvent(event: AnalyticsHelper.settingsThemeClicked);
+    showBarModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.transparent,
+        builder: (context) => ThemeSelectorScreen());
   }
 
   void _openCurrencyScreen() {
@@ -145,7 +153,7 @@ class SettingsGroup extends StatelessWidget {
         child: Text(
           title,
           style: TextStyle(
-              color: CustomColors.primaryColor,
+              color: context.appPrimaryColor.withOpacity(0.6),
               fontSize: 24,
               fontWeight: FontWeight.w600),
         ),

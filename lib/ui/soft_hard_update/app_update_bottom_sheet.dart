@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:moneygram/main.dart';
 import 'package:moneygram/utils/analytics_helper.dart';
-import 'package:moneygram/utils/custom_colors.dart';
+import 'package:moneygram/core/theme/moneygram_theme.dart';
 
-class AppUpdateBottomSheet extends StatelessWidget {
+class AppUpdateBottomSheet extends StatefulWidget {
   final VoidCallback onUpdateClick;
   final bool isDismissible;
 
@@ -12,12 +12,17 @@ class AppUpdateBottomSheet extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<AppUpdateBottomSheet> createState() => _AppUpdateBottomSheetState();
+}
+
+class _AppUpdateBottomSheetState extends State<AppUpdateBottomSheet> {
+  @override
   Widget build(BuildContext context) {
     return Container(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (isDismissible) crossIcon(),
+            if (widget.isDismissible) crossIcon(),
             const SizedBox(height: 48),
             const Icon(
               Icons.system_update_outlined,
@@ -34,7 +39,7 @@ class AppUpdateBottomSheet extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(10), topLeft: Radius.circular(10)),
-          color: CustomColors.secondaryColor,
+          color: context.appSecondaryColor,
         ));
   }
 
@@ -45,7 +50,7 @@ class AppUpdateBottomSheet extends StatelessWidget {
         child: Icon(
           Icons.cancel,
           size: 30,
-          color: CustomColors.primaryColor,
+          color: context.appPrimaryColor,
         ),
         onTap: onCrossClick,
       ),
@@ -59,7 +64,7 @@ class AppUpdateBottomSheet extends StatelessWidget {
         "New Update Available!",
         textAlign: TextAlign.center,
         style: TextStyle(
-            color: CustomColors.primaryColor,
+            color: context.appPrimaryColor,
             fontSize: 18,
             fontWeight: FontWeight.w600),
       ),
@@ -82,13 +87,13 @@ class AppUpdateBottomSheet extends StatelessWidget {
         child: Text(
           "Update".toUpperCase(),
           style: TextStyle(
-              color: CustomColors.secondaryColor,
+              color: context.appSecondaryColor,
               fontWeight: FontWeight.w600,
               fontSize: 18),
         ),
         onPressed: onClick,
         style: ElevatedButton.styleFrom(
-            backgroundColor: CustomColors.primaryColor,
+            backgroundColor: context.appPrimaryColor,
             padding: const EdgeInsets.all(10)),
       ),
     ));
@@ -102,13 +107,13 @@ class AppUpdateBottomSheet extends StatelessWidget {
 
   void onClick() {
     updateButtonAnalytics();
-    onUpdateClick();
+    widget.onUpdateClick();
   }
 
   void updateButtonAnalytics() {
     String eventName = AnalyticsHelper.softUpdateButtonClicked;
     // if sheet's not dismissible, then it's a hard update
-    if (!isDismissible) {
+    if (!widget.isDismissible) {
       eventName = AnalyticsHelper.hardUpdateButtonClicked;
     }
     AnalyticsHelper.logEvent(event: eventName);

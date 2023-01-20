@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moneygram/utils/custom_colors.dart';
+import 'package:moneygram/core/theme/moneygram_theme.dart';
 
 class KeyboardKey extends StatefulWidget {
   final dynamic label;
@@ -40,12 +40,12 @@ class _KeyboardKeyState extends State<KeyboardKey> {
     double size = MediaQuery.of(context).size.height / 15;
     print(size);
     return Material(
-        color: CustomColors.secondaryColor,
+        color: context.appSecondaryColor,
         child: Container(
           height: size,
           margin: EdgeInsets.all(2),
           decoration: BoxDecoration(
-              color: CustomColors.primaryColor.withOpacity(0.05),
+              color: context.appPrimaryColor.withOpacity(0.05),
               borderRadius: BorderRadius.circular(6)),
           child: InkWell(
             borderRadius: BorderRadius.circular(6),

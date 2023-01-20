@@ -1,14 +1,13 @@
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moneygram/category/model/category.dart';
 import 'package:moneygram/ui/base_screen.dart';
 import 'package:moneygram/ui/category/add_edit_category_screen.dart';
 import 'package:moneygram/utils/analytics_helper.dart';
-import 'package:moneygram/utils/custom_colors.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
 import 'package:moneygram/utils/enum/transaction_type.dart';
 import 'package:moneygram/viewmodels/manage_category_view_model.dart';
+import 'package:moneygram/core/theme/moneygram_theme.dart';
 
 class ManageCategoryScreen extends StatefulWidget {
   const ManageCategoryScreen({super.key});
@@ -35,11 +34,8 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
 
   Widget _scaffold() {
     return Scaffold(
+      backgroundColor: context.appHomeScreenBgColor,
       appBar: AppBar(
-          elevation: 0,
-          backgroundColor: CustomColors.secondaryColor,
-          foregroundColor: CustomColors.primaryColor,
-          surfaceTintColor: Colors.transparent,
           title: Text("Categories"),
           actions: _appBarActions()),
       body: _body(),
@@ -94,7 +90,6 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
 
   Widget _listView() {
     return Container(
-      color: CustomColors.secondaryColor,
       child: ListView.builder(
           padding:
               const EdgeInsets.only(bottom: kFloatingActionButtonMargin + 100),
@@ -113,11 +108,11 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
         padding: 18,
         children: {0: Text('Expense'), 1: Text('Income')},
         decoration: BoxDecoration(
-          color: CupertinoColors.lightBackgroundGray,
+          color: context.appToggleBgColor,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: CustomColors.primaryColor.withOpacity(.1),
+              color: context.appSecondaryColor.withOpacity(0.8),
               blurRadius: 4.0,
               spreadRadius: 1.0,
               offset: Offset(
@@ -128,11 +123,11 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
           ],
         ),
         thumbDecoration: BoxDecoration(
-          color: CustomColors.secondaryColor,
+          color: context.appSecondaryColor,
           borderRadius: BorderRadius.circular(6),
           boxShadow: [
             BoxShadow(
-              color: CustomColors.primaryColor.withOpacity(.05),
+              color: context.appPrimaryColor.withOpacity(.05),
               blurRadius: 2.0,
               spreadRadius: 0.5,
               offset: Offset(
@@ -164,7 +159,7 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
       padding: EdgeInsets.symmetric(vertical: 4, horizontal: 10),
       child: Text(
         text,
-        style: TextStyle(fontSize: 16, color: CustomColors.secondaryColor),
+        style: TextStyle(fontSize: 16, color: context.appSecondaryColor),
       ),
     );
   }
@@ -181,7 +176,8 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
             Row(
               children: [
                 Text(category.emoji,
-                    style: CustomTextStyle.emojiStyle(fontSize: 24)),
+                    style: CustomTextStyle.emojiStyle(
+                        context: context, fontSize: 24)),
                 SizedBox(width: 12),
                 Expanded(
                   child: Column(
@@ -194,8 +190,7 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
                       Text(category.isActive ? "Show" : "Hidden",
                           style: TextStyle(
                               fontSize: 12,
-                              color:
-                                  CustomColors.primaryColor.withOpacity(0.6))),
+                              color: context.appPrimaryColor.withOpacity(0.6))),
                     ],
                   ),
                 ),
@@ -230,13 +225,13 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
     //       fit: BoxFit.contain,
     //       child: CupertinoSwitch(
     //           value: category.isActive,
-    //           activeColor: CustomColors.primaryColor.withOpacity(0.8),
+    //           activeColor: context.appPrimaryColor.withOpacity(0.8),
     //           onChanged: callback)),
     // );
 
     var widget = Switch(
         value: category.isActive,
-        activeColor: CustomColors.primaryColor.withOpacity(0.8),
+        activeColor: context.appPrimaryColor.withOpacity(0.8),
         onChanged: callback);
 
     return widget;
@@ -264,11 +259,11 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
     return FloatingActionButton(
       onPressed: () => _openAddEditCategoryScreen(),
       tooltip: 'Add Category',
-      backgroundColor: CustomColors.secondaryColor,
+      backgroundColor: context.appSecondaryColor,
       child: Icon(
         Icons.add,
         size: 32,
-        color: CustomColors.primaryColor,
+        color: context.appPrimaryColor,
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:moneygram/core/theme/moneygram_theme.dart';
 import 'package:moneygram/utils/enum/box_types.dart';
 
 const String themeModeKey = 'key_theme_mode';
@@ -17,7 +18,7 @@ const String defaultAccount = 'default_account_key';
 
 abstract class SettingsService {
   Future<void> setThemeMode(ThemeMode themeMode);
-  Future<ThemeMode> themeMode();
+  ThemeMode themeMode();
 
   Future<void> setUpdateNotification(bool mode);
   Future<bool> notification();
@@ -92,12 +93,14 @@ class SettingsServiceImpl implements SettingsService {
 
   @override
   Future<void> setThemeMode(ThemeMode themeMode) async {
-    await box.put(themeModeKey, themeMode.index);
+    await box.put(themeModeKey, ThemeModeHelper.index(themeMode));
   }
 
   @override
-  Future<ThemeMode> themeMode() async {
-    return ThemeMode.values[box.get(themeModeKey, defaultValue: 0)];
+  ThemeMode themeMode() {
+    // ThemeMode.values
+    int index = box.get(themeModeKey, defaultValue: 0);
+    return ThemeModeHelper.themeMode(index);
   }
 
   @override
