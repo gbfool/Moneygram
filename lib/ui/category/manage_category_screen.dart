@@ -36,10 +36,6 @@ class _ManageCategoryScreenState extends State<ManageCategoryScreen> {
     return Scaffold(
       backgroundColor: context.appHomeScreenBgColor,
       appBar: AppBar(
-          elevation: 0,
-          backgroundColor: context.appSecondaryColor,
-          foregroundColor: context.appPrimaryColor,
-          surfaceTintColor: Colors.transparent,
           title: Text("Categories"),
           actions: _appBarActions()),
       body: _body(),

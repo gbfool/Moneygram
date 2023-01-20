@@ -30,10 +30,6 @@ class _CurrencyScreenState extends State<CurrencyScreen> {
     return Scaffold(
         backgroundColor: context.appHomeScreenBgColor,
         appBar: AppBar(
-          elevation: 0,
-          backgroundColor: context.appSecondaryColor,
-          foregroundColor: context.appPrimaryColor,
-          surfaceTintColor: Colors.transparent,
           title: Text("Currency"),
         ),
         body: _listView());

@@ -3,9 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:moneygram/utils/custom_colors.dart';
 
-const ColorScheme lightTheme = ColorScheme.light();
-const ColorScheme darkTheme = ColorScheme.dark();
-
 extension ColorSchemeExtension on ColorScheme {
   Color get primaryColor => this.brightness == Brightness.light
       ? CustomColors.lightPrimaryColor
@@ -125,10 +122,23 @@ FloatingActionButtonThemeData floatingActionButton(ColorScheme colorScheme) {
   );
 }
 
+AppBarTheme appBarThemeLight(ColorScheme colorScheme) {
+  return AppBarTheme(
+    elevation: 0,
+    backgroundColor: colorScheme.secondaryColor,
+    foregroundColor: colorScheme.primaryColor,
+    surfaceTintColor: CustomColors.lightSecondaryColor,
+    systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith(
+      statusBarColor: Colors.transparent,
+    ),
+  );
+}
+
 AppBarTheme appBarThemeDark(ColorScheme colorScheme) {
   return AppBarTheme(
     elevation: 0,
-    backgroundColor: Colors.amber,
+    backgroundColor: colorScheme.secondaryColor,
+    foregroundColor: colorScheme.primaryColor,
     surfaceTintColor: CustomColors.darkSecondaryColor,
     systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(
       statusBarColor: Colors.transparent,

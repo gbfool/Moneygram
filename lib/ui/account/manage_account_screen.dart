@@ -31,13 +31,7 @@ class _ManageAccountScreenState extends State<ManageAccountScreen> {
 
   Widget _scaffold() {
     return Scaffold(
-      appBar: AppBar(
-          elevation: 0,
-          backgroundColor: context.appSecondaryColor,
-          foregroundColor: context.appPrimaryColor,
-          surfaceTintColor: Colors.transparent,
-          title: Text("Accounts"),
-          actions: _appBarActions()),
+      appBar: AppBar(title: Text("Accounts"), actions: _appBarActions()),
       body: _listView(),
       floatingActionButton: _fab(),
     );

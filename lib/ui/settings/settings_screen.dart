@@ -24,6 +24,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: context.appHomeScreenBgColor,
+        appBar: AppBar(
+            title: Text(
+          "Settings",
+          style: TextStyle(
+              color: context.appPrimaryColor,
+              fontSize: 24,
+              fontWeight: FontWeight.w600),
+        )),
         body: SafeArea(
             child: Container(
           child: SingleChildScrollView(
@@ -35,7 +43,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Column _content() {
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      _settingsLabel(),
       SizedBox(height: 32),
       SettingsGroup(
         title: "Preferences",
@@ -95,17 +102,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
     ]);
   }
 
-  Widget _settingsLabel() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Text("Settings",
-          style: TextStyle(
-              color: context.appPrimaryColor,
-              fontSize: 32,
-              fontWeight: FontWeight.w600)),
-    );
-  }
-
   void _openCurrencyScreen() {
     AnalyticsHelper.logEvent(
         event: AnalyticsHelper.settingsCurrencySelectorClicked);
@@ -156,7 +152,7 @@ class SettingsGroup extends StatelessWidget {
         child: Text(
           title,
           style: TextStyle(
-              color: Theme.of(context).disabledColor,
+              color: context.appPrimaryColor.withOpacity(0.6),
               fontSize: 24,
               fontWeight: FontWeight.w600),
         ),

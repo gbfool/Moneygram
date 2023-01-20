@@ -92,9 +92,12 @@ class _MyAppState extends State<MyApp> {
           print(themeMode);
           ColorScheme lightColorScheme = ColorScheme.fromSeed(
             seedColor: context.appPrimaryColor,
+            primary: context.appSecondaryColor,
           );
           ColorScheme darkColorScheme = ColorScheme.fromSeed(
             seedColor: context.appPrimaryColor,
+            primary: context.appSecondaryColor,
+            onSurfaceVariant: context.appSecondaryColor,
             brightness: Brightness.dark,
           );
           return MaterialApp(
@@ -104,6 +107,7 @@ class _MyAppState extends State<MyApp> {
             ).copyWith(
               colorScheme: lightColorScheme,
               dialogTheme: dialogTheme(),
+              appBarTheme: appBarThemeLight(lightColorScheme),
               useMaterial3: true,
               scaffoldBackgroundColor: lightColorScheme.background,
               dialogBackgroundColor: lightColorScheme.background,

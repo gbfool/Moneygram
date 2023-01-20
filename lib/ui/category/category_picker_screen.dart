@@ -136,7 +136,7 @@ class _CategoryPickerScreenState extends State<CategoryPickerScreen> {
         padding: 18,
         children: {0: Text('Expense'), 1: Text('Income')},
         decoration: BoxDecoration(
-          color: CupertinoColors.lightBackgroundGray,
+          color: context.appToggleBgColor,
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(

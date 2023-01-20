@@ -21,7 +21,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   @override
   Widget build(BuildContext context) {
     _isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom != 0;
-    return Scaffold(body: _content());
+    return Scaffold(
+        backgroundColor: context.appHomeScreenBgColor, body: _content());
   }
 
   Widget _content() {
