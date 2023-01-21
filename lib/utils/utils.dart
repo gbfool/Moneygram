@@ -5,7 +5,7 @@ import 'package:moneygram/utils/enum/transaction_type.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Utils {
-  static String currentAppVersion = "1.1.0";
+  static String currentAppVersion = "1.2.0";
   static List<Category> getExpensesCategory() {
     List<Category> list = [];
     list.add(Category(emoji: "💧", name: "Water", isCustomCategory: false));
