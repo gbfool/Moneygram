@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:moneygram/ui/alert_dialog_view.dart';
 import 'package:moneygram/viewmodels/add_transaction_view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:moneygram/core/theme/moneygram_theme.dart';
 
 enum Options { delete }
 
@@ -70,6 +71,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
   Widget _buildPopupMenu() {
     return PopupMenuButton(
       padding: EdgeInsets.zero,
+      color: context.appHomeScreenBgColor,
       child: Container(
         height: 36,
         width: 48,
@@ -106,7 +108,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
         children: [
           Icon(
             iconData,
-            color: Colors.black,
+            color: context.appPrimaryColor,
           ),
           Text(title),
         ],

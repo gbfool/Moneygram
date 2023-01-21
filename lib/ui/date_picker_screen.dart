@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:moneygram/core/theme/moneygram_theme.dart';
 
 class DatePickerScreen extends StatefulWidget {
   final DateTime? selectedDate;
@@ -31,6 +32,7 @@ class DatePickerScreenState extends State<DatePickerScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
+        color: context.appHomeScreenBgColor,
         padding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -54,30 +56,32 @@ class DatePickerScreenState extends State<DatePickerScreen> {
                 child: Container(
                   child: SfDateRangePicker(
                     onSelectionChanged: _onSelectionChanged,
-                    todayHighlightColor: Colors.black,
-                    selectionColor: Colors.black,
+                    todayHighlightColor: context.appPrimaryColor,
+                    selectionColor: context.appPrimaryColor,
                     initialSelectedDate: _selectedDate,
-                    selectionTextStyle:
-                        TextStyle(color: Colors.white, fontSize: 18),
+                    selectionTextStyle: TextStyle(
+                        color: context.appSecondaryColor, fontSize: 18),
                     showNavigationArrow: true,
                     headerStyle: DateRangePickerHeaderStyle(
                         textStyle: TextStyle(
                             fontSize: 20,
-                            color: Colors.black,
+                            color: context.appPrimaryColor,
                             fontWeight: FontWeight.bold)),
                     monthViewSettings: DateRangePickerMonthViewSettings(
                         dayFormat: "EEE",
                         viewHeaderStyle: DateRangePickerViewHeaderStyle(
                             textStyle: TextStyle(
-                                color: Colors.black.withOpacity(0.5)))),
+                                color:
+                                    context.appPrimaryColor.withOpacity(0.5)))),
                     monthCellStyle: DateRangePickerMonthCellStyle(
-                        textStyle: TextStyle(color: Colors.black, fontSize: 18),
+                        textStyle: TextStyle(
+                            color: context.appPrimaryColor, fontSize: 18),
                         todayTextStyle: TextStyle(
-                            color: Colors.black.withOpacity(0.9),
+                            color: context.appPrimaryColor.withOpacity(0.9),
                             fontSize: 18)),
                     yearCellStyle: DateRangePickerYearCellStyle(
-                      textStyle: const TextStyle(color: Colors.black),
-                      todayTextStyle: const TextStyle(color: Colors.black),
+                      textStyle: TextStyle(color: context.appPrimaryColor),
+                      todayTextStyle: TextStyle(color: context.appPrimaryColor),
                     ),
                   ),
                 ))
@@ -97,10 +101,11 @@ class DatePickerScreenState extends State<DatePickerScreen> {
         alignment: Alignment.center,
         child: Text(
           "Done",
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: context.appSecondaryColor),
         ),
         decoration: BoxDecoration(
-            color: Colors.black, borderRadius: BorderRadius.circular(20)),
+            color: context.appPrimaryColor,
+            borderRadius: BorderRadius.circular(20)),
       ),
     );
   }

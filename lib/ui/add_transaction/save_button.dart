@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:moneygram/utils/custom_colors.dart';
+import 'package:moneygram/core/theme/moneygram_theme.dart';
 
 class SaveButton extends StatelessWidget {
   final VoidCallback onTap;
@@ -19,11 +19,14 @@ class SaveButton extends StatelessWidget {
           "Save",
           style: TextStyle(
               fontSize: 20,
-              color:
-                  isEnable ? Colors.white : CustomColors.disableTextColorBtn),
+              color: isEnable
+                  ? context.appSecondaryColor
+                  : context.appDisableTextColorBtn),
         ),
         decoration: BoxDecoration(
-            color: isEnable ? Colors.black : CustomColors.disableBgColorBtn,
+            color: isEnable
+                ? context.appPrimaryColor
+                : context.appDisableBgColorBtn,
             borderRadius: BorderRadius.all(Radius.circular(24))),
       ),
     );

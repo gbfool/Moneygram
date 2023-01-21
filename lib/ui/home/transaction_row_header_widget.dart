@@ -3,8 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:moneygram/utils/currency_helper.dart';
 import 'package:moneygram/utils/enum/filter_budget.dart';
 import 'package:moneygram/utils/time_extension.dart';
+import 'package:moneygram/core/theme/moneygram_theme.dart';
 
-class TransactionRowHeaderWidget extends StatelessWidget {
+class TransactionRowHeaderWidget extends StatefulWidget {
   final DateTime dateTime;
   final double expense;
   final double income;
@@ -15,6 +16,13 @@ class TransactionRowHeaderWidget extends StatelessWidget {
       required this.income})
       : super(key: key);
 
+  @override
+  State<TransactionRowHeaderWidget> createState() =>
+      _TransactionRowHeaderWidgetState();
+}
+
+class _TransactionRowHeaderWidgetState
+    extends State<TransactionRowHeaderWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,9 +38,9 @@ class TransactionRowHeaderWidget extends StatelessWidget {
         _date(),
         const Spacer(),
         const SizedBox(width: 12),
-        ..._amountWidget("E", expense),
+        ..._amountWidget("E", widget.expense),
         const SizedBox(width: 6),
-        ..._amountWidget("I", income),
+        ..._amountWidget("I", widget.income),
       ],
     );
   }
@@ -40,11 +48,11 @@ class TransactionRowHeaderWidget extends StatelessWidget {
   // ignore: unused_element
   Widget _date2() {
     return Text(
-      dateTime.formatted(FilterBudget.daily),
+      widget.dateTime.formatted(FilterBudget.daily),
       style: GoogleFonts.lato(
           fontSize: 22,
           fontWeight: FontWeight.w600,
-          color: Colors.black.withOpacity(0.5)),
+          color: context.appPrimaryColor.withOpacity(0.5)),
     );
   }
 
@@ -54,11 +62,11 @@ class TransactionRowHeaderWidget extends StatelessWidget {
       children: [
         Container(
           child: Text(
-            dateTime.decoratedDay,
+            widget.dateTime.decoratedDay,
             style: GoogleFonts.lato(
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
-                color: Colors.black.withOpacity(0.8)),
+                color: context.appPrimaryColor.withOpacity(0.8)),
           ),
         ),
         const SizedBox(width: 8),
@@ -66,13 +74,15 @@ class TransactionRowHeaderWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              dateTime.decoratedWeek,
-              style: GoogleFonts.lato(fontSize: 14, color: Colors.black),
+              widget.dateTime.decoratedWeek,
+              style: GoogleFonts.lato(
+                  fontSize: 14, color: context.appPrimaryColor),
             ),
             Text(
-              dateTime.decoratedMonthAndYear,
+              widget.dateTime.decoratedMonthAndYear,
               style: GoogleFonts.lato(
-                  fontSize: 12, color: Colors.black.withOpacity(0.4)),
+                  fontSize: 12,
+                  color: context.appPrimaryColor.withOpacity(0.4)),
             ),
           ],
         ),
@@ -86,7 +96,7 @@ class TransactionRowHeaderWidget extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 4),
       child: Text(symbol, style: TextStyle(fontWeight: FontWeight.w600)),
       decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.1),
+          color: context.appPrimaryColor.withOpacity(0.1),
           borderRadius: BorderRadius.circular(4)),
     );
     widgets.add(symbolWidget);
@@ -96,7 +106,7 @@ class TransactionRowHeaderWidget extends StatelessWidget {
       style: GoogleFonts.lato(
           fontSize: 16,
           fontWeight: FontWeight.w600,
-          color: Colors.black.withOpacity(0.5)),
+          color: context.appPrimaryColor.withOpacity(0.5)),
     ));
     return widgets;
   }

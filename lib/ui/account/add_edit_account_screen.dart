@@ -6,6 +6,7 @@ import 'package:moneygram/account/repository/account_repository.dart';
 import 'package:moneygram/di/service_locator.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
 import 'package:moneygram/utils/validation_utils.dart';
+import 'package:moneygram/core/theme/moneygram_theme.dart';
 
 /// Example for EmojiPickerFlutter
 class AddEditAccountScreen extends StatefulWidget {
@@ -40,7 +41,7 @@ class _AddEditAccountScreenState extends State<AddEditAccountScreen> {
     _isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom != 0;
     var title = widget.account != null ? "Edit" : "Add";
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: context.appSecondaryColor,
       appBar: AppBar(
         title: Text('$title Account'),
         actions: [
@@ -52,8 +53,9 @@ class _AddEditAccountScreenState extends State<AddEditAccountScreen> {
   }
 
   Widget _actionDoneButton() {
-    var color =
-        isAnythingChange() ? Colors.black : Colors.black.withOpacity(0.2);
+    var color = isAnythingChange()
+        ? context.appPrimaryColor
+        : context.appPrimaryColor.withOpacity(0.2);
     return InkWell(
         onTap: () {
           _actionButtonOnClicked();
@@ -92,11 +94,14 @@ class _AddEditAccountScreenState extends State<AddEditAccountScreen> {
       padding: EdgeInsets.only(top: 24),
       child: Container(
           decoration: BoxDecoration(
-              color: Color(0xFFF2F2F2), borderRadius: BorderRadius.circular(8)),
+              color: context.appBgColor,
+              borderRadius: BorderRadius.circular(8)),
           padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
           child: Text(_selectedEmoji,
               style: CustomTextStyle.emojiStyle(
-                  fontSize: 40, fontWeight: FontWeight.bold))),
+                  context: context,
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold))),
     );
   }
 
@@ -108,15 +113,17 @@ class _AddEditAccountScreenState extends State<AddEditAccountScreen> {
         child: IntrinsicWidth(
           child: TextField(
             controller: _textEditingController,
-            cursorColor: Colors.black,
+            cursorColor: context.appPrimaryColor,
             style: TextStyle(fontSize: 24),
             onChanged: (value) {
               setState(() {});
             },
             decoration: InputDecoration(
                 hintStyle: TextStyle(
-                    fontSize: 24, color: Colors.black.withOpacity(0.3)),
+                    fontSize: 24,
+                    color: context.appPrimaryColor.withOpacity(0.3)),
                 border: InputBorder.none,
+                fillColor: Colors.transparent,
                 hintText: _textEditingController.text.isEmpty
                     ? "Add Account Name"
                     : null),
@@ -131,7 +138,7 @@ class _AddEditAccountScreenState extends State<AddEditAccountScreen> {
       offstage: _isKeyboardOpen,
       child: Container(
           height: 400,
-          color: const Color(0xFFF2F2F2),
+          color: context.appBgColor,
           child: SafeArea(
             child: EmojiPicker(
               onEmojiSelected: (category, emoji) {
@@ -145,14 +152,15 @@ class _AddEditAccountScreenState extends State<AddEditAccountScreen> {
                       (foundation.defaultTargetPlatform == TargetPlatform.iOS
                           ? 1.30
                           : 1.0),
-                  bgColor: const Color(0xFFF2F2F2),
-                  indicatorColor: Colors.black,
+                  bgColor: context.appBgColor,
+                  indicatorColor: context.appPrimaryColor,
                   iconColor: Colors.grey,
-                  iconColorSelected: Colors.black,
-                  skinToneDialogBgColor: Colors.white,
+                  iconColorSelected: context.appPrimaryColor,
+                  skinToneDialogBgColor: context.appSecondaryColor,
                   enableSkinTones: false,
                   showRecentsTab: false,
-                  emojiTextStyle: CustomTextStyle.emojiStyle(fontSize: 16)),
+                  emojiTextStyle: CustomTextStyle.emojiStyle(
+                      context: context, fontSize: 16)),
             ),
           )),
     );
@@ -187,7 +195,7 @@ class _AddEditAccountScreenState extends State<AddEditAccountScreen> {
       account = Account(emoji: _selectedEmoji, name: inputAccountName);
       _accountRepository.addAccount(account: account);
     }
-    // callback called so that it refreshs the screen
+    // callback called so that it refresh the screen
     widget.addOrEditPerformed();
     Navigator.of(context).pop();
   }

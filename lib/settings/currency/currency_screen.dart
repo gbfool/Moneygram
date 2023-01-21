@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moneygram/core/theme/moneygram_theme.dart';
 import 'package:moneygram/settings/currency/currency_utils.dart';
 import 'package:moneygram/ui/base_screen.dart';
 import 'package:moneygram/utils/analytics_helper.dart';
@@ -27,11 +28,8 @@ class _CurrencyScreenState extends State<CurrencyScreen> {
 
   Widget _scaffold() {
     return Scaffold(
+        backgroundColor: context.appHomeScreenBgColor,
         appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          surfaceTintColor: Colors.transparent,
           title: Text("Currency"),
         ),
         body: _listView());
@@ -39,7 +37,7 @@ class _CurrencyScreenState extends State<CurrencyScreen> {
 
   Widget _listView() {
     return Container(
-      color: Colors.white,
+      color: context.appHomeScreenBgColor,
       child: ListView.builder(
           padding:
               const EdgeInsets.only(bottom: kFloatingActionButtonMargin + 100),
@@ -63,7 +61,7 @@ class _CurrencyScreenState extends State<CurrencyScreen> {
       },
       child: Container(
         padding: EdgeInsets.only(top: 12, left: 16, right: 16),
-        color: isSelected ? Colors.black.withOpacity(0.05) : null,
+        color: isSelected ? context.appPrimaryColor.withOpacity(0.05) : null,
         child: Column(
           children: [
             Row(

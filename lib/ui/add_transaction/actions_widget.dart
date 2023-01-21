@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:moneygram/account/model/account.dart';
 import 'package:moneygram/category/category_hive_helper.dart';
 import 'package:moneygram/category/model/category.dart';
+import 'package:moneygram/core/theme/moneygram_theme.dart';
 import 'package:moneygram/ui/base_screen.dart';
 import 'package:moneygram/ui/account/account_picker_screen.dart';
 import 'package:moneygram/ui/category/category_picker_screen.dart';
@@ -70,11 +71,12 @@ class _ActionsWidgetState extends State<ActionsWidget> {
   Widget _inputField() {
     return TextField(
       controller: widget.notesTextController,
-      cursorColor: Colors.black,
+      cursorColor: context.appPrimaryColor,
       decoration: InputDecoration(
           border: InputBorder.none,
           hintText: "Add notes",
           isDense: true,
+          fillColor: Colors.transparent,
           contentPadding: EdgeInsets.all(0)),
     );
   }
@@ -106,7 +108,8 @@ class _ActionsWidgetState extends State<ActionsWidget> {
     List<Widget> widgets = [];
     if (account != null) {
       widgets.addAll([
-        Text(account.emoji, style: CustomTextStyle.emojiStyle(fontSize: 24)),
+        Text(account.emoji,
+            style: CustomTextStyle.emojiStyle(context: context, fontSize: 24)),
         SizedBox(width: 4),
         Flexible(
           child: Text(
@@ -120,7 +123,8 @@ class _ActionsWidgetState extends State<ActionsWidget> {
     } else {
       widgets.add(Text(
         "Select Account",
-        style: TextStyle(fontSize: 16, color: Colors.black.withOpacity(0.5)),
+        style: TextStyle(
+            fontSize: 16, color: context.appPrimaryColor.withOpacity(0.5)),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ));
@@ -152,7 +156,8 @@ class _ActionsWidgetState extends State<ActionsWidget> {
     List<Widget> widgets = [];
     if (category != null) {
       widgets.addAll([
-        Text(category.emoji, style: CustomTextStyle.emojiStyle(fontSize: 24)),
+        Text(category.emoji,
+            style: CustomTextStyle.emojiStyle(context: context, fontSize: 24)),
         SizedBox(width: 4),
         Flexible(
           child: Text(
@@ -166,7 +171,8 @@ class _ActionsWidgetState extends State<ActionsWidget> {
     } else {
       widgets.add(Text(
         "Select Category",
-        style: TextStyle(fontSize: 16, color: Colors.black.withOpacity(0.5)),
+        style: TextStyle(
+            fontSize: 16, color: context.appPrimaryColor.withOpacity(0.5)),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ));

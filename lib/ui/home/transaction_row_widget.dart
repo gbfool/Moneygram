@@ -5,6 +5,7 @@ import 'package:moneygram/transactions/models/transaction.dart';
 import 'package:moneygram/utils/currency_helper.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
 import 'package:moneygram/utils/validation_utils.dart';
+import 'package:moneygram/core/theme/moneygram_theme.dart';
 
 class TransactionRowWidget extends StatefulWidget {
   final Transaction transaction;
@@ -37,7 +38,7 @@ class _TransactionRowWidgetState extends State<TransactionRowWidget> {
           widget.categoryLocalDataSource
               .fetchCategory(widget.transaction.categoryId)!
               .emoji,
-          style: CustomTextStyle.emojiStyle(fontSize: 24),
+          style: CustomTextStyle.emojiStyle(context: context, fontSize: 24),
         ),
       ),
       const SizedBox(width: 12),
@@ -87,7 +88,8 @@ class _TransactionRowWidgetState extends State<TransactionRowWidget> {
       Text(widget.transaction.notes ?? "",
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: TextStyle(fontSize: 14, color: Colors.black.withOpacity(0.6)))
+          style: TextStyle(
+              fontSize: 14, color: context.appPrimaryColor.withOpacity(0.6)))
     ];
   }
 }

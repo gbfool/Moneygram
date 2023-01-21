@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moneygram/core/theme/moneygram_theme.dart';
 
 class SettingsRowWidget extends StatelessWidget {
   final String title;
@@ -21,12 +22,14 @@ class SettingsRowWidget extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-                color: Colors.black, fontSize: 18, fontWeight: FontWeight.w500),
+                color: context.appPrimaryColor,
+                fontSize: 18,
+                fontWeight: FontWeight.w500),
           ),
           SizedBox(height: 4),
           Text(
             subtitle,
-            style: TextStyle(color: Colors.black.withOpacity(0.7)),
+            style: TextStyle(color: context.appPrimaryColor.withOpacity(0.7)),
           ),
           const SizedBox(height: 16),
           const Divider(height: 0.5, thickness: 0),

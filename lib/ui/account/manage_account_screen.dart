@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moneygram/account/model/account.dart';
+import 'package:moneygram/core/theme/moneygram_theme.dart';
 import 'package:moneygram/ui/account/add_edit_account_screen.dart';
 import 'package:moneygram/ui/base_screen.dart';
 import 'package:moneygram/utils/analytics_helper.dart';
@@ -30,13 +31,8 @@ class _ManageAccountScreenState extends State<ManageAccountScreen> {
 
   Widget _scaffold() {
     return Scaffold(
-      appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          surfaceTintColor: Colors.transparent,
-          title: Text("Accounts"),
-          actions: _appBarActions()),
+      backgroundColor: context.appHomeScreenBgColor,
+      appBar: AppBar(title: Text("Accounts"), actions: _appBarActions()),
       body: _listView(),
       floatingActionButton: _fab(),
     );
@@ -78,7 +74,6 @@ class _ManageAccountScreenState extends State<ManageAccountScreen> {
 
   Widget _listView() {
     return Container(
-      color: Colors.white,
       child: ListView.builder(
           padding:
               const EdgeInsets.only(bottom: kFloatingActionButtonMargin + 100),
@@ -101,7 +96,8 @@ class _ManageAccountScreenState extends State<ManageAccountScreen> {
             Row(
               children: [
                 Text(account.emoji,
-                    style: CustomTextStyle.emojiStyle(fontSize: 24)),
+                    style: CustomTextStyle.emojiStyle(
+                        context: context, fontSize: 24)),
                 SizedBox(width: 12),
                 Expanded(
                   child: Column(
@@ -114,7 +110,7 @@ class _ManageAccountScreenState extends State<ManageAccountScreen> {
                       Text(account.isActive ? "Show" : "Hidden",
                           style: TextStyle(
                               fontSize: 12,
-                              color: Colors.black.withOpacity(0.6))),
+                              color: context.appPrimaryColor.withOpacity(0.6))),
                     ],
                   ),
                 ),
@@ -148,13 +144,13 @@ class _ManageAccountScreenState extends State<ManageAccountScreen> {
     //       fit: BoxFit.contain,
     //       child: CupertinoSwitch(
     //           value: category.isActive,
-    //           activeColor: Colors.black.withOpacity(0.8),
+    //           activeColor: context.appPrimaryColor.withOpacity(0.8),
     //           onChanged: callback)),
     // );
 
     var widget = Switch(
         value: account.isActive,
-        activeColor: Colors.black.withOpacity(0.8),
+        activeColor: context.appPrimaryColor.withOpacity(0.8),
         onChanged: callback);
 
     return widget;
@@ -182,11 +178,11 @@ class _ManageAccountScreenState extends State<ManageAccountScreen> {
     return FloatingActionButton(
       onPressed: () => _openAddEditAccountScreen(),
       tooltip: 'Add Account',
-      backgroundColor: Colors.white,
-      child: const Icon(
+      backgroundColor: context.appSecondaryColor,
+      child: Icon(
         Icons.add,
         size: 32,
-        color: Colors.black,
+        color: context.appPrimaryColor,
       ),
     );
   }

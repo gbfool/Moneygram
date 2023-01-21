@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moneygram/core/theme/moneygram_theme.dart';
 import 'package:moneygram/transactions/models/transaction.dart';
 import 'package:moneygram/ui/add_transaction/actions_widget.dart';
 import 'package:moneygram/ui/add_transaction/amount_widget.dart';
@@ -58,7 +59,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
         FocusScope.of(context).requestFocus(new FocusNode());
       },
       child: Container(
-        color: Colors.white,
+        color: context.appSecondaryColor,
         child: SafeArea(
           minimum: EdgeInsets.only(bottom: 16),
           child: Column(

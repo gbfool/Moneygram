@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:moneygram/core/theme/moneygram_theme.dart';
 import 'package:moneygram/utils/analytics_helper.dart';
-import 'package:moneygram/utils/custom_colors.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
 import 'package:moneygram/utils/validation_utils.dart';
 
@@ -21,7 +21,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   @override
   Widget build(BuildContext context) {
     _isKeyboardOpen = MediaQuery.of(context).viewInsets.bottom != 0;
-    return Scaffold(body: _content());
+    return Scaffold(
+        backgroundColor: context.appHomeScreenBgColor, body: _content());
   }
 
   Widget _content() {
@@ -63,7 +64,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   Widget _header() {
     return Container(
         padding: const EdgeInsets.only(left: 12, right: 12, top: 16),
-        color: Colors.white,
+        color: context.appSecondaryColor,
         child: IntrinsicHeight(
             child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -110,16 +111,16 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                       color: isEnable
-                          ? Colors.black
-                          : CustomColors.disableBgColorBtn,
+                          ? context.appPrimaryColor
+                          : context.appDisableBgColorBtn,
                       borderRadius: BorderRadius.circular(13)),
                   child: Text(
                     'Save',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: isEnable
-                            ? Colors.white
-                            : CustomColors.disableTextColorBtn,
+                            ? context.appSecondaryColor
+                            : context.appDisableTextColorBtn,
                         fontWeight: FontWeight.w600),
                   )),
             )),
@@ -161,13 +162,14 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
             },
       child: Container(
         decoration: BoxDecoration(
-            color: isSelected ? Colors.black.withOpacity(0.1) : null,
+            color: isSelected ? context.appPrimaryColor.withOpacity(0.1) : null,
             borderRadius: BorderRadius.circular(8)),
         padding:
             EdgeInsets.only(left: isFirst ? 0 : 4, right: 4, top: 6, bottom: 6),
         child: Text(
           emoji,
-          style: CustomTextStyle.emojiStyle(fontSize: isSelected ? 40 : 32),
+          style: CustomTextStyle.emojiStyle(
+              context: context, fontSize: isSelected ? 40 : 32),
         ),
       ),
     );
@@ -188,21 +190,21 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
         hintMaxLines: 1,
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10),
-        hintStyle:
-            TextStyle(fontSize: 16, color: Colors.black.withOpacity(0.3)),
-        fillColor: Colors.white,
+        hintStyle: TextStyle(
+            fontSize: 16, color: context.appPrimaryColor.withOpacity(0.3)),
+        fillColor: context.appSecondaryColor,
         filled: true,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4),
-          borderSide: const BorderSide(
-            color: Colors.white,
+          borderSide: BorderSide(
+            color: context.appSecondaryColor,
             width: 0.2,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4),
-          borderSide: const BorderSide(
-            color: Colors.black26,
+          borderSide: BorderSide(
+            color: context.appPrimaryColor.withOpacity(0.26),
             width: 0.2,
           ),
         ),
@@ -239,14 +241,16 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                   fontSize: 22,
                   fontWeight: FontWeight.w600,
                   color: isEnable
-                      ? Colors.white
-                      : CustomColors.disableTextColorBtn),
+                      ? context.appSecondaryColor
+                      : context.appDisableTextColorBtn),
             ),
             decoration: BoxDecoration(
-                color: isEnable ? Colors.black : CustomColors.disableBgColorBtn,
+                color: isEnable
+                    ? context.appPrimaryColor
+                    : context.appDisableBgColorBtn,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.white.withOpacity(0.03),
+                    color: context.appSecondaryColor.withOpacity(0.03),
                     spreadRadius: 5,
                     blurRadius: 7,
                     offset: Offset(0, 3), // changes position of shadow

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:moneygram/ui/home/home_screen.dart';
 import 'package:moneygram/ui/settings/settings_screen.dart';
 import 'package:moneygram/utils/analytics_helper.dart';
+import 'package:moneygram/core/theme/moneygram_theme.dart';
 
 class BottomNavigationState extends StatefulWidget {
   const BottomNavigationState({
@@ -49,19 +50,21 @@ class _BottomNavigationState extends State<BottomNavigationState> {
           items: [
             BottomNavigationBarItem(
               icon: iconEmojiWidget(Icons.home, Colors.grey),
-              activeIcon: iconEmojiWidget(Icons.home, Colors.black),
+              activeIcon: iconEmojiWidget(Icons.home, context.appPrimaryColor),
               label: 'Home',
             ),
             BottomNavigationBarItem(
               icon: iconEmojiWidget(Icons.settings, Colors.grey),
-              activeIcon: iconEmojiWidget(Icons.settings, Colors.black),
+              activeIcon:
+                  iconEmojiWidget(Icons.settings, context.appPrimaryColor),
               label: 'Settings',
             ),
           ],
           type: BottomNavigationBarType.fixed,
-          selectedItemColor: Colors.black,
+          selectedItemColor: context.appPrimaryColor,
           selectedFontSize: 14,
           unselectedFontSize: 14,
+          backgroundColor: context.appBgColor,
           unselectedItemColor: Colors.grey,
           currentIndex: _selectedIndex,
           onTap: _onItemTapped,

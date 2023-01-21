@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:moneygram/transactions/models/transaction.dart';
 import 'package:moneygram/ui/add_transaction/add_transaction_page.dart';
 import 'package:moneygram/ui/base_screen.dart';
@@ -12,6 +11,7 @@ import 'package:moneygram/utils/analytics_helper.dart';
 import 'package:moneygram/utils/broadcast/broadcast_channels.dart';
 import 'package:moneygram/utils/broadcast/broadcast_receiver.dart';
 import 'package:moneygram/utils/custom_text_style.dart';
+import 'package:moneygram/core/theme/moneygram_theme.dart';
 import 'package:moneygram/utils/utils.dart';
 import 'package:moneygram/utils/validation_utils.dart';
 import 'package:moneygram/viewmodels/home_screen_viewmodel.dart';
@@ -55,33 +55,23 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _content() {
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-        // Use [SystemUiOverlayStyle.light] for white status bar
-        // or [SystemUiOverlayStyle.dark] for black status bar
-        // https://stackoverflow.com/a/58132007/1321917
-        value: SystemUiOverlayStyle.dark,
-        child: Scaffold(
-          appBar: AppBar(
-              toolbarHeight: 0,
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              systemOverlayStyle: const SystemUiOverlayStyle(
-                statusBarColor: Colors.transparent,
-                statusBarIconBrightness: Brightness.dark,
-                statusBarBrightness: Brightness.light,
-              )),
-          body: SafeArea(
-            child: _body(),
-          ),
-          floatingActionButton:
-              _fab(), // This trailing comma makes auto-formatting nicer for build methods.
-        ));
+    return Scaffold(
+      appBar: AppBar(
+          toolbarHeight: 0,
+          backgroundColor: context.appHomeScreenBgColor,
+          elevation: 0),
+      body: SafeArea(
+        child: _body(),
+      ),
+      floatingActionButton:
+          _fab(), // This trailing comma makes auto-formatting nicer for build methods.
+    );
   }
 
   Widget _body() {
     return Container(
       padding: EdgeInsets.only(top: 12),
-      color: Color(0xFFFDFCFA),
+      color: context.appHomeScreenBgColor,
       child: Column(
         children: [
           _timeRangeWidget(),
@@ -104,9 +94,10 @@ class _HomePageState extends State<HomePage> {
           height: 36,
           width: 36,
           alignment: Alignment.center,
-          child: Icon(Icons.arrow_back, color: Colors.black.withOpacity(0.5)),
+          child: Icon(Icons.arrow_back,
+              color: context.appPrimaryColor.withOpacity(0.5)),
           decoration: BoxDecoration(
-              color: Color(0xFFF4F4F4),
+              color: context.appBgColor,
               borderRadius: BorderRadius.circular(18))),
     );
     var rightArrow = InkWell(
@@ -120,10 +111,10 @@ class _HomePageState extends State<HomePage> {
           height: 36,
           width: 36,
           alignment: Alignment.center,
-          child:
-              Icon(Icons.arrow_forward, color: Colors.black.withOpacity(0.5)),
+          child: Icon(Icons.arrow_forward,
+              color: context.appPrimaryColor.withOpacity(0.5)),
           decoration: BoxDecoration(
-              color: Color(0xFFF4F4F4),
+              color: context.appBgColor,
               borderRadius: BorderRadius.circular(18))),
     );
     var rangeWidget = Text(
@@ -175,11 +166,11 @@ class _HomePageState extends State<HomePage> {
         _openTransactionPage();
       },
       tooltip: 'Add Transaction',
-      backgroundColor: Colors.white,
-      child: const Icon(
+      backgroundColor: context.appSecondaryColor,
+      child: Icon(
         Icons.add,
         size: 32,
-        color: Colors.black,
+        color: context.appPrimaryColor,
       ),
     );
   }
@@ -216,28 +207,12 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
-  // ignore: unused_element
-  Widget _topWidgetV1() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16),
-      child: Row(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _buildExpenseIncomeWidgetV1(),
-          const SizedBox(width: 16),
-          _buildExpenseIncomeWidgetV1()
-        ],
-      ),
-    );
-  }
-
   Widget _topWidgetV2() {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
       padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8), color: Color(0xFFF4F4F4)),
+          borderRadius: BorderRadius.circular(8), color: context.appBgColor),
       child: Column(
         children: [
           _buildExpenseIncomeWidgetV2(
@@ -254,41 +229,17 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildExpenseIncomeWidgetV1() {
-    var textSpan = TextSpan(children: [
-      TextSpan(
-          text: "💸",
-          style: CustomTextStyle.emojiStyle(fontSize: 14, color: Colors.black)),
-      TextSpan(text: " Expenses", style: TextStyle(color: Color(0xFF8c8c8c)))
-    ]);
-    var amountWidget = Text(
-      "₹200",
-      style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
-    );
-    return Expanded(
-      child: Container(
-          padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8), color: Color(0xFFF4F4F4)),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                RichText(text: textSpan),
-                const SizedBox(height: 8),
-                amountWidget
-              ])),
-    );
-  }
-
   Widget _buildExpenseIncomeWidgetV2(
       {required String emoji, required String header, required String amount}) {
     var textSpan = TextSpan(children: [
       TextSpan(
           text: emoji,
-          style: CustomTextStyle.emojiStyle(fontSize: 18, color: Colors.black)),
+          style: CustomTextStyle.emojiStyle(
+              context: context, fontSize: 18)),
       TextSpan(
           text: " $header",
-          style: TextStyle(fontSize: 14, color: Colors.black.withOpacity(0.6)))
+          style: TextStyle(
+              fontSize: 14, color: context.appPrimaryColor.withOpacity(0.6)))
     ]);
     var amountWidget = Text(
       amount,
