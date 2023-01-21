@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:moneygram/core/theme/moneygram_theme.dart';
+import 'package:moneygram/utils/analytics_helper.dart';
 import 'package:moneygram/utils/broadcast/broadcast_channels.dart';
 import 'package:moneygram/utils/broadcast/broadcast_receiver.dart';
 import 'package:moneygram/utils/enum/theme_mode.dart';
@@ -113,6 +114,9 @@ class _ThemeSelectorScreenState extends State<ThemeSelectorScreen> {
   }
 
   void _selectedValueCallback(ThemeMode mode) {
+    AnalyticsHelper.logEvent(
+        event: AnalyticsHelper.themeSelectorRowClicked,
+        params: {"theme_mode": mode.themeName});
     setState(() {
       _selectedTheme = mode;
       ThemeModeHelper.setTheme(mode);

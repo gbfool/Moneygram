@@ -47,7 +47,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
         title: "Preferences",
         children: [
           SettingsRowWidget(
-              title: "Theme", subtitle: ThemeModeHelper.currentThemeStr(), onTap: _themeSelectorClicked),
+              title: "Theme",
+              subtitle: ThemeModeHelper.currentThemeStr(),
+              onTap: _themeSelectorClicked),
           SettingsRowWidget(
             title: "Currency",
             subtitle: CurrencyHelper.getCurrencyName(),

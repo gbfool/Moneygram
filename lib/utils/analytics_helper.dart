@@ -42,6 +42,10 @@ class AnalyticsHelper {
       "settings_give_feedback_clicked";
   static const String settingsRateAppClicked = "settings_rate_app_clicked";
 
+  // theme
+  static const String themeSelectorRowClicked = "theme_selector_row_clicked";
+
+  // currency
   static const String currencySelectorRowClicked =
       "currency_selector_row_clicked";
 
