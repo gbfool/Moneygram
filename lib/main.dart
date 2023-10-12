@@ -137,7 +137,7 @@ class _MyAppState extends State<MyApp> {
             ),
             themeMode: themeMode,
             navigatorKey: navigatorKey,
-            title: 'Money',
+            title: 'Bucky',
             home: BottomNavigationState(),
           );
         });
